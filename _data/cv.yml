@@ -1,0 +1,235 @@
+# CV Data for Erin Percival Carter
+# Update this file to update both the web CV and downloadable versions
+# Last updated: 2025-01-15
+
+name: "Erin Percival Carter"
+title: "Associate Professor of Marketing"
+affiliation: "Maine Business School, University of Maine"
+address: "5723 Donald P. Corbett Business Building, Orono, ME 04469-5723"
+phone_office: "(207) 481-4944"
+phone_cell: "(307) 660-1599"
+email: "erin.p.carter@maine.edu"
+website: "erinlpc.com"
+
+education:
+  - degree: "Ph.D., Marketing"
+    institution: "Leeds School of Business, University of Colorado Boulder"
+    year: 2017
+  - degree: "Bachelor of Science, Marketing"
+    institution: "University of Wyoming"
+    year: 2010
+
+research_interests:
+  - "Judgment and Decision Making"
+  - "Well-Being"
+  - "Authenticity"
+  - "Morality"
+  - "Sustainability and Food Systems"
+
+publications:
+  - authors: "Campbell, Margaret C., Justin Pomerance, and Erin Percival Carter"
+    title: "Painful Prices: A Moral Harm Approach to Price Fairness"
+    journal: "Journal of Consumer Research"
+    year: 2025
+    doi: ""
+    
+  - authors: "Percival Carter, Erin, and William G. Obenauer"
+    title: "Reframing and Restructuring Organizational Strategies for Addressing Workplace Harassment and Discrimination in the Workplace"
+    journal: "Group & Organization Management"
+    year: 2025
+    doi: ""
+
+  - authors: "Percival Carter, Erin, Lawrence E. Williams, Nicholas Light"
+    title: "Consumers' minimum time investments in meaningful consumption"
+    journal: "Marketing Letters"
+    year: 2023
+    doi: "https://doi.org/10.1007/s11002-023-09709-z"
+
+  - authors: "Stough, Rusty and Erin Percival Carter"
+    title: "What Was Yours is (For Now) Mine: Prior User Knowledge Reduces Product Satisfaction but Can Improve Experiential Satisfaction in Access-Based Consumption"
+    journal: "Journal of Consumer Behavior"
+    year: 2023
+    doi: ""
+
+  - authors: "Percival Carter, Erin"
+    title: "Power and the Perception of Pregnancy in the Academy: Reflection, Review, and Recommendations for Institutional Change"
+    journal: "Gender, Work & Organization"
+    year: 2023
+    doi: "https://doi.org/10.1111/gwao.13001"
+
+  - authors: "Percival Carter, Erin, and Stephanie Welcomer"
+    title: "Designing and Distinguishing Meaningful Artisan Food Experiences"
+    journal: "Sustainability"
+    year: 2021
+    doi: "https://doi.org/10.3390/su13158569"
+
+  - authors: "Warren, Caleb, Erin Percival Carter, and A. Peter McGraw"
+    title: "Being Funny is Not Enough: Negative Feelings Predict When Humor is Persuasive"
+    journal: "International Journal of Advertising"
+    year: 2019
+    doi: ""
+
+working_papers:
+  - authors: "Entsminger, Jason, Lucy McGowan, and Erin Percival Carter"
+    title: "Control Without Consensus: Innovation Pressures in Tension with Consumer Preferences in Controlled Environment Agriculture"
+    status: "Preparing for Submission"
+    target: "Science, Technology, and Human Values"
+    
+  - authors: "Percival Carter, Erin, Caroline Noblet, and Qiujie (Angie) Zheng"
+    title: "Messages that Help Consumers of Maine Food Navigate PFAS Information"
+    status: "Discussing outlets with co-authors"
+    
+  - authors: "Percival Carter, Erin, Jennifer Dinger, and Molly Rapert"
+    title: "Give a Little Bit: Consumers Ask More of Women Entrepreneurs"
+    status: "Submitting"
+    target: "Journal of Research in Marketing and Entrepreneurship"
+    
+  - authors: "Percival Carter, Erin, Lawrence Williams, and A. Peter McGraw"
+    title: "How Hype Helps and Hinders Well-Being"
+    status: "Preparing for submission"
+    note: "Based on 3rd essay of dissertation research"
+    
+  - authors: "Percival Carter, Erin, and A. Peter McGraw"
+    title: "In Pursuit of Imperfection: Flawed Products Reduce Process Uncertainty"
+    status: "Preparing for submission"
+    target: "Food Quality and Preference"
+    
+  - authors: "Percival Carter, Erin"
+    title: "Adapting Hackathons for Online Marketing Education"
+    status: "Preparing for submission"
+    
+  - authors: "Percival Carter, Erin"
+    title: "Price Gouging at the Pumpkin Patch? Expense Neglect in Agritourism Leads to Perceptions of Price Unfairness"
+    status: "Data collected, writing in progress"
+    
+  - authors: "Percival Carter, Erin, Jason Entsminger, and Rusty Stough"
+    title: "Is Food Art? Looking at the Role of Food Entrepreneurs as Artists"
+    status: "Writing in progress"
+    
+  - authors: "Welcomer, Stephanie, and Erin Percival Carter"
+    title: "Agricultural Work-Based Learning Fosters Business Students' Interest in Pursuing Agricultural Careers"
+    status: "Writing in progress"
+    
+  - authors: "McGraw, A. Peter, Erin Percival Carter, and Jennifer Harman"
+    title: "Humor Production and Perceptions of Psychological Health"
+    status: "Preparing for submission"
+    note: "Available at https://ssrn.com/abstract=2727829"
+
+grants_awarded:
+  - title: "The Agritourism Premium: Culinary Trails as an Experiential Marketing Strategy for State-Branded Farm, Fish, and Fiber Products"
+    amount: 14091
+    year: 2024
+    funder: "Northeast SARE"
+    role: "PI"
+    
+  - title: "BARD (Business, Agriculture, and Rural Development) Technical Assistance Pipeline"
+    amount: 292000
+    year: 2022
+    funder: "US Congressionally Directed Spending (Senators Collins and King)"
+    role: "Co-Developer and Key Personnel"
+
+grants_submitted:
+  - title: "Burnout Contagion – Network Effects of Employee Burnout Spillover on Interdependent Organizations"
+    amount: 288127
+    year: 2025
+    funder: "NSF"
+    role: "Co-PI"
+    
+  - title: "PFAS Risk Perception and Communication: Hypersensitivity to Language, Insensitivity to Dose"
+    amount: 50233
+    year: 2025
+    funder: "UMaine Research Funding Opportunity"
+    role: "Co-PI"
+    status: "Notice expected October 2025"
+    
+  - title: "Expanding solar projects at the University of Maine, grazing dairy heifers at Witter Farm"
+    amount: 49875
+    year: 2025
+    funder: "US DOE LASSO"
+    role: "Co-PI"
+    status: "Final decisions pending"
+    
+  - title: "PARTNERSHIP: Sustainable Agrofood, Consumer Response, and Venturing: Uncertainty Reduction within the context of Controlled Environment Agriculture"
+    amount: 807822
+    year: 2024
+    funder: "USDA, NIFA"
+    role: "Co-PI"
+    status: "Final decision pending"
+    
+  - title: "OffshoreWind4Maine: 2.0 Offshore Wind Workforce Development Academy"
+    amount: 496918
+    year: 2024
+    funder: "State of Maine Governor's Office"
+    role: "Co-PI"
+
+awards:
+  - name: "Maine Business School Excellence in Research Award"
+    year: 2024
+  - name: "Nominated for MBS Teaching Award"
+    year: "2022, 2023"
+  - name: "Selected by Beta Gamma Sigma students for induction"
+    year: 2021
+  - name: "University of Maine nominee for Donald Harward Award for Excellence in Service Learning"
+    year: 2021
+  - name: "University of Maine CUGR Faculty Fellow"
+    year: "2020-2021"
+  - name: "Maine Business School Dean's Research Award"
+    year: 2019
+  - name: "Qualtrics Behavioral Research Grant"
+    year: 2015
+  - name: "AMA Sheth Doctoral Consortium Fellow"
+    year: 2015
+
+teaching:
+  current_courses:
+    - code: "MKT 382"
+      name: "Consumer Behavior"
+      level: "Undergraduate"
+    - code: "MKT 374"
+      name: "Personal Selling and Sales Management"
+      level: "Undergraduate"
+    - code: "MKT 378"
+      name: "Marketing Research"
+      level: "Undergraduate"
+      
+  # Could add historical evaluations here if desired
+
+service_reviewing:
+  - "Journal of Marketing"
+  - "Journal of Consumer Research (Trainee)"
+  - "International Journal of Research in Marketing"
+  - "International Journal of Advertising"
+  - "British Food Journal"
+  - "Humor: International Journal of Humor Research"
+  - "Association for Consumer Research Conference"
+
+professional_affiliations:
+  - "Society for Agriculture and Human Values"
+  - "American Marketing Association"
+  - "Association for Consumer Research"
+  - "International Positive Psychology Association"
+  - "Society for Consumer Psychology"
+  - "Society for Personality and Social Psychology"
+
+public_service:
+  - "Maine Fibershed, Steering Committee Member"
+  - "The Maine Food Strategy, Steering Committee Member"
+  - "Orono Town Council Ad-Hoc Committee on Diversity Equity and Inclusion, Associate Member and Data Consultant"
+
+professional_experience:
+  - title: "Co-Founder & Director"
+    organization: "BARD Institute"
+    location: "Orono, ME"
+    years: "Present"
+  - title: "Director and Principal Behavioral Science Consultant"
+    organization: "ELPC, LLC"
+    location: "Orono, ME"
+    years: "Present"
+  - title: "Digital and Interactive Marketing Coordinator"
+    organization: "University of Wyoming"
+    location: "Laramie, WY"
+    years: "2011-2012"
+  - title: "Marketing Manager"
+    organization: "The Blue Sky Group Inc."
+    location: "Laramie, WY"
+    years: "2010-2011"

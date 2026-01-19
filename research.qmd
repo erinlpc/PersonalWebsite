@@ -1,0 +1,136 @@
+---
+title: "Research"
+subtitle: "Understanding judgment and choice in the marketplace"
+toc: true
+toc-title: "Research Streams"
+---
+
+My research uses behavioral economics and social psychology to understand how people make judgments and decisions as consumers, employees, and citizens. I'm drawn to questions where understanding the psychology can lead to better outcomes—for individuals, for organizations, and for society.
+
+---
+
+::: {.research-stream}
+
+## Meaning, Pleasure, and Well-Being {#well-being}
+
+The pursuit of happiness drives many consumption decisions. But what do people actually *mean* when they say they want to be happy?
+
+With [Lawrence Williams](http://leeds-faculty.colorado.edu/lw/), I study the distinction between happiness as *pleasure* (hedonic well-being) and happiness as *meaning* (eudaimonic well-being). We find that consumers approach these differently: compared to pursuing pleasure, pursuing meaning involves expectations of lasting benefits—and requires greater minimum time investments to derive those benefits.
+
+This has implications for how we design experiences, how we market them, and how consumers allocate their most precious resource: time.
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Selected Publications
+
+**Consumers' Minimum Time Investments in Meaningful Consumption**
+Percival Carter, Williams, & Light • *Marketing Letters*, 2023
+[Read →](https://doi.org/10.1007/s11002-023-09709-z)
+:::
+
+:::
+
+
+::: {.research-stream}
+
+## Fairness, Harm, and Moral Judgment {#fairness}
+
+When is a price unfair? When does a company cross an ethical line? These aren't just philosophical questions—they drive consumer behavior, shape reputations, and determine market outcomes.
+
+My work in this area approaches price fairness as fundamentally a *moral* judgment, shaped by perceptions of harm to consumers. I've also examined how pregnancy is perceived in academic institutions, how harassment and discrimination policies fail, and how consumers make demands of entrepreneurs based on gender.
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Selected Publications
+
+**Painful Prices: A Moral Harm Approach to Price Fairness**
+Campbell, Pomerance, & Percival Carter • *Journal of Consumer Research*, 2025
+
+**Reframing and Restructuring Organizational Strategies for Addressing Workplace Harassment and Discrimination**
+Percival Carter & Obenauer • *Group & Organization Management*, 2025
+
+**Power and the Perception of Pregnancy in the Academy**
+Percival Carter • *Gender, Work & Organization*, 2023
+[Read →](https://doi.org/10.1111/gwao.13001)
+:::
+
+:::
+
+
+::: {.research-stream}
+
+## Sustainability and Food Systems {#sustainability}
+
+How do consumers think about local, sustainable, and artisan food? And how can small-scale producers compete in markets dominated by industrial agriculture?
+
+This research stream connects my academic interests to work I care about deeply. With partners including Maine Farmland Trust, the Maine Cheese Guild, and Maine Fibershed, I study how consumers perceive small-scale producers' products differently from conventional alternatives—and how producers can design experiences that cultivate genuine connection with their customers.
+
+Current work examines how Maine can communicate about PFAS contamination in ways that inform consumers without unfairly damaging perceptions of all Maine food.
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Selected Publications
+
+**Designing and Distinguishing Meaningful Artisan Food Experiences**
+Percival Carter & Welcomer • *Sustainability*, 2021
+[Read →](https://doi.org/10.3390/su13158569)
+:::
+
+:::
+
+
+::: {.research-stream}
+
+## Authenticity and Imperfection {#authenticity}
+
+Can a product be *too* perfect?
+
+With [Pete McGraw](http://www.petermcgraw.org/), I study how flaws can actually increase product evaluations. The key insight: when consumers care about production processes that are difficult to verify (organic farming, handmade crafts), visible imperfections serve as credible signals. A blemished apple might be *more* appealing than a perfect one—because the blemish reduces uncertainty about how it was grown.
+
+This work has implications for artisan producers, sustainable agriculture, and anyone competing on authenticity rather than polish.
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Working Paper
+
+**In Pursuit of Imperfection: Flawed Products Reduce Process Uncertainty**
+Percival Carter & McGraw • *Preparing for submission*
+
+As discussed on the [Here We Are podcast](http://www.herewearepodcast.com/episode/38/peter-mcgraw-and-erin-percival) and demonstrated memorably by [Ron Swanson](https://www.youtube.com/watch?v=t0sg1nyFJRI).
+:::
+
+:::
+
+
+::: {.research-stream}
+
+## Hype and Its Discontents {#hype}
+
+Championships. Series finales. Award shows. Millions of people tune in to hyped events even when they have no intrinsic interest in boxing, period dramas, or filmmaking.
+
+With Lawrence Williams and Pete McGraw, I studied how "believing the hype" affects consumer well-being. Using data from nearly 7,000 people across 16 hyped television events, we found that giving in to hype is largely *detrimental*—with one exception: it can improve social well-being by helping solitary viewers feel connected through shared cultural experiences.
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Working Paper
+
+**How Hype Helps and Hinders Well-Being**
+Percival Carter, Williams, & McGraw • *Under revision*
+:::
+
+:::
+
+
+::: {.research-stream}
+
+## Humor {#humor}
+
+In a previous life, I managed the Humor Research Lab at the University of Colorado Boulder. That work examined when humor helps and hurts brand attitudes—finding that the key isn't whether an ad is funny, but whether it triggers negative emotional reactions independent of humor.
+
+::: {.callout-note appearance="minimal" collapse="true"}
+## Selected Publications
+
+**Being Funny is Not Enough: Negative Feelings Predict When Humor is Persuasive**
+Warren, Percival Carter, & McGraw • *International Journal of Advertising*, 2019
+:::
+
+:::
+
+---
+
+For a complete list of publications and working papers, see my [CV](cv.qmd).

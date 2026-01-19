@@ -1,0 +1,38 @@
+---
+title: "Consumer Behavior"
+subtitle: "MKT 382"
+---
+
+This course examines the psychological, social, and cultural factors that influence consumer decision-making. We explore how consumers perceive information, form attitudes, make choices, and experience consumption—and how marketers can apply these insights ethically and effectively.
+
+## Course Format
+
+This course alternates between in-person and asynchronous online formats depending on the semester.
+
+## Lecture Videos
+
+::: {.callout-note}
+## Coming Soon
+Lecture video links will be added here.
+:::
+
+<!-- 
+Structure for video listings:
+### Module 1: Introduction to Consumer Behavior
+- [1.1 What is Consumer Behavior?](https://youtube.com/...) (15 min)
+- [1.2 The Consumer Decision Process](https://youtube.com/...) (20 min)
+-->
+
+## Readings
+
+::: {.callout-note}
+## Coming Soon
+Course readings and supplementary materials will be added here.
+:::
+
+## Assignments
+
+::: {.callout-note}
+## Coming Soon
+Assignment descriptions and materials will be added here.
+:::

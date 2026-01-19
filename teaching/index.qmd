@@ -1,0 +1,72 @@
+---
+title: "Teaching"
+subtitle: "Consumer psychology, sales, research methods, and professional development"
+toc: false
+---
+
+I teach courses that help students understand how consumers think, how to build relationships that drive sales, and how to use data to make better marketing decisions. I also develop professional skills courses on topics I wish someone had taught me earlier.
+
+---
+
+## Core Courses
+
+::: {.course-card}
+### Consumer Behavior
+**MKT 382** · Undergraduate
+
+Why do people buy what they buy? This course examines the psychological, social, and cultural factors that shape consumer decisions—from perception and attention to attitudes, emotions, and social influence. Students learn to apply these insights to marketing strategy.
+
+*Offered in-person and asynchronously online.*
+
+[Course Materials →](consumer-behavior/index.qmd)
+:::
+
+::: {.course-card}
+### Sales Management & Personal Selling
+**MKT 374** · Undergraduate
+
+Sales is fundamentally about understanding people and building relationships. This course develops both the interpersonal skills of effective selling and the strategic thinking required to manage sales teams and processes.
+
+*Offered in-person and asynchronously online.*
+
+[Course Materials →](sales-management/index.qmd)
+:::
+
+::: {.course-card}
+### Marketing Research & Analytics
+**MKT 378** · Undergraduate
+
+Hands-on training in research design, data collection, and analysis using R. Students work with real data and learn to translate quantitative findings into actionable marketing insights. Includes custom-built interactive tools for exploring statistical concepts.
+
+[Course Materials →](marketing-research/index.qmd)
+:::
+
+---
+
+## Professional Skills Courses
+
+One-credit courses focused on building specific capabilities. Both are offered asynchronously online.
+
+::: {.course-card}
+### Time Management: The Psychology of Getting Things Done
+**1 Credit** · Professional Skills
+
+Beyond productivity hacks: this course examines the psychological foundations of time management—attention, motivation, habit formation, and sustainable productivity. Students learn *why* certain strategies work and *when* to apply them.
+
+[Course Materials →](time-management/index.qmd)
+:::
+
+::: {.course-card}
+### Moral Judgment & Decision Making in the Marketplace
+**1 Credit** · Professional Skills · *Coming Spring 2026*
+
+How do consumers, managers, and organizations navigate ethical decisions? This course examines frameworks for moral reasoning and applies them to contemporary business challenges—from pricing fairness to data ethics to sustainability.
+
+[Course Materials →](moral-judgment/index.qmd)
+:::
+
+---
+
+## Special Topics
+
+I've also developed experiential courses connecting business students with sustainable agriculture in Maine, in partnership with the [BARD Institute](../bard.qmd) and organizations including Maine Farmland Trust, the Maine Cheese Guild, and Maine Fibershed. These courses—funded in part by a [congressional earmark](https://umaine.edu/news/blog/2022/09/16/mbs-percival-carter-welcomer-awarded-292k-small-business-administration-grant-for-bard-program/)—give students hands-on experience applying business skills in contexts they rarely encounter in traditional coursework.
