@@ -1,0 +1,41 @@
+---
+title: "Time Management: The Psychology of Getting Things Done"
+subtitle: "Professional Skills Course (1 Credit)"
+---
+
+This course examines the psychological foundations of time management, moving beyond simple productivity hacks to understand *why* certain strategies work and *when* they're most effective.
+
+## Course Format
+
+Asynchronous online. All materials are designed to be accessible and self-paced.
+
+## Modules
+
+::: {.callout-note}
+## Coming Soon
+Course modules and materials are under development for the current semester.
+:::
+
+<!-- 
+Planned structure:
+### Module 1: Attention and Focus
+### Module 2: Motivation and Procrastination  
+### Module 3: Habit Formation
+### Module 4: Planning and Goal-Setting
+### Module 5: Energy Management
+### Module 6: Sustainable Productivity
+-->
+
+## Readings
+
+::: {.callout-note}
+## Coming Soon
+Readings will be added as the course develops.
+:::
+
+## Assignments
+
+::: {.callout-note}
+## Coming Soon
+Assignment materials will be added here.
+:::

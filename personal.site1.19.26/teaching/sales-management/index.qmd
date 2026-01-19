@@ -1,0 +1,31 @@
+---
+title: "Sales Management & Personal Selling"
+subtitle: "MKT 374"
+---
+
+This course develops skills in personal selling, sales force management, and relationship building. You'll learn both the interpersonal dynamics of effective selling and the strategic considerations of managing a sales organization.
+
+## Course Format
+
+This course alternates between in-person and asynchronous online formats depending on the semester.
+
+## Lecture Videos
+
+::: {.callout-note}
+## Coming Soon
+Lecture video links will be added here.
+:::
+
+## Readings
+
+::: {.callout-note}
+## Coming Soon
+Course readings will be added here.
+:::
+
+## Assignments
+
+::: {.callout-note}
+## Coming Soon
+Assignment materials will be added here.
+:::

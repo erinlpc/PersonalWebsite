@@ -1,0 +1,208 @@
+---
+title: "Curriculum Vitae"
+subtitle: "Erin Percival Carter"
+toc: true
+toc-title: "Sections"
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(yaml)
+cv <- yaml.load_file("_data/cv.yml")
+```
+
+::: {.callout-tip appearance="minimal"}
+[Download as PDF](files/percival_carter_cv.pdf){.btn .btn-primary} · Last updated January 2025
+:::
+
+---
+
+## Contact
+
+**`r cv$name`** · `r cv$title`
+`r cv$affiliation`
+
+`r cv$address`
+[`r cv$email`](mailto:`r cv$email`) · [`r cv$website`](https://`r cv$website`)
+Office: `r cv$phone_office`
+
+---
+
+## Education
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (ed in cv$education) {
+  cat(sprintf("**%s**
+%s, %s\n\n", ed$degree, ed$institution, ed$year))
+}
+```
+
+---
+
+## Research Interests
+
+```{r}
+#| echo: false
+#| output: asis
+
+cat(paste(cv$research_interests, collapse = " · "))
+```
+
+---
+ 
+## Publications
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (pub in cv$publications) {
+  doi_link <- if (!is.null(pub$doi) && pub$doi != "") {
+    sprintf("
+[DOI →](%s)", pub$doi)
+  } else {
+    ""
+  }
+  cat(sprintf("::: {.publication}
+**%s**
+%s
+*%s*, %s%s
+:::
+
+", pub$title, pub$authors, pub$journal, pub$year, doi_link))
+}
+```
+
+---
+
+## Working Papers
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (wp in cv$working_papers) {
+  target <- if (!is.null(wp$target)) sprintf(" · Target: *%s*", wp$target) else ""
+  note <- if (!is.null(wp$note)) sprintf("
+*%s*", wp$note) else ""
+  cat(sprintf("::: {.publication}
+**%s**
+%s
+%s%s%s
+:::
+
+", wp$title, wp$authors, wp$status, target, note))
+}
+```
+
+---
+
+## Grants
+
+### Awarded
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (g in cv$grants_awarded) {
+  cat(sprintf("**%s**
+$%s · %s · %s · %s\n\n", 
+              g$title, format(g$amount, big.mark=","), g$year, g$funder, g$role))
+}
+```
+
+### Submitted & Pending
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (g in cv$grants_submitted) {
+  status <- if (!is.null(g$status)) sprintf(" · %s", g$status) else ""
+  cat(sprintf("**%s**
+$%s · %s · %s · %s%s\n\n", 
+              g$title, format(g$amount, big.mark=","), g$year, g$funder, g$role, status))
+}
+```
+
+---
+
+## Awards & Honors
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (a in cv$awards) {
+  cat(sprintf("- **%s** (%s)\n", a$name, a$year))
+}
+```
+
+---
+
+## Teaching
+
+### Current Courses
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (c in cv$teaching$current_courses) {
+  cat(sprintf("- **%s** · %s\n", c$code, c$name))
+}
+```
+
+---
+
+## Service
+
+### Journal Reviewing
+
+```{r}
+#| echo: false
+#| output: asis
+
+cat(paste(cv$service_reviewing, collapse = " · "))
+```
+
+### Professional Affiliations
+
+```{r}
+#| echo: false
+#| output: asis
+
+cat(paste(cv$professional_affiliations, collapse = " · "))
+```
+
+### Public Service
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (s in cv$public_service) {
+  cat(sprintf("- %s\n", s))
+}
+```
+
+---
+
+## Professional Experience
+
+```{r}
+#| echo: false
+#| output: asis
+
+for (exp in cv$professional_experience) {
+  cat(sprintf("**%s** · %s
+%s · %s\n\n", exp$title, exp$organization, exp$location, exp$years))
+}
+```

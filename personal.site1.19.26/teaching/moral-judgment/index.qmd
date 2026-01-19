@@ -1,0 +1,30 @@
+---
+title: "Moral Judgment & Decision Making in the Marketplace"
+subtitle: "Professional Skills Course (1 Credit)"
+---
+
+::: {.callout-warning}
+## Coming Spring 2026
+This course is currently under development.
+:::
+
+This course explores how consumers, managers, and organizations navigate ethical decisions in commercial contexts. We examine frameworks for moral reasoning and apply them to contemporary business challenges.
+
+## Course Format
+
+Asynchronous online. All materials will be designed to be accessible and self-paced.
+
+## Topics
+
+Planned topics include:
+
+- Foundations of moral psychology
+- Consumer responses to corporate ethics and CSR
+- Pricing and fairness
+- Privacy and data ethics
+- Environmental and sustainability ethics
+- Whistleblowing and organizational moral courage
+
+## Contact
+
+Interested in this course? [Get in touch](../../contact.qmd) with questions.
