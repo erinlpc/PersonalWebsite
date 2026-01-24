@@ -13,8 +13,10 @@ This course provides hands-on training in research design, data collection, and 
 
 These Shiny applications help you explore statistical concepts visually. Play with them to build intuition before diving into the math.
 
+1. [Week 2: Bagel Run Predictor](shinyapps/BagelRunPredictor.qmd) — Our first attempts at some basic model comparisons...but make it about bagels...
+
 ::: {.callout-note appearance="minimal"}
-**Coming Soon** · Links to Shiny apps will be added as they're migrated to the new site.
+**More Coming Soon** · Links to Shiny apps will be added as they're migrated to the new site.
 :::
 
 <!-- 
