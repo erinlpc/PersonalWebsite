@@ -2,6 +2,8 @@
 title: "MKT 378 — Stout Pricing Example"
 format: html
 editor: visual
+execute:
+  eval: false
 ---
 
 ::: callout-tip
