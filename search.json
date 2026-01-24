@@ -105,95 +105,193 @@
     "text": "Part 8 — Proportional Reduction in Error (PRE)\nPRE = (Error_baseline - Error_new) / Error_baseline\nWe’ll use SSE (sum of squared errors) as our measure of error size here. Note there are alternative ways to measure/conceptualize error but we’re going to just square it for now (we’re squaring it to ensure all positive numbers so that we know the extent to which our predictions “missed” when we sum the “misses” for each observation).\nThe code below will calculate SSE for each model:\n\nSSE_brewmaster &lt;- sum((stout_data$WTP - stout_data$Model_Brewmaster)^2)\nSSE_mean       &lt;- sum((stout_data$WTP - stout_data$Model_Mean)^2)\nSSE_likes_stout      &lt;- sum((stout_data$WTP - stout_data$Model_Like_Stout)^2)\n\nLet’s take a look at those values now:\n\nSSE_brewmaster\nSSE_mean\nSSE_likes_stout\n\n\nComparing Models with PRE\nOK, now we want to compare some of our models using the PRE formula.\nAs you look at these results, I want you to think about what we’re really doing in the stout model compared to the others in marketing terms… instead of just having the same strategy for understanding/predicting an entire market, we’re coming up with different strategies for understanding and predicting different segments of the market…which is a lot like… SEGMENTATION! That’s right! A very rudimentary version of it, but look how well it performs compared to the others…\nLet’s give it a go:\nPRE: Sample Mean vs. Brewmaster\n\nPRE_mean_vs_brew &lt;- (SSE_brewmaster - SSE_mean) / SSE_brewmaster\nPRE_mean_vs_brew   # proportion of error reduced\n\nPRE: Likes Stout vs. Sample Mean\n\nPRE_likesstout_vs_mean &lt;- (SSE_mean - SSE_likes_stout) / SSE_mean\nPRE_likesstout_vs_mean\n\nPRE: Likes Stout vs. Brewmaster (direct comparison)\n\nPRE_likesstout_vs_brew &lt;- (SSE_brewmaster - SSE_likes_stout) / SSE_brewmaster\nPRE_likesstout_vs_brew"
   },
   {
-    "objectID": "teaching/sales-management/index.html",
-    "href": "teaching/sales-management/index.html",
-    "title": "Sales Management & Personal Selling",
+    "objectID": "teaching/marketing-research/index.html",
+    "href": "teaching/marketing-research/index.html",
+    "title": "Marketing Research & Analytics",
     "section": "",
-    "text": "This course develops skills in personal selling, sales force management, and relationship building. You’ll learn both the interpersonal dynamics of effective selling and the strategic considerations of managing a sales organization."
+    "text": "This course provides hands-on training in research design, data collection, and analysis using R. You’ll learn to translate quantitative findings into actionable marketing insights—and build skills that transfer to any data-driven role."
   },
   {
-    "objectID": "teaching/sales-management/index.html#course-format",
-    "href": "teaching/sales-management/index.html#course-format",
-    "title": "Sales Management & Personal Selling",
+    "objectID": "teaching/marketing-research/index.html#interactive-tools",
+    "href": "teaching/marketing-research/index.html#interactive-tools",
+    "title": "Marketing Research & Analytics",
+    "section": "Interactive Tools",
+    "text": "Interactive Tools\nThese Shiny applications help you explore statistical concepts visually. Play with them to build intuition before diving into the math.\n\nWeek 2: Bagel Run Predictor — Our first attempts at some basic model comparisons…but make it about bagels…\n\n\n\n\n\n\n\nMore Coming Soon · Links to Shiny apps will be added as they’re migrated to the new site."
+  },
+  {
+    "objectID": "teaching/marketing-research/index.html#coding-assignments",
+    "href": "teaching/marketing-research/index.html#coding-assignments",
+    "title": "Marketing Research & Analytics",
+    "section": "Coding Assignments",
+    "text": "Coding Assignments\nThese assignments build your R skills progressively. Each is designed to be accessible—you don’t need prior programming experience.\n\nGetting Started\n\nWeek 1: File Management Practice — Install R/RStudio, set up your folders, learn relative paths\nWeek 2: Stout Exercise — Practice loading data, intro to model comparison\n\n\n\n\n\n\n\nMore coming · Additional assignments will be added throughout the semester."
+  },
+  {
+    "objectID": "teaching/marketing-research/index.html#resources",
+    "href": "teaching/marketing-research/index.html#resources",
+    "title": "Marketing Research & Analytics",
+    "section": "Resources",
+    "text": "Resources\n\nSetup\nBefore the first assignment, you’ll need:\n\nR — Download from CRAN\nRStudio — Download from Posit\n\nI’ll walk through installation in class, but these links have everything you need.\n\n\nReferences\n\nR for Data Science — Free online textbook; excellent for beginners\nQuarto Documentation — For when you’re ready to create your own reports\nggplot2 Cheat Sheet — Keep this handy\n\n\n\nGetting Help\nStuck on an assignment? In order:\n\nRe-read the error message carefully\nGoogle the error message (seriously—this is what professionals do)\nCheck the course discussion board\nCome to office hours"
+  },
+  {
+    "objectID": "teaching/time-management/index.html",
+    "href": "teaching/time-management/index.html",
+    "title": "Time Management: The Psychology of Getting Things Done",
+    "section": "",
+    "text": "This course examines the psychological foundations of time management, moving beyond simple productivity hacks to understand why certain strategies work and when they’re most effective."
+  },
+  {
+    "objectID": "teaching/time-management/index.html#course-format",
+    "href": "teaching/time-management/index.html#course-format",
+    "title": "Time Management: The Psychology of Getting Things Done",
     "section": "Course Format",
-    "text": "Course Format\nThis course alternates between in-person and asynchronous online formats depending on the semester."
+    "text": "Course Format\nAsynchronous online. All materials are designed to be accessible and self-paced."
   },
   {
-    "objectID": "teaching/sales-management/index.html#lecture-videos",
-    "href": "teaching/sales-management/index.html#lecture-videos",
-    "title": "Sales Management & Personal Selling",
-    "section": "Lecture Videos",
-    "text": "Lecture Videos\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nLecture video links will be added here."
+    "objectID": "teaching/time-management/index.html#modules",
+    "href": "teaching/time-management/index.html#modules",
+    "title": "Time Management: The Psychology of Getting Things Done",
+    "section": "Modules",
+    "text": "Modules\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nCourse modules and materials are under development for the current semester."
   },
   {
-    "objectID": "teaching/sales-management/index.html#readings",
-    "href": "teaching/sales-management/index.html#readings",
-    "title": "Sales Management & Personal Selling",
+    "objectID": "teaching/time-management/index.html#readings",
+    "href": "teaching/time-management/index.html#readings",
+    "title": "Time Management: The Psychology of Getting Things Done",
     "section": "Readings",
-    "text": "Readings\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nCourse readings will be added here."
+    "text": "Readings\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nReadings will be added as the course develops."
   },
   {
-    "objectID": "teaching/sales-management/index.html#assignments",
-    "href": "teaching/sales-management/index.html#assignments",
-    "title": "Sales Management & Personal Selling",
+    "objectID": "teaching/time-management/index.html#assignments",
+    "href": "teaching/time-management/index.html#assignments",
+    "title": "Time Management: The Psychology of Getting Things Done",
     "section": "Assignments",
     "text": "Assignments\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nAssignment materials will be added here."
   },
   {
-    "objectID": "teaching/moral-judgment/index.html",
-    "href": "teaching/moral-judgment/index.html",
-    "title": "Moral Judgment & Decision Making in the Marketplace",
+    "objectID": "teaching/index.html",
+    "href": "teaching/index.html",
+    "title": "Teaching",
     "section": "",
-    "text": "WarningComing Spring 2026\n\n\n\nThis course is currently under development.\nThis course explores how consumers, managers, and organizations navigate ethical decisions in commercial contexts. We examine frameworks for moral reasoning and apply them to contemporary business challenges."
+    "text": "I teach courses that help students understand how consumers think, how to build relationships that drive sales, and how to use data to make better marketing decisions. I also develop professional skills courses on topics I wish someone had taught me earlier."
   },
   {
-    "objectID": "teaching/moral-judgment/index.html#course-format",
-    "href": "teaching/moral-judgment/index.html#course-format",
-    "title": "Moral Judgment & Decision Making in the Marketplace",
-    "section": "Course Format",
-    "text": "Course Format\nAsynchronous online. All materials will be designed to be accessible and self-paced."
+    "objectID": "teaching/index.html#core-courses",
+    "href": "teaching/index.html#core-courses",
+    "title": "Teaching",
+    "section": "Core Courses",
+    "text": "Core Courses\n\nConsumer Behavior\nMKT 382 · Undergraduate\nWhy do people buy what they buy? This course examines the psychological, social, and cultural factors that shape consumer decisions—from perception and attention to attitudes, emotions, and social influence. Students learn to apply these insights to marketing strategy.\nOffered in-person and asynchronously online.\nCourse Materials →\n\n\nSales Management & Personal Selling\nMKT 374 · Undergraduate\nSales is fundamentally about understanding people and building relationships. This course develops both the interpersonal skills of effective selling and the strategic thinking required to manage sales teams and processes.\nOffered in-person and asynchronously online.\nCourse Materials →\n\n\nMarketing Research & Analytics\nMKT 378 · Undergraduate\nHands-on training in research design, data collection, and analysis using R. Students work with real data and learn to translate quantitative findings into actionable marketing insights. Includes custom-built interactive tools for exploring statistical concepts.\nCourse Materials →"
   },
   {
-    "objectID": "teaching/moral-judgment/index.html#topics",
-    "href": "teaching/moral-judgment/index.html#topics",
-    "title": "Moral Judgment & Decision Making in the Marketplace",
-    "section": "Topics",
-    "text": "Topics\nPlanned topics include:\n\nFoundations of moral psychology\nConsumer responses to corporate ethics and CSR\nPricing and fairness\nPrivacy and data ethics\nEnvironmental and sustainability ethics\nWhistleblowing and organizational moral courage"
+    "objectID": "teaching/index.html#professional-skills-courses",
+    "href": "teaching/index.html#professional-skills-courses",
+    "title": "Teaching",
+    "section": "Professional Skills Courses",
+    "text": "Professional Skills Courses\nOne-credit courses focused on building specific capabilities. Both are offered asynchronously online.\n\nTime Management: The Psychology of Getting Things Done\n1 Credit · Professional Skills\nBeyond productivity hacks: this course examines the psychological foundations of time management—attention, motivation, habit formation, and sustainable productivity. Students learn why certain strategies work and when to apply them.\nCourse Materials →\n\n\nMoral Judgment & Decision Making in the Marketplace\n1 Credit · Professional Skills · Coming Spring 2026\nHow do consumers, managers, and organizations navigate ethical decisions? This course examines frameworks for moral reasoning and applies them to contemporary business challenges—from pricing fairness to data ethics to sustainability.\nCourse Materials →"
   },
   {
-    "objectID": "teaching/moral-judgment/index.html#contact",
-    "href": "teaching/moral-judgment/index.html#contact",
-    "title": "Moral Judgment & Decision Making in the Marketplace",
-    "section": "Contact",
-    "text": "Contact\nInterested in this course? Get in touch with questions."
+    "objectID": "teaching/index.html#special-topics",
+    "href": "teaching/index.html#special-topics",
+    "title": "Teaching",
+    "section": "Special Topics",
+    "text": "Special Topics\nI’ve also developed experiential courses connecting business students with sustainable agriculture in Maine, in partnership with the BARD Institute and organizations including Maine Farmland Trust, the Maine Cheese Guild, and Maine Fibershed. These courses—funded in part by a congressional earmark—give students hands-on experience applying business skills in contexts they rarely encounter in traditional coursework."
   },
   {
-    "objectID": "bard.html",
-    "href": "bard.html",
-    "title": "BARD Institute",
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Research",
     "section": "",
-    "text": "The BARD Institute is an independent organization I co-founded and co-direct. We work to strengthen sustainable agriculture by bringing contemporary business thinking and research to small-scale producers.\nThis work was inspired by Dr. Ayana Elizabeth Johnson’s Climate Venn Diagram—finding the intersection of what you’re good at, what the world needs, and what brings you joy. For me, that intersection sits squarely at the junction of behavioral science, business strategy, and sustainable food systems."
+    "text": "My research uses behavioral economics and social psychology to understand how people make judgments and decisions as consumers, employees, and citizens. I’m drawn to questions where understanding the psychology can lead to better outcomes—for individuals, for organizations, and for society.\nFor a complete list of publications and working papers, see my CV."
   },
   {
-    "objectID": "bard.html#what-we-do",
-    "href": "bard.html#what-we-do",
-    "title": "BARD Institute",
-    "section": "What We Do",
-    "text": "What We Do\n\nBusiness Advising\nTailored guidance for small-scale agricultural producers navigating markets, pricing, branding, and growth—grounded in research on how consumers actually perceive and value local and artisan products.\n\n\nResearch & Analytics\nUnderstanding consumer perceptions and market opportunities through rigorous research methods. Our work helps producers make evidence-based decisions rather than relying on intuition alone.\n\n\nStudent Engagement\nDeep-dive courses and research assistantships that give business students hands-on experience in sustainable agriculture—filling a critical gap in both business education and agricultural service provision."
+    "objectID": "research.html#well-being",
+    "href": "research.html#well-being",
+    "title": "Research",
+    "section": "Meaning, Pleasure, and Well-Being",
+    "text": "Meaning, Pleasure, and Well-Being\nThe pursuit of happiness drives many consumption decisions. But what do people actually mean when they say they want to be happy?\nWith Lawrence Williams, I study the distinction between happiness as pleasure (hedonic well-being) and happiness as meaning (eudaimonic well-being). We find that consumers approach these differently: compared to pursuing pleasure, pursuing meaning involves expectations of lasting benefits—and requires greater minimum time investments to derive those benefits.\nThis has implications for how we design experiences, how we market them, and how consumers allocate their most precious resource: time.\n\n\n\n\n\n\nNoteSelected Publications\n\n\n\n\n\nConsumers’ Minimum Time Investments in Meaningful Consumption Percival Carter, Williams, & Light • Marketing Letters, 2023 Read →"
   },
   {
-    "objectID": "bard.html#partners",
-    "href": "bard.html#partners",
-    "title": "BARD Institute",
-    "section": "Partners",
-    "text": "Partners\nWe’ve been fortunate to work with organizations committed to Maine’s agricultural future:\n\nMaine Farmland Trust\nMaine Cheese Guild\nMaine Fibershed\nMaine Fiber Frolic"
+    "objectID": "research.html#fairness",
+    "href": "research.html#fairness",
+    "title": "Research",
+    "section": "Fairness, Harm, and Moral Judgment",
+    "text": "Fairness, Harm, and Moral Judgment\nWhen is a price unfair? When does a company cross an ethical line? These aren’t just philosophical questions—they drive consumer behavior, shape reputations, and determine market outcomes.\nMy work in this area approaches price fairness as fundamentally a moral judgment, shaped by perceptions of harm to consumers. I’ve also examined how pregnancy is perceived in academic institutions, how harassment and discrimination policies fail, and how consumers make demands of entrepreneurs based on gender.\n\n\n\n\n\n\nNoteSelected Publications\n\n\n\n\n\nPainful Prices: A Moral Harm Approach to Price Fairness Campbell, Pomerance, & Percival Carter • Journal of Consumer Research, 2025\nReframing and Restructuring Organizational Strategies for Addressing Workplace Harassment and Discrimination Percival Carter & Obenauer • Group & Organization Management, 2025\nPower and the Perception of Pregnancy in the Academy Percival Carter • Gender, Work & Organization, 2023 Read →"
   },
   {
-    "objectID": "bard.html#learn-more",
-    "href": "bard.html#learn-more",
-    "title": "BARD Institute",
-    "section": "Learn More",
-    "text": "Learn More\nVisit bardinstitute.com for current projects and ways to get involved.\nInterested in partnering with BARD or having us work with your organization? Get in touch."
+    "objectID": "research.html#sustainability",
+    "href": "research.html#sustainability",
+    "title": "Research",
+    "section": "Sustainability and Food Systems",
+    "text": "Sustainability and Food Systems\nHow do consumers think about local, sustainable, and artisan food? And how can small-scale producers compete in markets dominated by industrial agriculture?\nThis research stream connects my academic interests to work I care about deeply. With partners including Maine Farmland Trust, the Maine Cheese Guild, and Maine Fibershed, I study how consumers perceive small-scale producers’ products differently from conventional alternatives—and how producers can design experiences that cultivate genuine connection with their customers.\nCurrent work examines how Maine can communicate about PFAS contamination in ways that inform consumers without unfairly damaging perceptions of all Maine food.\n\n\n\n\n\n\nNoteSelected Publications\n\n\n\n\n\nDesigning and Distinguishing Meaningful Artisan Food Experiences Percival Carter & Welcomer • Sustainability, 2021 Read →"
+  },
+  {
+    "objectID": "research.html#authenticity",
+    "href": "research.html#authenticity",
+    "title": "Research",
+    "section": "Authenticity and Imperfection",
+    "text": "Authenticity and Imperfection\nCan a product be too perfect?\nWith Pete McGraw, I study how flaws can actually increase product evaluations. The key insight: when consumers care about production processes that are difficult to verify (organic farming, handmade crafts), visible imperfections serve as credible signals. A blemished apple might be more appealing than a perfect one—because the blemish reduces uncertainty about how it was grown.\nThis work has implications for artisan producers, sustainable agriculture, and anyone competing on authenticity rather than polish.\n\n\n\n\n\n\nNoteWorking Paper\n\n\n\n\n\nIn Pursuit of Imperfection: Flawed Products Reduce Process Uncertainty Percival Carter & McGraw • Preparing for submission\nAs discussed on the Here We Are podcast and demonstrated memorably by Ron Swanson."
+  },
+  {
+    "objectID": "research.html#hype",
+    "href": "research.html#hype",
+    "title": "Research",
+    "section": "Hype and Its Discontents",
+    "text": "Hype and Its Discontents\nChampionships. Series finales. Award shows. Millions of people tune in to hyped events even when they have no intrinsic interest in boxing, period dramas, or filmmaking.\nWith Lawrence Williams and Pete McGraw, I studied how “believing the hype” affects consumer well-being. Using data from nearly 7,000 people across 16 hyped television events, we found that giving in to hype is largely detrimental—with one exception: it can improve social well-being by helping solitary viewers feel connected through shared cultural experiences.\n\n\n\n\n\n\nNoteWorking Paper\n\n\n\n\n\nHow Hype Helps and Hinders Well-Being Percival Carter, Williams, & McGraw • Under revision"
+  },
+  {
+    "objectID": "research.html#humor",
+    "href": "research.html#humor",
+    "title": "Research",
+    "section": "Humor",
+    "text": "Humor\nIn a previous life, I managed the Humor Research Lab at the University of Colorado Boulder. That work examined when humor helps and hurts brand attitudes—finding that the key isn’t whether an ad is funny, but whether it triggers negative emotional reactions independent of humor.\n\n\n\n\n\n\nNoteSelected Publications\n\n\n\n\n\nBeing Funny is Not Enough: Negative Feelings Predict When Humor is Persuasive Warren, Percival Carter, & McGraw • International Journal of Advertising, 2019"
+  },
+  {
+    "objectID": "contact.html",
+    "href": "contact.html",
+    "title": "Contact",
+    "section": "",
+    "text": "Erin Percival Carter Associate Professor of Marketing Maine Business School, University of Maine\nEmail · erin.p.carter@maine.edu Office · 5723 Donald P. Corbett Business Building, Orono, ME Phone · (207) 481-4944"
+  },
+  {
+    "objectID": "contact.html#get-in-touch",
+    "href": "contact.html#get-in-touch",
+    "title": "Contact",
+    "section": "",
+    "text": "Erin Percival Carter Associate Professor of Marketing Maine Business School, University of Maine\nEmail · erin.p.carter@maine.edu Office · 5723 Donald P. Corbett Business Building, Orono, ME Phone · (207) 481-4944"
+  },
+  {
+    "objectID": "contact.html#for-students",
+    "href": "contact.html#for-students",
+    "title": "Contact",
+    "section": "For Students",
+    "text": "For Students\nCurrent students: reach out via email or Brightspace. Office hours are posted each semester and announced in class.\nI’m always happy to talk about research opportunities, career questions, or course material you’re wrestling with."
+  },
+  {
+    "objectID": "contact.html#for-collaboration",
+    "href": "contact.html#for-collaboration",
+    "title": "Contact",
+    "section": "For Collaboration",
+    "text": "For Collaboration\nI occasionally take on consulting projects focused on behavioral research to inform marketing strategy and brand development. I’m most interested in projects that:\n\nHave potential for academic publication\nFocus on sustainable agriculture, food systems, or Maine-based organizations\nInvolve interesting behavioral questions\n\nIf your project isn’t a fit for me, I’m glad to refer you to someone who might be better suited."
+  },
+  {
+    "objectID": "contact.html#media-speaking",
+    "href": "contact.html#media-speaking",
+    "title": "Contact",
+    "section": "Media & Speaking",
+    "text": "Media & Speaking\nFor media inquiries or speaking requests, email me with details about your project or event. I’m particularly happy to discuss consumer psychology, sustainable agriculture, or the intersection of the two."
+  },
+  {
+    "objectID": "index.html#how-i-work",
+    "href": "index.html#how-i-work",
+    "title": "Erin Percival Carter",
+    "section": "How I Work",
+    "text": "How I Work\n\n\n\n◈\n\n\nResearch\nUsing behavioral experiments to understand how consumers think about meaning, morality, authenticity, and sustainability.\n\n\n\n\n◇\n\n\nTeaching\nConsumer behavior, sales, marketing analytics. Building courses on the psychology of time and moral decision-making.\n\n\n\n\n▽\n\n\nPractice\nThrough BARD, connecting small-scale agricultural producers with the business insights they need to thrive."
+  },
+  {
+    "objectID": "index.html#navigating-risk-in-food-systems",
+    "href": "index.html#navigating-risk-in-food-systems",
+    "title": "Erin Percival Carter",
+    "section": "Navigating Risk in Food Systems",
+    "text": "Navigating Risk in Food Systems\nI’m currently investigating how Maine can communicate about PFAS contamination in ways that inform consumers without unfairly damaging perceptions of all Maine-grown food. This work sits at the intersection of risk perception, regional branding, and the psychology of trust.\nI’m also developing new courses on the psychology of time management and moral judgment in business—topics I wish someone had taught me earlier in my career.\nExplore my research →"
   },
   {
     "objectID": "cv.html",
@@ -273,193 +371,102 @@
     "text": "Professional Experience\nCo-Founder & Director · BARD Institute Orono, ME · Present\nDirector and Principal Behavioral Science Consultant · ELPC, LLC Orono, ME · Present\nDigital and Interactive Marketing Coordinator · University of Wyoming Laramie, WY · 2011-2012\nMarketing Manager · The Blue Sky Group Inc. Laramie, WY · 2010-2011"
   },
   {
-    "objectID": "index.html#how-i-work",
-    "href": "index.html#how-i-work",
-    "title": "Erin Percival Carter",
-    "section": "How I Work",
-    "text": "How I Work\n\n\n\n◈\n\n\nResearch\nUsing behavioral experiments to understand how consumers think about meaning, morality, authenticity, and sustainability.\n\n\n\n\n◇\n\n\nTeaching\nConsumer behavior, sales, marketing analytics. Building courses on the psychology of time and moral decision-making.\n\n\n\n\n▽\n\n\nPractice\nThrough BARD, connecting small-scale agricultural producers with the business insights they need to thrive."
-  },
-  {
-    "objectID": "index.html#navigating-risk-in-food-systems",
-    "href": "index.html#navigating-risk-in-food-systems",
-    "title": "Erin Percival Carter",
-    "section": "Navigating Risk in Food Systems",
-    "text": "Navigating Risk in Food Systems\nI’m currently investigating how Maine can communicate about PFAS contamination in ways that inform consumers without unfairly damaging perceptions of all Maine-grown food. This work sits at the intersection of risk perception, regional branding, and the psychology of trust.\nI’m also developing new courses on the psychology of time management and moral judgment in business—topics I wish someone had taught me earlier in my career.\nExplore my research →"
-  },
-  {
-    "objectID": "contact.html",
-    "href": "contact.html",
-    "title": "Contact",
+    "objectID": "bard.html",
+    "href": "bard.html",
+    "title": "BARD Institute",
     "section": "",
-    "text": "Erin Percival Carter Associate Professor of Marketing Maine Business School, University of Maine\nEmail · erin.p.carter@maine.edu Office · 5723 Donald P. Corbett Business Building, Orono, ME Phone · (207) 481-4944"
+    "text": "The BARD Institute is an independent organization I co-founded and co-direct. We work to strengthen sustainable agriculture by bringing contemporary business thinking and research to small-scale producers.\nThis work was inspired by Dr. Ayana Elizabeth Johnson’s Climate Venn Diagram—finding the intersection of what you’re good at, what the world needs, and what brings you joy. For me, that intersection sits squarely at the junction of behavioral science, business strategy, and sustainable food systems."
   },
   {
-    "objectID": "contact.html#get-in-touch",
-    "href": "contact.html#get-in-touch",
-    "title": "Contact",
+    "objectID": "bard.html#what-we-do",
+    "href": "bard.html#what-we-do",
+    "title": "BARD Institute",
+    "section": "What We Do",
+    "text": "What We Do\n\nBusiness Advising\nTailored guidance for small-scale agricultural producers navigating markets, pricing, branding, and growth—grounded in research on how consumers actually perceive and value local and artisan products.\n\n\nResearch & Analytics\nUnderstanding consumer perceptions and market opportunities through rigorous research methods. Our work helps producers make evidence-based decisions rather than relying on intuition alone.\n\n\nStudent Engagement\nDeep-dive courses and research assistantships that give business students hands-on experience in sustainable agriculture—filling a critical gap in both business education and agricultural service provision."
+  },
+  {
+    "objectID": "bard.html#partners",
+    "href": "bard.html#partners",
+    "title": "BARD Institute",
+    "section": "Partners",
+    "text": "Partners\nWe’ve been fortunate to work with organizations committed to Maine’s agricultural future:\n\nMaine Farmland Trust\nMaine Cheese Guild\nMaine Fibershed\nMaine Fiber Frolic"
+  },
+  {
+    "objectID": "bard.html#learn-more",
+    "href": "bard.html#learn-more",
+    "title": "BARD Institute",
+    "section": "Learn More",
+    "text": "Learn More\nVisit bardinstitute.com for current projects and ways to get involved.\nInterested in partnering with BARD or having us work with your organization? Get in touch."
+  },
+  {
+    "objectID": "teaching/moral-judgment/index.html",
+    "href": "teaching/moral-judgment/index.html",
+    "title": "Moral Judgment & Decision Making in the Marketplace",
     "section": "",
-    "text": "Erin Percival Carter Associate Professor of Marketing Maine Business School, University of Maine\nEmail · erin.p.carter@maine.edu Office · 5723 Donald P. Corbett Business Building, Orono, ME Phone · (207) 481-4944"
+    "text": "WarningComing Spring 2026\n\n\n\nThis course is currently under development.\nThis course explores how consumers, managers, and organizations navigate ethical decisions in commercial contexts. We examine frameworks for moral reasoning and apply them to contemporary business challenges."
   },
   {
-    "objectID": "contact.html#for-students",
-    "href": "contact.html#for-students",
-    "title": "Contact",
-    "section": "For Students",
-    "text": "For Students\nCurrent students: reach out via email or Brightspace. Office hours are posted each semester and announced in class.\nI’m always happy to talk about research opportunities, career questions, or course material you’re wrestling with."
-  },
-  {
-    "objectID": "contact.html#for-collaboration",
-    "href": "contact.html#for-collaboration",
-    "title": "Contact",
-    "section": "For Collaboration",
-    "text": "For Collaboration\nI occasionally take on consulting projects focused on behavioral research to inform marketing strategy and brand development. I’m most interested in projects that:\n\nHave potential for academic publication\nFocus on sustainable agriculture, food systems, or Maine-based organizations\nInvolve interesting behavioral questions\n\nIf your project isn’t a fit for me, I’m glad to refer you to someone who might be better suited."
-  },
-  {
-    "objectID": "contact.html#media-speaking",
-    "href": "contact.html#media-speaking",
-    "title": "Contact",
-    "section": "Media & Speaking",
-    "text": "Media & Speaking\nFor media inquiries or speaking requests, email me with details about your project or event. I’m particularly happy to discuss consumer psychology, sustainable agriculture, or the intersection of the two."
-  },
-  {
-    "objectID": "research.html",
-    "href": "research.html",
-    "title": "Research",
-    "section": "",
-    "text": "My research uses behavioral economics and social psychology to understand how people make judgments and decisions as consumers, employees, and citizens. I’m drawn to questions where understanding the psychology can lead to better outcomes—for individuals, for organizations, and for society.\nFor a complete list of publications and working papers, see my CV."
-  },
-  {
-    "objectID": "research.html#well-being",
-    "href": "research.html#well-being",
-    "title": "Research",
-    "section": "Meaning, Pleasure, and Well-Being",
-    "text": "Meaning, Pleasure, and Well-Being\nThe pursuit of happiness drives many consumption decisions. But what do people actually mean when they say they want to be happy?\nWith Lawrence Williams, I study the distinction between happiness as pleasure (hedonic well-being) and happiness as meaning (eudaimonic well-being). We find that consumers approach these differently: compared to pursuing pleasure, pursuing meaning involves expectations of lasting benefits—and requires greater minimum time investments to derive those benefits.\nThis has implications for how we design experiences, how we market them, and how consumers allocate their most precious resource: time.\n\n\n\n\n\n\nNoteSelected Publications\n\n\n\n\n\nConsumers’ Minimum Time Investments in Meaningful Consumption Percival Carter, Williams, & Light • Marketing Letters, 2023 Read →"
-  },
-  {
-    "objectID": "research.html#fairness",
-    "href": "research.html#fairness",
-    "title": "Research",
-    "section": "Fairness, Harm, and Moral Judgment",
-    "text": "Fairness, Harm, and Moral Judgment\nWhen is a price unfair? When does a company cross an ethical line? These aren’t just philosophical questions—they drive consumer behavior, shape reputations, and determine market outcomes.\nMy work in this area approaches price fairness as fundamentally a moral judgment, shaped by perceptions of harm to consumers. I’ve also examined how pregnancy is perceived in academic institutions, how harassment and discrimination policies fail, and how consumers make demands of entrepreneurs based on gender.\n\n\n\n\n\n\nNoteSelected Publications\n\n\n\n\n\nPainful Prices: A Moral Harm Approach to Price Fairness Campbell, Pomerance, & Percival Carter • Journal of Consumer Research, 2025\nReframing and Restructuring Organizational Strategies for Addressing Workplace Harassment and Discrimination Percival Carter & Obenauer • Group & Organization Management, 2025\nPower and the Perception of Pregnancy in the Academy Percival Carter • Gender, Work & Organization, 2023 Read →"
-  },
-  {
-    "objectID": "research.html#sustainability",
-    "href": "research.html#sustainability",
-    "title": "Research",
-    "section": "Sustainability and Food Systems",
-    "text": "Sustainability and Food Systems\nHow do consumers think about local, sustainable, and artisan food? And how can small-scale producers compete in markets dominated by industrial agriculture?\nThis research stream connects my academic interests to work I care about deeply. With partners including Maine Farmland Trust, the Maine Cheese Guild, and Maine Fibershed, I study how consumers perceive small-scale producers’ products differently from conventional alternatives—and how producers can design experiences that cultivate genuine connection with their customers.\nCurrent work examines how Maine can communicate about PFAS contamination in ways that inform consumers without unfairly damaging perceptions of all Maine food.\n\n\n\n\n\n\nNoteSelected Publications\n\n\n\n\n\nDesigning and Distinguishing Meaningful Artisan Food Experiences Percival Carter & Welcomer • Sustainability, 2021 Read →"
-  },
-  {
-    "objectID": "research.html#authenticity",
-    "href": "research.html#authenticity",
-    "title": "Research",
-    "section": "Authenticity and Imperfection",
-    "text": "Authenticity and Imperfection\nCan a product be too perfect?\nWith Pete McGraw, I study how flaws can actually increase product evaluations. The key insight: when consumers care about production processes that are difficult to verify (organic farming, handmade crafts), visible imperfections serve as credible signals. A blemished apple might be more appealing than a perfect one—because the blemish reduces uncertainty about how it was grown.\nThis work has implications for artisan producers, sustainable agriculture, and anyone competing on authenticity rather than polish.\n\n\n\n\n\n\nNoteWorking Paper\n\n\n\n\n\nIn Pursuit of Imperfection: Flawed Products Reduce Process Uncertainty Percival Carter & McGraw • Preparing for submission\nAs discussed on the Here We Are podcast and demonstrated memorably by Ron Swanson."
-  },
-  {
-    "objectID": "research.html#hype",
-    "href": "research.html#hype",
-    "title": "Research",
-    "section": "Hype and Its Discontents",
-    "text": "Hype and Its Discontents\nChampionships. Series finales. Award shows. Millions of people tune in to hyped events even when they have no intrinsic interest in boxing, period dramas, or filmmaking.\nWith Lawrence Williams and Pete McGraw, I studied how “believing the hype” affects consumer well-being. Using data from nearly 7,000 people across 16 hyped television events, we found that giving in to hype is largely detrimental—with one exception: it can improve social well-being by helping solitary viewers feel connected through shared cultural experiences.\n\n\n\n\n\n\nNoteWorking Paper\n\n\n\n\n\nHow Hype Helps and Hinders Well-Being Percival Carter, Williams, & McGraw • Under revision"
-  },
-  {
-    "objectID": "research.html#humor",
-    "href": "research.html#humor",
-    "title": "Research",
-    "section": "Humor",
-    "text": "Humor\nIn a previous life, I managed the Humor Research Lab at the University of Colorado Boulder. That work examined when humor helps and hurts brand attitudes—finding that the key isn’t whether an ad is funny, but whether it triggers negative emotional reactions independent of humor.\n\n\n\n\n\n\nNoteSelected Publications\n\n\n\n\n\nBeing Funny is Not Enough: Negative Feelings Predict When Humor is Persuasive Warren, Percival Carter, & McGraw • International Journal of Advertising, 2019"
-  },
-  {
-    "objectID": "teaching/index.html",
-    "href": "teaching/index.html",
-    "title": "Teaching",
-    "section": "",
-    "text": "I teach courses that help students understand how consumers think, how to build relationships that drive sales, and how to use data to make better marketing decisions. I also develop professional skills courses on topics I wish someone had taught me earlier."
-  },
-  {
-    "objectID": "teaching/index.html#core-courses",
-    "href": "teaching/index.html#core-courses",
-    "title": "Teaching",
-    "section": "Core Courses",
-    "text": "Core Courses\n\nConsumer Behavior\nMKT 382 · Undergraduate\nWhy do people buy what they buy? This course examines the psychological, social, and cultural factors that shape consumer decisions—from perception and attention to attitudes, emotions, and social influence. Students learn to apply these insights to marketing strategy.\nOffered in-person and asynchronously online.\nCourse Materials →\n\n\nSales Management & Personal Selling\nMKT 374 · Undergraduate\nSales is fundamentally about understanding people and building relationships. This course develops both the interpersonal skills of effective selling and the strategic thinking required to manage sales teams and processes.\nOffered in-person and asynchronously online.\nCourse Materials →\n\n\nMarketing Research & Analytics\nMKT 378 · Undergraduate\nHands-on training in research design, data collection, and analysis using R. Students work with real data and learn to translate quantitative findings into actionable marketing insights. Includes custom-built interactive tools for exploring statistical concepts.\nCourse Materials →"
-  },
-  {
-    "objectID": "teaching/index.html#professional-skills-courses",
-    "href": "teaching/index.html#professional-skills-courses",
-    "title": "Teaching",
-    "section": "Professional Skills Courses",
-    "text": "Professional Skills Courses\nOne-credit courses focused on building specific capabilities. Both are offered asynchronously online.\n\nTime Management: The Psychology of Getting Things Done\n1 Credit · Professional Skills\nBeyond productivity hacks: this course examines the psychological foundations of time management—attention, motivation, habit formation, and sustainable productivity. Students learn why certain strategies work and when to apply them.\nCourse Materials →\n\n\nMoral Judgment & Decision Making in the Marketplace\n1 Credit · Professional Skills · Coming Spring 2026\nHow do consumers, managers, and organizations navigate ethical decisions? This course examines frameworks for moral reasoning and applies them to contemporary business challenges—from pricing fairness to data ethics to sustainability.\nCourse Materials →"
-  },
-  {
-    "objectID": "teaching/index.html#special-topics",
-    "href": "teaching/index.html#special-topics",
-    "title": "Teaching",
-    "section": "Special Topics",
-    "text": "Special Topics\nI’ve also developed experiential courses connecting business students with sustainable agriculture in Maine, in partnership with the BARD Institute and organizations including Maine Farmland Trust, the Maine Cheese Guild, and Maine Fibershed. These courses—funded in part by a congressional earmark—give students hands-on experience applying business skills in contexts they rarely encounter in traditional coursework."
-  },
-  {
-    "objectID": "teaching/time-management/index.html",
-    "href": "teaching/time-management/index.html",
-    "title": "Time Management: The Psychology of Getting Things Done",
-    "section": "",
-    "text": "This course examines the psychological foundations of time management, moving beyond simple productivity hacks to understand why certain strategies work and when they’re most effective."
-  },
-  {
-    "objectID": "teaching/time-management/index.html#course-format",
-    "href": "teaching/time-management/index.html#course-format",
-    "title": "Time Management: The Psychology of Getting Things Done",
+    "objectID": "teaching/moral-judgment/index.html#course-format",
+    "href": "teaching/moral-judgment/index.html#course-format",
+    "title": "Moral Judgment & Decision Making in the Marketplace",
     "section": "Course Format",
-    "text": "Course Format\nAsynchronous online. All materials are designed to be accessible and self-paced."
+    "text": "Course Format\nAsynchronous online. All materials will be designed to be accessible and self-paced."
   },
   {
-    "objectID": "teaching/time-management/index.html#modules",
-    "href": "teaching/time-management/index.html#modules",
-    "title": "Time Management: The Psychology of Getting Things Done",
-    "section": "Modules",
-    "text": "Modules\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nCourse modules and materials are under development for the current semester."
+    "objectID": "teaching/moral-judgment/index.html#topics",
+    "href": "teaching/moral-judgment/index.html#topics",
+    "title": "Moral Judgment & Decision Making in the Marketplace",
+    "section": "Topics",
+    "text": "Topics\nPlanned topics include:\n\nFoundations of moral psychology\nConsumer responses to corporate ethics and CSR\nPricing and fairness\nPrivacy and data ethics\nEnvironmental and sustainability ethics\nWhistleblowing and organizational moral courage"
   },
   {
-    "objectID": "teaching/time-management/index.html#readings",
-    "href": "teaching/time-management/index.html#readings",
-    "title": "Time Management: The Psychology of Getting Things Done",
+    "objectID": "teaching/moral-judgment/index.html#contact",
+    "href": "teaching/moral-judgment/index.html#contact",
+    "title": "Moral Judgment & Decision Making in the Marketplace",
+    "section": "Contact",
+    "text": "Contact\nInterested in this course? Get in touch with questions."
+  },
+  {
+    "objectID": "teaching/sales-management/index.html",
+    "href": "teaching/sales-management/index.html",
+    "title": "Sales Management & Personal Selling",
+    "section": "",
+    "text": "This course develops skills in personal selling, sales force management, and relationship building. You’ll learn both the interpersonal dynamics of effective selling and the strategic considerations of managing a sales organization."
+  },
+  {
+    "objectID": "teaching/sales-management/index.html#course-format",
+    "href": "teaching/sales-management/index.html#course-format",
+    "title": "Sales Management & Personal Selling",
+    "section": "Course Format",
+    "text": "Course Format\nThis course alternates between in-person and asynchronous online formats depending on the semester."
+  },
+  {
+    "objectID": "teaching/sales-management/index.html#lecture-videos",
+    "href": "teaching/sales-management/index.html#lecture-videos",
+    "title": "Sales Management & Personal Selling",
+    "section": "Lecture Videos",
+    "text": "Lecture Videos\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nLecture video links will be added here."
+  },
+  {
+    "objectID": "teaching/sales-management/index.html#readings",
+    "href": "teaching/sales-management/index.html#readings",
+    "title": "Sales Management & Personal Selling",
     "section": "Readings",
-    "text": "Readings\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nReadings will be added as the course develops."
+    "text": "Readings\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nCourse readings will be added here."
   },
   {
-    "objectID": "teaching/time-management/index.html#assignments",
-    "href": "teaching/time-management/index.html#assignments",
-    "title": "Time Management: The Psychology of Getting Things Done",
+    "objectID": "teaching/sales-management/index.html#assignments",
+    "href": "teaching/sales-management/index.html#assignments",
+    "title": "Sales Management & Personal Selling",
     "section": "Assignments",
     "text": "Assignments\n\n\n\n\n\n\nNoteComing Soon\n\n\n\nAssignment materials will be added here."
   },
   {
-    "objectID": "teaching/marketing-research/index.html",
-    "href": "teaching/marketing-research/index.html",
-    "title": "Marketing Research & Analytics",
+    "objectID": "teaching/marketing-research/shinyapps/BagelRunPredictor.html",
+    "href": "teaching/marketing-research/shinyapps/BagelRunPredictor.html",
+    "title": "Bagel Run Predictor App",
     "section": "",
-    "text": "This course provides hands-on training in research design, data collection, and analysis using R. You’ll learn to translate quantitative findings into actionable marketing insights—and build skills that transfer to any data-driven role."
-  },
-  {
-    "objectID": "teaching/marketing-research/index.html#interactive-tools",
-    "href": "teaching/marketing-research/index.html#interactive-tools",
-    "title": "Marketing Research & Analytics",
-    "section": "Interactive Tools",
-    "text": "Interactive Tools\nThese Shiny applications help you explore statistical concepts visually. Play with them to build intuition before diving into the math.\n\n\n\n\n\n\nComing Soon · Links to Shiny apps will be added as they’re migrated to the new site."
-  },
-  {
-    "objectID": "teaching/marketing-research/index.html#coding-assignments",
-    "href": "teaching/marketing-research/index.html#coding-assignments",
-    "title": "Marketing Research & Analytics",
-    "section": "Coding Assignments",
-    "text": "Coding Assignments\nThese assignments build your R skills progressively. Each is designed to be accessible—you don’t need prior programming experience.\n\nGetting Started\n\nWeek 1: File Management Practice — Install R/RStudio, set up your folders, learn relative paths\nWeek 2: Stout Exercise — Practice loading data, intro to model comparison\n\n\n\n\n\n\n\nMore coming · Additional assignments will be added throughout the semester."
-  },
-  {
-    "objectID": "teaching/marketing-research/index.html#resources",
-    "href": "teaching/marketing-research/index.html#resources",
-    "title": "Marketing Research & Analytics",
-    "section": "Resources",
-    "text": "Resources\n\nSetup\nBefore the first assignment, you’ll need:\n\nR — Download from CRAN\nRStudio — Download from Posit\n\nI’ll walk through installation in class, but these links have everything you need.\n\n\nReferences\n\nR for Data Science — Free online textbook; excellent for beginners\nQuarto Documentation — For when you’re ready to create your own reports\nggplot2 Cheat Sheet — Keep this handy\n\n\n\nGetting Help\nStuck on an assignment? In order:\n\nRe-read the error message carefully\nGoogle the error message (seriously—this is what professionals do)\nCheck the course discussion board\nCome to office hours"
+    "text": "TipAlternative Access\n\n\n\nIf the embedded app below doesn’t display correctly in your browser, you can open it directly in a new tab."
   },
   {
     "objectID": "teaching/marketing-research/assignments/hw1-file-management.html",
