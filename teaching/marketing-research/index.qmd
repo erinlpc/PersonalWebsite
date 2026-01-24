@@ -37,6 +37,8 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 1. [Week 1: File Management Practice](assignments/hw1-file-management.qmd) — Install R/RStudio, set up your folders, learn relative paths
 
+2. [Week 2: Stout Exercise](assignments/stout_exercise.qmd) — Practice loading data, intro to model comparison
+
 ::: {.callout-note appearance="minimal"}
 **More coming** · Additional assignments will be added throughout the semester.
 :::

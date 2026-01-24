@@ -1,0 +1,315 @@
+---
+title: "MKT 378 — Stout Pricing Example"
+format: html
+editor: visual
+---
+
+::: callout-tip
+## Download Option
+
+If you prefer to work directly in RStudio, you can [download the R script version of this exercise](Stout_Data_Exercise_FINAL.R).
+:::
+
+## Overview
+
+**Goals for this exercise:**
+
+1.  Load the stout_research.csv dataset (it's in the folder for this week on Brightspace)
+2.  Build three different models of willingness to pay
+3.  Calculate errors (DATA - MODEL)
+4.  Visualize how model predictions compare to the actual data
+
+Remember: **DATA = MODEL + ERROR**
+
+That means **ERROR = DATA - MODEL**
+
+## Part 1 — Load the Dataset
+
+First, let's load our dataset directly from the .csv file. Make sure "stout_research.csv" is saved in your working directory. If you're building from assignment 1 and working from your project file, this is likely in the class folder you established last time and you may or may not need to specify the Datasets subfolder.
+
+Tip: use `getwd()` to check your current working directory and `setwd()` if you need to change where R is looking.
+
+```{r}
+stout_data <- read.csv("Datasets/stout_research.csv")
+```
+
+Let's take a quick peek at the dataset (this function shows us just the top rows of a dataset):
+
+```{r}
+head(stout_data)
+```
+
+## Part 2 — Look at the Structure of the Data
+
+We should see 4 columns:
+
+-   **ID** — an ID number for each participant
+-   **LikesStout** — Yes/No
+-   **LocalImportant** — Yes/No
+-   **WTP** — willingness to pay in dollars
+
+```{r}
+str(stout_data)
+```
+
+You can probably kind of tell what that function did, namely, produce a little summary of what each variable in the dataset is doing, but a nice tip in RStudio is that you always type "?" followed immediately by the function that you're trying to run or better understand and it will pull up the documentation explaining what that particular command in R is doing in the bottom right of RStudio. Let's give it a quick shot:
+
+```{r}
+?str
+```
+
+As you read that documentation, you'll notice it says that `str` is a common alternative to `summary`. Maybe we should give that a try, too.
+
+```{r}
+summary(stout_data)
+```
+
+But wait, there's more. What if I want to ask R to summarize not the entire stout dataset, but just teh willingness to pay data? Well, that's going to look something like this:
+
+```{r}
+summary(stout_data$WTP)
+```
+
+What we're doing in that command is once again orienting R with exactly where we want it to look. The statement says "Hey, R, go ahead and do `summary` on this thing that exists in the dataset I have loaded named `stout_data`. Once you get in `stout_data`, you're going to want to look for the variable named `WTP`. Use that and only that."
+
+So same info as before, but a way to be more specific in asking R to focus on what I specifically want more information about as opposed to just summarizing everything.
+
+## Part 3 — Model 0: The Brewmaster's Intuition
+
+Our brewmaster says: "Price it at \$7 per pint." That's a model! It predicts 7 for everyone.
+
+So here's one way we can examine that prediction: we add a new column to the dataset literally predicting "7" for every single respondent. We'll call that new column/variable `Model_Brewmaster`:
+
+```{r}
+stout_data$Model_Brewmaster <- 7
+```
+
+Let's check to make sure that worked the way we expected...
+
+```{r}
+head(stout_data)
+```
+
+Now let's calculate **ERROR = DATA - MODEL**
+
+Remember, the data in this case are the WTP data from our dataset, the model we're examining is the Brewmaster's suggested price of \$7. In this case, we can just ask R to calculate the difference between each person's reported amount in our dataset and that guess of 7. We'll call that value in our dataset `Error_Brewmaster`:
+
+```{r}
+stout_data$Error_Brewmaster <- stout_data$WTP - stout_data$Model_Brewmaster
+```
+
+What this line of code is saying to R is: "R, I want you to go to that dataset I have loaded called `stout_data` and when you get there, create a NEW variable that you're going to call `Error_Brewmaster`. The way that you will create `Error_Brewmaster` will be to subtract the value associated with the existing variable `Model_Brewmaster` from the value associated with the existing variable `WTP` for each observation in the dataset."
+
+...And because I'm compulsive, I'm going to check again to make sure it did exactly that:
+
+```{r}
+head(stout_data)
+```
+
+## Part 4 — Model 1: The Sample Mean
+
+Next, we try a data-based model: predict the average WTP for everyone.
+
+Here we're going to create a value in R that is called `mean_wtp`. We could call it `FantasticBananas` and it wouldn't make a difference, R doesn't care what we name things. R does care that we specify how to calculate or define that value, though, which is everything that is happening to the right of the `<-`
+
+On that side, we're saying "R, that thing we asked you to create, here's how you create it: run the function `mean` on the variable `WTP` that you will find in the dataset we have loaded titled `stout_data`"
+
+```{r}
+mean_wtp <- mean(stout_data$WTP)
+mean_wtp   # this should come out to 7.425
+```
+
+Add predictions and errors:
+
+```{r}
+stout_data$Model_Mean <- mean_wtp
+stout_data$Error_Mean <- stout_data$WTP - stout_data$Model_Mean
+```
+
+```{r}
+head(stout_data)
+```
+
+## Part 5 — Model 2: Split by Stout Preference
+
+Now let's allow our model to use one variable: whether someone likes stout. We'll calculate the average WTP separately for "Yes" and "No."
+
+```{r}
+mean_yes <- mean(stout_data$WTP[stout_data$LikesStout == "Yes"])
+mean_no  <- mean(stout_data$WTP[stout_data$LikesStout == "No"])
+```
+
+OK, and now let's check to see what they were:
+
+```{r}
+mean_yes  # should be ~8.46
+mean_no   # should be ~5.88
+```
+
+Add predictions to the dataset with this line of code:
+
+```{r}
+stout_data$Model_Like_Stout <- ifelse(stout_data$LikesStout == "Yes", mean_yes, mean_no)
+```
+
+The line above is slightly more complex than the other variables we've created but if you break it down piece by piece, you'll note that it all makes sense/isn't that complicated. We're telling R to create another new variable in the existing dataset (`stout_data`) and to call that new variable `Model_Like_Stout`. We then have to tell R how to fill in that column and this time, there are two different options. The statement we make there is saying IF the response on that row to the existing `LikesStout` item is "Yes", then R should put the value we calculate for the mean of the yes respondents for that new variable. In all other cases, we're telling R to go ahead and enter the mean of the no respondents for that new variable.
+
+And calculate the errors again:
+
+```{r}
+stout_data$Error_Like_Stout <- stout_data$WTP - stout_data$Model_Like_Stout
+```
+
+```{r}
+head(stout_data)
+```
+
+## Part 6 — Compare Models Visually
+
+For thsi section, here in just a second I am going to ask you to run some code as a block all at once and not worry too much about exactly what's happening — the point for now is to create the figure to look at what's going on with the performance of our models (as captured by the differences in ERROR) and not so much to try to learn the ins and outs of the ggplot code creating the figure (plenty of time for that later).
+
+That said, our goals for this plot:
+
+1.  Show *actual* WTP for each customer (points).
+2.  Show each model's *prediction* for each customer.
+3.  Make it crystal clear that Brewmaster and Sample Mean are static estimates (we make the same prediction for everyone), whereas the Likes Stout model *changes* by respondent (we have two possible estimates to choose from for any given observation).
+
+### Installing and Loading Packages
+
+In order to create this figure, you're going to need to use a couple of commands that don't come with stock R...but don't worry, it's not a DLC situation where each additional command is going to cost you \$20, it's just a DLC in the sense that you will need to download (or install) a couple of packages in R so that it knows what you mean when you use these new commands.
+
+So the first time you run this, if you haven't installed these packages previously, you will need to run the following install code:
+
+```{r}
+##### AFTER YOU RUN THE FOLLOWING THREE LINES ONE TIME, COMMENT THEM OUT BY ADDING
+##### A "#" IN FRONT OF EACH OF THE THREE LINES BELOW. YOU DON'T NEED TO INSTALL THE
+##### PACKAGES AGAIN
+#
+##### TO COMMENT OUT A LINE, JUST PUT A "#" AT THE VERY START OF THE LINE.
+##### FOR EXAMPLE, THE LINE BELOW IS COMMENTED OUT:
+##### # install.packages("ggplot2")
+
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("tidyr")
+```
+
+OK, but then once the packages are installed you will need to make sure that they're loaded up and ready to go from the things in your library, so ALWAYS run the following three:
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+```
+
+### Creating the Visualization
+
+Now for the rest of this section, you can just go ahead and highlight the whole chunk of code and run it.
+
+To be frank, I had to have chatgpt help me troubleshoot and write the very first section with the ID vars to get the figure to look the way I want it to look. Visualizations are important but coding them is, frankly, not my strong point and sometimes I need help.
+
+```{r}
+# Create a numeric x position for each row and keep the ID labels for display
+stout_data <- stout_data |>
+  arrange(ID) |>
+  mutate(x_i = row_number())
+
+# Gather predictions to long format for faceting
+viz_long <- stout_data |>
+  select(ID, x_i, WTP, LikesStout, Model_Brewmaster, Model_Mean, Model_Like_Stout) |>
+  pivot_longer(
+    cols = c(Model_Brewmaster, Model_Mean, Model_Like_Stout),
+    names_to = "Model",
+    values_to = "Pred"
+  ) |>
+  mutate(
+    Model = factor(
+      Model,
+      levels = c("Model_Brewmaster", "Model_Mean", "Model_Like_Stout"),
+      labels = c("Brewmaster ($7 flat)", 
+                 "Sample Mean (~$7.43 flat)", 
+                 "Likes Stout (two-level)")
+    )
+  )
+
+
+# Create figure visualizing the residuals (ERROR = DATA – MODEL)
+ggplot(viz_long, aes(x = x_i)) + 
+  # thin vertical line shows leftover (residual): from prediction up to actual
+  geom_segment(aes(y = Pred, yend = WTP, xend = x_i),
+               linewidth = 0.6, alpha = 0.7, color = "red") +
+  # prediction planks
+  geom_segment(aes(y = Pred, yend = Pred,
+                   x = x_i - 0.3, xend = x_i + 0.3),
+               linewidth = 2, color = "blue") +
+  # actual dots
+  geom_point(aes(y = WTP), size = 2, color = "black") +
+  facet_wrap(~ Model, ncol = 1, scales = "fixed") +
+  scale_x_continuous(breaks = stout_data$x_i, labels = stout_data$ID) +
+  labs(title = "ERROR = DATA – MODEL (visualizing the ERROR or the residuals)",
+       subtitle = "Red lines = ERROR • Blue bars = MODEL predictions • Dots = DATA on actual WTP",
+       x = "Respondent ID",
+       y = "WTP ($)") +
+  theme_minimal(base_size = 12)
+```
+
+## Part 7 — Review
+
+What did we see?
+
+-   **Model 0 (Brewmaster's \$7):** simple, but lots of leftover error.
+-   **Model 1 (Sample Mean):** closer, error shrinks.
+-   **Model 2 (Likes Stout):** explains much more, error shrinks further.
+
+This is **DATA = MODEL + ERROR** (and conversely **ERROR = DATA - MODEL**) in action.
+
+## Part 8 — Proportional Reduction in Error (PRE)
+
+**PRE = (Error_baseline - Error_new) / Error_baseline**
+
+We'll use SSE (sum of squared errors) as our measure of error size here. Note there are alternative ways to measure/conceptualize error but we're going to just square it for now (we're squaring it to ensure all positive numbers so that we know the extent to which our predictions "missed" when we sum the "misses" for each observation).
+
+The code below will calculate SSE for each model:
+
+```{r}
+SSE_brewmaster <- sum((stout_data$WTP - stout_data$Model_Brewmaster)^2)
+SSE_mean       <- sum((stout_data$WTP - stout_data$Model_Mean)^2)
+SSE_likes_stout      <- sum((stout_data$WTP - stout_data$Model_Like_Stout)^2)
+```
+
+Let's take a look at those values now:
+
+```{r}
+SSE_brewmaster
+SSE_mean
+SSE_likes_stout
+```
+
+### Comparing Models with PRE
+
+OK, now we want to compare some of our models using the PRE formula.
+
+As you look at these results, I want you to think about what we're really doing in the stout model compared to the others in marketing terms... instead of just having the same strategy for understanding/predicting an entire market, we're coming up with different strategies for understanding and predicting different segments of the market...which is a lot like... **SEGMENTATION!** That's right! A very rudimentary version of it, but look how well it performs compared to the others...
+
+Let's give it a go:
+
+**PRE: Sample Mean vs. Brewmaster**
+
+```{r}
+PRE_mean_vs_brew <- (SSE_brewmaster - SSE_mean) / SSE_brewmaster
+PRE_mean_vs_brew   # proportion of error reduced
+```
+
+**PRE: Likes Stout vs. Sample Mean**
+
+```{r}
+PRE_likesstout_vs_mean <- (SSE_mean - SSE_likes_stout) / SSE_mean
+PRE_likesstout_vs_mean
+```
+
+**PRE: Likes Stout vs. Brewmaster (direct comparison)**
+
+```{r}
+PRE_likesstout_vs_brew <- (SSE_brewmaster - SSE_likes_stout) / SSE_brewmaster
+PRE_likesstout_vs_brew
+```
