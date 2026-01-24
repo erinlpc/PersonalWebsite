@@ -12,7 +12,7 @@ execute:
 If you prefer to work directly in RStudio, you can [download the R script version of this exercise](https://erinlpc.github.io/PersonalWebsite/files/Stout_Data_Exercise_FINAL.R).
 :::
 
-## Overview
+## Overview 
 
 **Goals for this exercise:**
 
