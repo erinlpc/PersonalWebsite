@@ -1,127 +1,133 @@
 ---
 title: "Erin Percival Carter"
-pagetitle: "Erin Percival Carter"
+pagetitle: "Behavioral Scientist"
 toc: false
 page-layout: custom
 css: home.css
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
-::: {.hero}
-::: {.hero-content}
-
-::: {.hero-text}
+:::::::: hero
+::::::: hero-content
+::::: hero-text
 # Erin Percival Carter
 
-::: {.tagline}
-Behavioral scientist studying how people make meaning in the marketplace—through what they buy, what they grow, and what they believe is right.
+::: tagline
+Behavioral scientist studying how people make meaning in the
+marketplace—through what they buy, what they make, and what they believe
+is right.
 :::
 
-::: {.hero-links}
+::: hero-links
 [Research](research.qmd){.hero-link}
-[Teaching](teaching/index.qmd){.hero-link}
-[CV](cv.qmd){.hero-link}
+[Teaching](teaching/index.qmd){.hero-link} [CV](cv.qmd){.hero-link}
 :::
-:::
+:::::
 
-::: {.hero-image-container}
+::: hero-image-container
 ![](images/headshot.jpg){.hero-image}
 :::
+:::::::
+::::::::
 
-:::
-:::
-
-::: {.section-break}
-:::
-
-::: {.intro-section}
-
-::: {.intro-content}
-
-I'm an Associate Professor of Marketing at the University of Maine, where I use experiments and data to understand consumer judgment and decision-making.
-
-My research focuses on questions at the intersection of **psychology** and **ethics**: How do people pursue meaning versus pleasure? When do prices feel unfair? Why might a *flawed* product be more appealing than a perfect one?
-
-I'm also a co-founder of the [BARD Institute](bard.qmd), working to bring rigorous business thinking to sustainable agriculture in Maine.
-
-:::
+::: section-break
 :::
 
-::: {.work-section}
+:::: intro-section
+::: intro-content
+I'm an Associate Professor of Marketing at the University of Maine,
+where I use experiments and data to understand consumer judgment and
+decision-making.
 
+My research focuses on questions at the intersection of **consumer behavior**
+and **moral judgment and decision making**: How do people pursue meaning versus pleasure? When do
+prices feel unfair? Why might a *flawed* product be more appealing than
+a perfect one?
+
+I'm also a co-founder of the [BARD Institute](bard.qmd), working to
+bring rigorous business thinking to sustainable agriculture in Maine.
+:::
+::::
+
+:::::::::: work-section
 ## How I Work
 
-::: {.work-grid}
-
-::: {.work-card}
-::: {.work-icon}
+::::::::: work-grid
+:::: work-card
+::: work-icon
 ◈
 :::
-### Research
-Using behavioral experiments to understand how consumers think about meaning, morality, authenticity, and sustainability.
-:::
 
-::: {.work-card}
-::: {.work-icon}
+### Research
+
+Using behavioral experiments to understand how consumers think about
+meaning, morality, authenticity, and sustainability.
+::::
+
+:::: work-card
+::: work-icon
 ◇
 :::
-### Teaching
-Consumer behavior, sales, marketing analytics. Building courses on the psychology of time and moral decision-making.
-:::
 
-::: {.work-card}
-::: {.work-icon}
+### Teaching
+
+I primarily teach consumer behavior, sales, marketing research. Building courses on the
+psychology of time and moral decision-making.
+::::
+
+:::: work-card
+::: work-icon
 ▽
 :::
+
 ### Practice
-Through BARD, connecting small-scale agricultural producers with the business insights they need to thrive.
-:::
 
-:::
-:::
+Through BARD, connecting small-scale agricultural producers with the
+business insights they need to thrive.
+::::
+:::::::::
+::::::::::
 
-
-::: {.current-section}
-
-::: {.current-content}
-
-::: {.current-label}
+::::: current-section
+:::: current-content
+::: current-label
 Current Focus
 :::
 
 ## Navigating Risk in Food Systems
 
-I'm currently investigating how Maine can communicate about PFAS contamination in ways that inform consumers without unfairly damaging perceptions of all Maine-grown food. This work sits at the intersection of risk perception, regional branding, and the psychology of trust.
+I'm currently investigating how Maine can communicate about PFAS
+contamination in ways that inform consumers without unfairly damaging
+perceptions of all Maine-grown food. This work sits at the intersection
+of risk perception, regional branding, and the psychology of trust.
 
-I'm also developing new courses on the **psychology of time management** and **moral judgment in business**—topics I wish someone had taught me earlier in my career.
+I'm also developing new courses on the **psychology of time management**
+and **moral judgment in business**—topics I wish someone had taught me
+earlier in my career.
 
 [Explore my research →](research.qmd){.text-link}
+::::
+:::::
 
+:::::: footer-section
+::::: footer-content
+::: footer-left
+**Erin Percival Carter** Associate Professor of Marketing Maine Business
+School University of Maine
+
+[Built with Quarto, stubbornness, and coffee.]{.home-colophon}
 :::
 
+::: footer-right
+[erin.p.carter\@maine.edu](mailto:erin.p.carter@maine.edu) [Maine
+Business School](https://umaine.edu/business/) [BARD
+Institute](https://bardinstitute.com/)
 :::
+:::::
+::::::
 
-
-::: {.footer-section}
-
-::: {.footer-content}
-
-::: {.footer-left}
-**Erin Percival Carter**
-Associate Professor of Marketing
-Maine Business School
-University of Maine
-
-<span class="home-colophon">Built with Quarto, stubbornness, and coffee.</span>
-:::
-
-::: {.footer-right}
-[erin.p.carter@maine.edu](mailto:erin.p.carter@maine.edu)
-[Maine Business School](https://umaine.edu/business/)
-[BARD Institute](https://bardinstitute.com/)
-:::
-
-:::
-
-:::
-
+```{=html}
 <script src="sheep.js"></script>
+```
