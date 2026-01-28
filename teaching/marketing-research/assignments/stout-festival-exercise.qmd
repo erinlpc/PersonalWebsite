@@ -1,0 +1,281 @@
+---
+title: "Stout Festival Exercise"
+subtitle: "Chapter 2 Homework: Calculating Error for WTP Data"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-overflow: wrap
+    self-contained: true
+execute:
+  warning: false
+  message: false
+---
+
+## Introduction
+
+We're going to continue working with our brewery client brief but there's been an exciting development - NEW DATA!
+
+Actually two new sets of data but we're going to focus on one for now. One of the brewery managers traveled to a beer festival and collected additional data there. That data is available in the class folder for this week for you to download. Your job is to make a first pass at analyzing the data to start to figure out what's going on here.
+
+::: {.callout-important}
+## Complete the Coffee Shop Exercise First
+I recommend you complete the readings, lecture, and associated coffee shop exercise before attempting to complete this exercise. I do a lot more walking you through the logic and providing every step of the code in the coffee shop exercise and I assume you need less of that by the time you start working on this one.
+:::
+
+---
+
+## Load the Data
+
+Load the dataset (make sure the .csv lives where R can see it).
+
+**Tip:** `getwd()` shows where R is looking. `setwd("path/…")` changes it.
+
+```{r}
+#| eval: false
+festival <- read.csv("Datasets/stout_festival.csv", stringsAsFactors = FALSE)
+
+# Quick peeks (these should *not* error)
+head(festival)
+str(festival)
+summary(festival$WTP)   # <- the star of the show for most of this exercise
+```
+
+---
+
+## Part 1: Calculate Measures of Central Tendency
+
+First, you need to calculate 2 measures of central tendency for WTP.
+
+### Calculate the median
+
+```{r}
+#| eval: false
+festival_median <- median(festival$WTP)
+```
+
+### Calculate the mean
+
+(You're going to have to do this one on your own. You can do it. Promise.)
+
+```{r}
+#| eval: false
+
+# YOUR CODE HERE
+
+```
+
+### Add b₀ predictions to the dataset
+
+Now add those values as b₀ predictions to the dataset. In other words, create new columns in the dataset for each model prediction that list that prediction for each observation in the dataset.
+
+#### Create b0_median variable in the festival dataset
+
+(You're going to have to do this one on your own. I believe in you.)
+
+```{r}
+#| eval: false
+
+# YOUR CODE HERE
+
+```
+
+#### Create b0_mean variable in teh festival dataset
+
+(I'm going to take a stab at this one but I can't know for sure because it will depend on what you did when you calculated the mean above. Trying my best but you will need to check and possibly troubleshoot my work)
+
+```{r}
+#| eval: false
+festival$b0_mean <- festival_mean
+```
+
+---
+
+## Part 2: Calculate Error Measures
+
+Second, you're going to calculate three different types of error:
+
+- Sum of Errors
+- Sum of Absolute Errors
+- Sum of Squared Error
+
+You'll need to calculate each type of error for b0_median and b0_mean.
+
+### Error calculations for Median
+
+I'll help you get started with median.
+
+#### Individual eᵢ (DATA - MODEL)
+
+We'll begin by calculating our individual eᵢ - the straight DATA-MODEL version:
+
+```{r}
+#| eval: false
+festival$ei_median <- festival$WTP - festival$b0_median
+```
+
+#### Sum of Errors
+
+Then you're going to need to calculate the Sum of Errors...pretty simple:
+
+```{r}
+#| eval: false
+SoE_median <- sum(festival$ei_median)
+SoE_median
+```
+
+#### Sum of Absolute Errors
+
+Now you're going to need to calculate the sum of absolute errors (you're on your own here):
+
+```{r}
+#| eval: false
+
+# YOUR CODE HERE
+
+```
+
+#### Sum of Squared Errors
+
+And finally, let's calculate the sum of squared error:
+
+```{r}
+#| eval: false
+SSE_median <- sum((festival$ei_median)^2)
+SSE_median
+```
+
+---
+
+### Error calculations for Mean
+
+OK, now everything we just did for median, you're going to need to do again for mean. This time, I'll just watch. You got this.
+
+#### Individual eᵢ (DATA - MODEL)
+
+Begin by calculating the individual eᵢ - the straight DATA-MODEL for b0_mean:
+
+```{r}
+#| eval: false
+
+# YOUR CODE HERE
+
+```
+
+#### Sum of Errors
+
+Now calculate the Sum of Errors:
+
+```{r}
+#| eval: false
+
+# YOUR CODE HERE
+
+```
+
+#### Sum of Absolute Errors
+
+...and the Sum of Absolute Errors:
+
+```{r}
+#| eval: false
+
+# YOUR CODE HERE
+
+```
+
+#### Sum of Squared Errors
+
+... and finally the Sum of Squared Errors:
+
+```{r}
+#| eval: false
+
+# YOUR CODE HERE
+
+```
+
+---
+
+## Summary Table
+
+OK, we're getting to the end.
+
+You don't have to, but something like this might be handy (though whether or not it will work as is will depend on the variable names you specified above):
+
+```{r}
+#| eval: false
+festivalresults <- data.frame((
+  Model = c("Mean", "Median")),
+  SoE    = c(SoE_mean, SoE_median),
+  SAE   = c(SAE_mean, SAE_median),
+  SSE   = c(SSE_mean, SSE_median)
+)
+
+festivalresults
+```
+
+And if you got the above to work but want it without the scientific notation, you should be able to make light work of the following:
+
+```{r}
+#| eval: false
+festival_results_pretty <- festivalresults
+festival_results_pretty$SoE <- format(festival_results_pretty$SoE, scientific = FALSE, trim = TRUE)
+festival_results_pretty
+```
+
+---
+
+**Nice job! You made it to the end!** I have a little (OPTIONAL) treat for you that has been waiting here.
+
+---
+
+## OPTIONAL: Word Cloud
+
+Word cloud from the open-text "Notes" responses in our festival dataset.
+
+```{r}
+#| eval: false
+
+# If you haven't installed these packages before, uncomment them, run the
+# install lines ONCE (then # them out).
+
+# install.packages("tidytext")
+# install.packages("wordcloud")     
+# install.packages("wordcloud2")    
+# install.packages("stringr")
+# install.packages("dplyr")
+
+library(dplyr)
+library(stringr)
+library(tidytext)
+library(wordcloud)    
+library(wordcloud2)   
+
+# 1) Grab the text column 
+txt <- festival$OpenText
+
+# 2) Replace NAs with blanks; build a small tibble
+texts <- tibble(text = ifelse(is.na(txt), "", txt))
+
+# 3) Tokenize into words and remove common stop words, general cleanup
+tokens <- texts %>%
+  mutate(text = tolower(text)) %>%
+  mutate(text = str_replace_all(text, "[^a-z\\s]", " ")) %>%  # keep letters + space
+  unnest_tokens(word, text) %>%
+  filter(str_detect(word, "^[a-z]+$"), nchar(word) > 2) %>%
+  anti_join(stop_words, by = "word")
+
+# 4) Count word frequencies
+word_counts <- tokens %>% count(word, sort = TRUE)
+
+# Quick peek at top 20 terms:
+head(word_counts, 20)
+
+# OK, so this was a new wordcloud function to me and actually generates HTML that
+# is interactive which is wild and crazy and cool. If you hover over the different
+# words, it gives you the counts which is kind of awesome if you ask me but I 
+# don't get out much.
+wordcloud2(word_counts, size = 1, minSize = 2, rotateRatio = 0.1)
+```

@@ -1,0 +1,918 @@
+---
+title: "Coffee Shop Micro-Demo for Chapter 2"
+subtitle: "Building Simple Models and Calculating Error"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-overflow: wrap
+    self-contained: true
+execute:
+  warning: false
+  message: false
+---
+
+## Overview and Goals
+
+This exercise walks through:
+
+1. Building a tiny dataset of ticket totals + item descriptions
+2. Picking a one-number model (b₀) to predict EVERY ticket
+3. Calculating, by hand, the error columns:
+   - ERROR = DATA - MODEL
+4. Computing four summary measures of error:
+   - **CE** = count of mismatches (who isn't exactly b₀?)
+   - **SE** = sum of residuals (signed) — can cancel!
+   - **SAE** = sum of absolute errors
+   - **SSE** = sum of squared errors
+
+::: {.callout-note}
+## Remember the fundamental equation
+DATA = MODEL + ERROR → ERROR = DATA - MODEL
+:::
+
+---
+
+## Part 0 — Build the Dataset
+
+We'll hard-code a small sample dataset with six tickets. The first column will be a respondent ID, the second the ticket total, and the third column will be an order summary.
+
+```{r}
+ID    <- 1:6
+Total <- c(6, 7, 7, 8, 30, 300)  # dollars per ticket (continuous outcome)
+Item  <- c("8 oz drip",
+           "12 oz drip",
+           "8 oz drip plus flavor",
+           "Pumpkin spice latte",
+           "Matcha latte + salad to go, breakfast bowl",
+           "Catering order - full coffee bar")
+
+coffee <- data.frame(ID, Total, Item, stringsAsFactors = FALSE)
+
+# Peek:
+coffee
+```
+
+---
+
+## Part 1 — Mode
+
+Now we need to go through and create a new variable to capture what kind of drink (if any) appears on the ticket. There's no right or wrong answer as far as EXACTLY what the catergories could be here (for example, depending on what all is included in the "coffee bar" catering order, that might be just drip coffee but a lot of it though I'm not treating it that way). This type of recoding of data is something it's important to make sure is well-documented and that whoever is going to use and rely on your analysis either agrees with beforehand (ideal) or at a minimum is able to decipher easily on their own.
+
+Note I could just use my silly human eyes and brain to go through and code each one by one but instead, I'm going to use a function in R from the grep family of commands. This is basically a series of commands that tells R how to do some pattern matching. You do need to be careful about confirming results when you use something like this but it's pretty handy especially if we're attempting to recode more than 7 observations. This is not a section of code I want you to get particularly bogged down in (I won't be testing you on it) but for those of you looking to stretch some skills, you might have fun playing around with it a bit. For what it's worth, typically my advice would be to do your best to design your survey or other data collection instrument so that all of this coding happens at the time of data collection so that you can avoid needing to recode as much as possible.
+
+That said, we'll classify each Item into a drink category using base R `grepl()`.
+
+I'm doing this to provide a simple categorical lens for us to estimate "mode".
+
+```{r}
+DrinkCategory <- ifelse(grepl("drip",      Item, ignore.case = TRUE), "Drip coffee",
+                        ifelse(grepl("latte",     Item, ignore.case = TRUE), "Latte",
+                               ifelse(grepl("catering",  Item, ignore.case = TRUE), "Catering",
+                                      "Other")))
+coffee$DrinkCategory <- DrinkCategory
+```
+
+Now we're going to use the `table()` command to give us a count of items in each of the categories in that new variable we created (a categorical "mode" demo). Expect "Drip coffee" to be the modal category here (3 of 6).
+
+```{r}
+table(coffee$DrinkCategory)
+```
+
+Note we can also generate a similar table to try to calculate the modal ticket total.
+
+```{r}
+table(coffee$Total) #You should see that the mode here is 7
+```
+
+The problem is that for continuous data like income or ticket total or wtp, mode isn't necessarily THAT informative...it tells us what the most frequent amount people paid but we have no idea based on this value if that most frequent value is near the center of our distribution, if those tickets were similar in composition of the order or just happened by chance, etc.
+
+That said, we're going to go ahead and record it as our mode with a new column:
+
+```{r}
+b0_mode <- 7
+coffee$b0_mode <- b0_mode
+```
+
+Now let's try some alternative measures of central tendency.
+
+---
+
+## Part 2 — Alternative Single b₀ Models
+
+Let's try each of the following:
+
+- **median** → a robust "typical" ticket, insensitive to extremes
+- **mean** → our average value, sensitive to extremes
+- **a number you choose** (e.g., 7, 8, 12) to see how the error changes
+
+Note that for median and mean, we can just use the command `median()` and `mean()`:
+
+```{r}
+b0_median <- median(coffee$Total)  # with even n, it's the average of the two middle values
+b0_mean   <- mean(coffee$Total)
+```
+
+Now we make new columns in the dataset for each measure of central tendency (remember, this is the full extent of our MODEL for these simple models):
+
+```{r}
+b0_median <- b0_median
+b0_mean <- b0_mean
+```
+
+And for fun, you pick a number for yourself here. I have it set at 12 but go ahead and change it to something else.
+
+```{r}
+b0_your_guess <- 12       # try any number you like OTHER than 7, 12, 7.5, or 59.67
+```
+
+OK, let's take a look at our dataset really quick and make sure it looks how we expect it to look... remember, we're expecting to see each one of our b₀'s in a new column on the right.
+
+```{r}
+head(coffee)
+```
+
+Well that's not correct. Why do we only see one column for mode? There should be one for median, one for mean, and one for your guess...
+
+Can you figure out what went wrong? Give it a shot before revealing the hint below.
+
+::: {.callout-tip collapse="true"}
+## Click to reveal hint
+
+Ugh, we didn't specify that we were creating new variables in the coffee dataset for the median, mean, and your guess values. We calculated the values and stored them in objects, but we never added them as columns to our dataframe!
+:::
+
+OK, fixed below:
+
+```{r}
+coffee$b0_median <- b0_median
+coffee$b0_mean <- b0_mean
+coffee$b0_your_guess <- b0_your_guess
+
+# Now let's check again:
+head(coffee)
+```
+
+NICE!
+
+---
+
+## Part 3 — Calculate Error Columns BY HAND
+
+(Some of you probably know that we could use commands to calculate these error columns instead of coding the math by hand...me too. We're going to do it by hand anyway because: 1. it's not that tough, 2. it's good practice, 3. I think it does a better job of helping you intuit what's going on with error and that is like priority 1 in this chapter.)
+
+### Residuals (signed): ERROR = DATA - MODEL
+
+```{r}
+coffee$ei_mode <- coffee$Total - coffee$b0_mode
+coffee$ei_median <- coffee$Total - coffee$b0_median
+coffee$ei_mean <- coffee$Total - coffee$b0_mean
+coffee$ei_your_guess <- coffee$Total - coffee$b0_your_guess
+
+# Let's take a peek at the dataset now (it's going to be looking a bit wider)
+head(coffee)
+```
+
+OK, so at this point we have calculated an error for EACH PREDICTION. The question is, how do we turn that into a single measure of error for the ENTIRE MODEL...?
+
+We're going to try 4 different strategies.
+
+---
+
+### Strategy 1: Count of Errors (CE)
+
+We define ERROR as any time our MODEL prediction for any given particular DATA is not EXACTLY correct. This is the "Count of Errors" style from the book.
+
+So one way that we could check this in our code is to tell R the following: For a given b₀, mark each row TRUE if the model nails it exactly (in other words, if Total == b₀), FALSE otherwise. Then count the TRUEs and FALSEs.
+
+Remember for continuous data like ticket totals, exact matches are rare — that's the whole point here - we're going to see CE kind of fall apart in terms of its usefulness for continuous data.
+
+```{r}
+# Row-by-row TRUE/FALSE hits for each constant model
+coffee$hit_mode        <- coffee$Total == coffee$b0_mode
+coffee$hit_median      <- coffee$Total == coffee$b0_median
+coffee$hit_mean        <- coffee$Total == coffee$b0_mean
+coffee$hit_your_guess  <- coffee$Total == coffee$b0_your_guess
+
+# Peek at what we just made (Note in the code below, I'm asking R to just show 
+# me a peek of only specific columns in the dataset because we've now added a lot 
+# of columns; everything we need to evaluate what's happening here and nothing 
+# else will appear using this code with left side = data, right = our results for
+# each measure of central tendency and when DATA == MODEL exactly)
+head(coffee[, c("ID", "Total",
+                "b0_mode", "b0_median", "b0_mean", "b0_your_guess",
+                "hit_mode", "hit_median", "hit_mean", "hit_your_guess")])
+```
+
+This is a small dataset (and for all predictors other than MODE, we're going to have a count of errors == our n since not a single observation in data == our other predictions) but still, what we want here is not a column of TRUEs and FALSEs, but instead a count of how many FALSEs we generate for any given measure of central tendency. So let's make that using code below:
+
+```{r}
+# Summarize the TRUE/FALSE counts for each b0
+cat("\n--- TRUE/FALSE counts (does Total equal b0?) ---\n")
+cat("Mode b0:\n");       print(table(coffee$hit_mode))
+cat("Median b0:\n");     print(table(coffee$hit_median))
+cat("Mean b0:\n");       print(table(coffee$hit_mean))
+cat("Your guess b0:\n"); print(table(coffee$hit_your_guess))
+```
+
+If you want one compact little table of counts, we can actually create OUR OWN FUNCTION to do that for us. We're going to call that function `count_tf`:
+
+```{r}
+count_tf <- function(log_vec) c("FALSE" = sum(!log_vec), "TRUE" = sum(log_vec))
+ce_counts <- rbind(
+  mode.      = count_tf(coffee$hit_mode),
+  median     = count_tf(coffee$hit_median),
+  mean       = count_tf(coffee$hit_mean),
+  your_guess = count_tf(coffee$hit_your_guess)
+)
+
+cat("\nCompact CE-style counts (rows = model, cols = FALSE/TRUE):\n")
+print(ce_counts)
+```
+
+(Don't get terribly bogged down in the function of it all if that's overwhelming right now - that's more of a fun little easter egg for anyone interested and also so that you can say that you've coded a new function in R by week 3 of the class which sounds pretty badass to be honest, so enjoy that)
+
+So to be clear, our count of errors == 6 for all measures of central tendency except for mode, in which case the count of errors = 4.
+
+But there's another way that we could get this same count using 1 column in our dataset instead of two... any ideas...?
+
+::: {.callout-tip collapse="true"}
+## Click to reveal hint
+
+That's right! We could also just count the number of eᵢ's == 0 in any of our calculated ERROR columns! Because if our MODEL == DATA, our ERROR == 0 (because ERROR == DATA - MODEL, so if our model predicts 7 and a given observation is 7, error for that value is ERROR == 7-7 which == 0)
+:::
+
+So let's check that out:
+
+```{r}
+# Count exact hits by checking residuals equal zero
+ei_equal_0_count_mode       <- coffee$ei_mode == 0
+ei_equal_0_count_median     <- coffee$ei_median == 0
+ei_equal_0_count_mean       <- coffee$ei_mean == 0
+ei_equal_0_count_your_guess <- coffee$ei_your_guess == 0
+
+# we can just look at each of the objects that we just made (they're going to be
+# just a series of TRUEs and FALSEs for whether each value == 0)
+ei_equal_0_count_mode
+ei_equal_0_count_median
+ei_equal_0_count_mean
+ei_equal_0_count_your_guess
+```
+
+But what we would really rather do is get a table of values, so as before let's summarize the TRUE/FALSE counts for each eᵢ:
+
+```{r}
+cat("\n--- TRUE/FALSE counts (does ei == 0?) ---\n")
+cat("Mode ei:\n");         print(table(ei_equal_0_count_mode))
+cat("Median ei:\n");       print(table(ei_equal_0_count_median))
+cat("Mean ei:\n");         print(table(ei_equal_0_count_mean))
+cat("Your guess ei:\n");   print(table(ei_equal_0_count_your_guess))
+```
+
+OK, and finally, the entire point of doing this two ways (using counts of times in which DATA=MODEL and ERROR==0 as hits and every other instance in our sample as misses or a count of errors) is that the two are equivalent, so let's just really quick check to make sure that both of the strategies we tried gave us the same answers:
+
+```{r}
+cat("\n--- Check the equivalence (hits via DATA==b0 vs ei==0) ---\n")
+cat("Mode:       ", all(coffee$hit_mode     == ei_equal_0_count_mode),     "\n")
+cat("Median:     ", all(coffee$hit_median   == ei_equal_0_count_median),   "\n")
+cat("Mean:       ", all(coffee$hit_mean     == ei_equal_0_count_mean),     "\n")
+cat("Your guess: ", all(coffee$hit_your_guess == ei_equal_0_count_your_guess), "\n")
+```
+
+That was honestly a lot of time spent on count of errors as a summary measure of total error in our model for me to now say that we will rarely use that as a summary measure of error in our model again...mode just isn't that useful for continuous data which will be the majority of our focus for at least the next while. So, if we want to have a measure of error that gets at the idea of how close our model predictions are to our actual data (without requiring that those predictions be EXACT), what might we try...
+
+One thing that might make sense, given that we have these handy error columns calculated and ready to go, is that we could just take a sum of all of our errors. This frankly sounds pretty reasonable. Those values are the difference between DATA and our MODEL (we literally calculated them by subtracting MODEL predictions from individual observations in data), so let's just add up those differences and call it a day, yeah?
+
+---
+
+### Strategy 2: Sum of Errors (SE)
+
+```{r}
+SoE_mode <- sum(coffee$ei_mode)
+SoE_median <- sum(coffee$ei_median)
+SoE_mean <- sum(coffee$ei_mean)
+SoE_your_guess <- sum(coffee$ei_your_guess)
+
+# Alright, let's see what we get for each one of those errors now, shall we?
+SoE_mode
+SoE_median
+SoE_mean
+SoE_your_guess
+```
+
+OK, so what the heck is this telling us...one thing should really stand out immediately, which is that we are getting a VERY, VERY small number for the SoE for our mean. Like really small. That's a really impressive model, hardly any error at all!
+
+As a reminder, this value is showing in scientific notation because it is so so small - if it wasn't in scientific notation with that e-14 at the end it would be extremely obnoxious trying to count the zeroes between the decimal and the first non-zero number...see for yourself when I tell it to give me a version not in scientific notation below:
+
+```{r}
+SoE_mean_nonsci <- format(SoE_mean, scientific=F)
+SoE_mean_nonsci
+```
+
+But wait a second, that doesn't seem right...when we looked at the dataset earlier, I don't remember that column having a bunch of exceptionally small error values...let's check again to confirm:
+
+```{r}
+coffee$ei_mean
+```
+
+Those are not small errors. Well wtf.
+
+Let's think about this for a second. What's wrong with this measure...?!?!
+
+::: {.callout-tip collapse="true"}
+## Click to reveal the answer
+
+Did you figure it out?
+
+The problem is that we are summing the eᵢ's but when our eᵢ's are pretty evenly distributed around 0, summing is going to allow the MODEL predictions that UNDERPREDICT the data to be positive values and the MODEL predictions that OVERPREDICT the data to be negative values. We then sum those positive and negative values and can end up with something that looks like zero error because the positive and negative errors cancel out. But we don't have 0 error. We have a lot of error.
+
+We can do better than this. Suggestions...?
+:::
+
+---
+
+### Strategy 3: Sum of Absolute Errors (SAE)
+
+Well, one thing we can do is to just take the absolute value of each eᵢ (making each a positive value or akin to a measure of distance). Let's try that.
+
+Absolute errors (remove the ability for some errors to be negative - let's make it more like a measure of the distance from MODEL to DATA regardless of whether we under- or overpredict with MODEL):
+
+```{r}
+SAE_mode <- sum(abs(coffee$ei_mode))
+SAE_median <- sum(abs(coffee$ei_median))
+SAE_mean <- sum(abs(coffee$ei_mean))
+SAE_your_guess <- sum(abs(coffee$ei_your_guess))
+
+# Alright, let's see what we get for each one of those errors now, shall we?
+SAE_mode
+SAE_median
+SAE_mean
+SAE_your_guess
+```
+
+OK, that looks more reasonable, yeah? When we move from a sum of errors to a sum of ABSOLUTE errors, our model error estimate for the simple model using mean as our b₀ significantly changes:
+
+```{r}
+SoE_mean
+SAE_mean
+```
+
+So now that's behaving in a much more logical way (and understandably we won't really ever use SoE again). But let's think about what's going on with SAE. What is it really doing for us? It's giving us a simple sum of the distance measures of our predictions and we get a total measure of the extent to which our predictions "miss." It doesn't really take into account the severity of the extent to which our MODEL misses, though.
+
+---
+
+### Strategy 4: Sum of Squared Errors (SSE)
+
+OK, so SAE gives us the linear, additive "miss." What if we want to have much harsher penalties (greater errors, a non-linear effect) for our MODEL predictions that miss DATA to a greater extent? Well, we could make our error non-linear, then. We could inflate those errors more significantly the greater the difference between the MODEL and DATA.
+
+Here's what that's going to look like:
+
+```{r}
+SSE_mode <- sum(coffee$ei_mode^2)
+SSE_median <- sum(coffee$ei_median^2)
+SSE_mean <- sum(coffee$ei_mean^2)
+SSE_your_guess <- sum(coffee$ei_your_guess^2)
+
+# Alright, let's see what we get for each one of those errors now, shall we?
+SSE_mode
+SSE_median
+SSE_mean
+SSE_your_guess
+```
+
+Those are some big old whopping errors. But honestly, you know what? As long as we are consistent in how we calculate our errors between any given Model C and Model A that we might want to compare, it doesn't much matter what the ABSOLUTE value of the errors is; we don't calculate ARE (absolute reduction in error) in the approach to building models we use in this class, we calculate the PRE (proportional reduction in error). So it's all relative.
+
+That said, the difference between these two numbers does tell us something:
+
+```{r}
+SAE_mean
+SSE_mean
+```
+
+It tells us that because of those non-linear penalties for MODEL mispredicting DATA by more than a little bit, we must have some predictions that are off the mark by a pretty significant amount.
+
+---
+
+## Summary Table
+
+OK, let's try putting this all together:
+
+```{r}
+# Table of summary values
+error_summary <- data.frame(
+  Model = c("Mode (7)", "Median (7.5)", "Mean (~59.67)", sprintf("Your guess (%.2f)", b0_your_guess)),
+  CE    = c(sum(!coffee$hit_mode), sum(!coffee$hit_median), sum(!coffee$hit_mean), sum(!coffee$hit_your_guess)),
+  SoE   = c(SoE_mode, SoE_median, SoE_mean, SoE_your_guess),
+  SAE   = c(SAE_mode, SAE_median, SAE_mean, SAE_your_guess),
+  SSE   = c(SSE_mode, SSE_median, SSE_mean, SSE_your_guess)
+)
+
+error_summary
+```
+
+If the scientific notation in the SoE column throws you, we can create a version without scientific notation here:
+
+```{r}
+error_summary_nsdisplay <- error_summary
+error_summary_nsdisplay$SoE <- format(error_summary$SoE, scientific = FALSE, trim = TRUE)
+
+error_summary_nsdisplay
+```
+
+---
+
+## Visualizations
+
+::: {.callout-warning}
+## Note on "Your guess" labels
+The visualization code below uses hardcoded labels like `"Your guess (b0 = 12)"`. If you changed your guess to a different value, you'll want to update these labels in the visualization code to match your actual value!
+:::
+
+You can just run all the code from here to the end (unless you've added lines of code as you've worked through the assignment).
+
+### OPTIONAL - Visualization Code
+
+The code below creates the visualizations from the lecture video. If you worked through the above code EXACTLY as written (with the exception of changing the value for "your_guess", which would be good/fine), you should be able to recreate these.
+
+```{r}
+#| message: false
+#| warning: false
+
+# Load required packages
+# If any of these library calls throws an error, you probably haven't 
+# installed that package. Run install.packages("packagename")
+# and then call it from library with the code below again.
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(scales)
+```
+
+---
+
+### Count of Errors (CE) Visualization
+
+```{r}
+#| fig-height: 10
+
+# Long format with one row per ticket x model (add numeric x_i)
+viz_ce <- coffee %>%
+  transmute(
+    ID, Total,
+    `Mode (b0 = 7)`        = b0_mode,
+    `Median (b0 = 7.5)`    = b0_median,
+    `Mean (b0 = 59.67…)`   = b0_mean,
+    `Your guess (b0 = 12)` = b0_your_guess
+  ) %>%
+  pivot_longer(
+    cols = -c(ID, Total),
+    names_to = "Model",
+    values_to = "Pred"
+  ) %>%
+  mutate(
+    hit = (Total == Pred),
+    x_i = as.numeric(ID),           
+    col = ifelse(hit, "hit", "miss")
+  )
+
+# Count of errors (misses) per model for annotation
+y_top  <- max(coffee$Total) * 1.10
+x_last <- max(viz_ce$x_i)
+ce_counts <- viz_ce %>%
+  group_by(Model) %>%
+  summarize(CountErrors = sum(!hit), .groups = "drop") %>%
+  mutate(x_pos = x_last, y_pos = y_top)
+
+# Plot (facet 4 panels)
+CEplot <- ggplot(viz_ce, aes(x = x_i)) +
+  geom_segment(
+    aes(y = Pred, yend = Pred,
+        x = x_i - 0.35, xend = x_i + 0.35),
+    color = "blue", linewidth = 2
+  ) +
+  geom_point(aes(y = Total, color = col), size = 2.6) +
+  scale_color_manual(
+    values = c(hit = "forestgreen", miss = "red3"),
+    labels = c(hit = "Hit (MODEL == DATA)", miss = "Miss"),
+    name = NULL
+  ) +
+  geom_text(
+    data = ce_counts,
+    aes(x = x_pos, y = y_pos,
+        label = paste0("Count of errors: ", CountErrors)),
+    inherit.aes = FALSE, hjust = 1, vjust = 1, size = 3.5
+  ) +
+  facet_wrap(~ Model, ncol = 1, scales = "fixed") +
+  scale_x_continuous(breaks = viz_ce$x_i[!duplicated(viz_ce$x_i)],
+                     labels = viz_ce$ID[!duplicated(viz_ce$ID)]) +
+  coord_cartesian(ylim = c(0, max(coffee$Total) * 1.12)) +
+  labs(
+    title = "Count of Errors (CE)",
+    subtitle = "Dots == DATA;\n
+      • Green dots = exact hits (ei == 0 or MODEL==DATA) \n
+      • Red dots = misses.\n\nBlue planks = model predictions",
+    x = "Ticket ID",
+    y = "Total ($)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "top")
+
+CEplot
+```
+
+But that catering order outlier is a bit obnoxious, making it hard to see. Let's take a log of our Y axis and try again:
+
+```{r}
+#| fig-height: 10
+
+# CE (log y)
+ymin_log <- min(coffee$Total) * 0.8
+ymax_log <- max(coffee$Total) * 1.30
+ce_counts_log <- ce_counts %>%
+  mutate(x_pos = max(viz_ce$x_i), y_pos = ymax_log * 0.95)
+
+CElogplot <- ggplot(viz_ce, aes(x = x_i)) +
+  geom_segment(aes(y = Pred, yend = Pred, x = x_i - 0.35, xend = x_i + 0.35),
+               color = "blue", linewidth = 2) +
+  geom_point(aes(y = Total, color = col), size = 2.6) +
+  scale_color_manual(values = c(hit = "forestgreen", miss = "red3"),
+                     labels = c(hit = "Hit (MODEL == DATA)", miss = "Miss"),
+                     name = NULL) +
+  geom_text(data = ce_counts_log,
+            aes(x = x_pos, y = y_pos, label = paste0("Count of errors: ", CountErrors)),
+            inherit.aes = FALSE, hjust = 1, vjust = 1, size = 3.5) +
+  facet_wrap(~ Model, ncol = 1, scales = "fixed") +
+  scale_x_continuous(breaks = viz_ce$x_i[!duplicated(viz_ce$x_i)],
+                     labels = viz_ce$ID[!duplicated(viz_ce$ID)]) +
+  scale_y_log10(breaks = c(5,6,7,8,10,20,30,50,100,200,300),
+                labels = number_format(accuracy = 1)) +
+  coord_cartesian(ylim = c(ymin_log, ymax_log)) +
+  labs(title = "Count of Errors (CE) — log scale",
+       subtitle = "Dots == DATA;\n
+      • Green dots = exact hits (ei == 0 or MODEL==DATA) \n
+      • Red dots = misses.\n\nBlue planks = model predictions",
+       x = "Ticket ID", y = "Total ($, log10)") +
+  theme_minimal(base_size = 12) +
+  theme(legend.position = "top")
+
+CElogplot
+```
+
+---
+
+### Sum of Errors (SE) Visualization
+
+```{r}
+#| fig-height: 10
+
+# Long format with residuals and numeric xi
+viz_se <- coffee %>%
+  transmute(
+    ID, Total,
+    `Mode (b0 = 7)`        = b0_mode,
+    `Median (b0 = 7.5)`    = b0_median,
+    `Mean (b0 = 59.67…)`   = b0_mean,
+    `Your guess (b0 = 12)` = b0_your_guess
+  ) %>%
+  pivot_longer(
+    cols = -c(ID, Total),
+    names_to = "Model",
+    values_to = "Pred"
+  ) %>%
+  mutate(
+    x_i   = as.numeric(ID),
+    resid = Total - Pred,
+    # color for the residual segment: black if positive (Pred < Actual), 
+    # red if negative (Pred > Actual)
+    seg_col = ifelse(resid >= 0, "pos", "neg")
+  )
+
+# Per-panel SE annotation (sum of residuals)
+y_top  <- max(coffee$Total) * 1.10
+x_last <- max(viz_se$x_i)
+se_annot <- viz_se %>%
+  group_by(Model) %>%
+  summarize(SE = sum(resid), .groups = "drop") %>%
+  mutate(
+    label = sprintf("SE = %.2f", SE),
+    x_pos = x_last, y_pos = y_top
+  )
+
+# Plot (facet 4 panels)
+SoEplot <- ggplot(viz_se, aes(x = x_i)) +
+  geom_segment(
+    aes(y = Pred, yend = Total, xend = x_i, color = seg_col),
+    linewidth = 0.7, alpha = 0.9
+  ) +
+  scale_color_manual(values = c(pos = "black", neg = "red3"), guide = "none") +
+  geom_segment(
+    aes(y = Pred, yend = Pred, x = x_i - 0.35, xend = x_i + 0.35),
+    color = "blue", linewidth = 2
+  ) +
+  geom_point(aes(y = Total), size = 2.6, color = "black") +
+  geom_text(
+    data = se_annot,
+    aes(x = x_pos, y = y_pos, label = label),
+    inherit.aes = FALSE, hjust = 1, vjust = 1, size = 3.5
+  ) +
+  facet_wrap(~ Model, ncol = 1, scales = "fixed") +
+  scale_x_continuous(
+    breaks = viz_se$x_i[!duplicated(viz_se$x_i)],
+    labels = viz_se$ID[!duplicated(viz_se$ID)]
+  ) +
+  coord_cartesian(ylim = c(0, max(coffee$Total) * 1.12)) +
+  labs(
+    title = "Sum of Error (SE)",
+    subtitle = "Line lengths == ERROR\n
+    • Black line = underpredict (MODEL < DATA, +ei) \n
+    • Red line = overpredict (MODEL > DATA, -ei)",
+    x = "Ticket ID",
+    y = "Total ($)"
+  ) +
+  theme_minimal(base_size = 12)
+
+SoEplot
+```
+
+But let's take the log of our y axis again:
+
+```{r}
+#| fig-height: 10
+
+ymin_log <- min(coffee$Total) * 0.8
+ymax_log <- max(coffee$Total) * 1.30
+se_annot_log <- se_annot %>%
+  mutate(x_pos = max(viz_se$x_i), y_pos = ymax_log * 0.95)
+
+SoElogplot <- ggplot(viz_se, aes(x = x_i)) +
+  geom_segment(aes(y = Pred, yend = Total, xend = x_i, color = seg_col),
+               linewidth = 0.7, alpha = 0.9) +
+  scale_color_manual(values = c(pos = "black", neg = "red3"), guide = "none") +
+  geom_segment(aes(y = Pred, yend = Pred, x = x_i - 0.35, xend = x_i + 0.35),
+               color = "blue", linewidth = 2) +
+  geom_point(aes(y = Total), size = 2.6, color = "black") +
+  geom_text(data = se_annot_log,
+            aes(x = x_pos, y = y_pos, label = label),
+            inherit.aes = FALSE, hjust = 1, vjust = 1, size = 3.5) +
+  facet_wrap(~ Model, ncol = 1, scales = "fixed") +
+  scale_x_continuous(breaks = viz_se$x_i[!duplicated(viz_se$x_i)],
+                     labels = viz_se$ID[!duplicated(viz_se$ID)]) +
+  scale_y_log10(breaks = c(5,6,7,8,10,20,30,50,100,200,300),
+                labels = number_format(accuracy = 1)) +
+  coord_cartesian(ylim = c(ymin_log, ymax_log)) +
+  labs(title = "Sum of Error (SE) log",
+       subtitle = "Line lengths == ERROR\n
+            • Black line = underpredict (MODEL < DATA, +ei) \n
+            • Red line = overpredict (MODEL > DATA, -ei)",
+                   x = "Ticket ID", y = "Total ($, log10)") +
+  theme_minimal(base_size = 12)
+
+SoElogplot
+```
+
+---
+
+### Sum of Absolute Error (SAE) Visualization
+
+But that's not great (as we well know) because it suggests we have 0 error for mean because it's treating some errors as negative and others as positive. Let's represent making all line lengths positive by simply making the lines all black:
+
+```{r}
+#| fig-height: 10
+
+# Long format with abs residuals
+viz_sae <- coffee %>%
+  transmute(
+    ID, Total,
+    `Mode (b0 = 7)`        = b0_mode,
+    `Median (b0 = 7.5)`    = b0_median,
+    `Mean (b0 = 59.67…)`   = b0_mean,
+    `Your guess (b0 = 12)` = b0_your_guess
+  ) %>%
+  pivot_longer(
+    cols = -c(ID, Total),
+    names_to = "Model",
+    values_to = "Pred"
+  ) %>%
+  mutate(
+    x_i       = as.numeric(ID),
+    resid     = Total - Pred,
+    abs_resid = abs(resid)
+  )
+
+# Per-panel SAE annotation
+y_top  <- max(coffee$Total) * 1.10
+x_last <- max(viz_sae$x_i)
+sae_annot <- viz_sae %>%
+  group_by(Model) %>%
+  summarize(SAE = sum(abs_resid), .groups = "drop") %>%
+  mutate(
+    label = sprintf("SAE = %.2f", SAE),
+    x_pos = x_last, y_pos = y_top
+  )
+
+# Plot (facet 4 panels)
+SAEplot <- ggplot(viz_sae, aes(x = x_i)) +
+  geom_segment(aes(y = Pred, yend = Total, xend = x_i),
+               linewidth = 0.7, alpha = 0.9, color = "black") +
+  geom_segment(aes(y = Pred, yend = Pred, x = x_i - 0.35, xend = x_i + 0.35),
+               color = "blue", linewidth = 2) +
+  geom_point(aes(y = Total), size = 2.6, color = "black") +
+  geom_text(data = sae_annot,
+            aes(x = x_pos, y = y_pos, label = label),
+            inherit.aes = FALSE, hjust = 1, vjust = 1, size = 3.5) +
+  facet_wrap(~ Model, ncol = 1, scales = "fixed") +
+  scale_x_continuous(
+    breaks = viz_sae$x_i[!duplicated(viz_sae$x_i)],
+    labels = viz_sae$ID[!duplicated(viz_sae$ID)]
+  ) +
+  coord_cartesian(ylim = c(0, max(coffee$Total) * 1.12)) +
+  labs(
+    title = "Sum of Absolute Error (SAE): Sum of absolute value of line lengths",
+    subtitle = "\nBlack lines ==  ERROR = DATA - MODEL \n
+    • Blue planks = MODEL\n
+    • Dots = DATA",
+    x = "Ticket ID",
+    y = "Total ($)"
+  ) +
+  theme_minimal(base_size = 12)
+
+SAEplot
+```
+
+And now we use a log Y axis again for visualization given our outlier:
+
+```{r}
+#| fig-height: 10
+
+ymin_log <- min(coffee$Total) * 0.8
+ymax_log <- max(coffee$Total) * 1.30
+
+sae_annot_log <- sae_annot %>%
+  mutate(x_pos = x_last, y_pos = ymax_log * 0.95)
+
+SAElogplot <- ggplot(viz_sae, aes(x = x_i)) +
+  geom_segment(aes(y = Pred, yend = Total, xend = x_i),
+               linewidth = 0.7, alpha = 0.9, color = "black") +
+  geom_segment(aes(y = Pred, yend = Pred, x = x_i - 0.35, xend = x_i + 0.35),
+               color = "blue", linewidth = 2) +
+  geom_point(aes(y = Total), size = 2.6, color = "black") +
+  geom_text(data = sae_annot_log,
+            aes(x = x_pos, y = y_pos, label = label),
+            inherit.aes = FALSE, hjust = 1, vjust = 1, size = 3.5) +
+  facet_wrap(~ Model, ncol = 1, scales = "fixed") +
+  scale_x_continuous(breaks = viz_sae$x_i[!duplicated(viz_sae$x_i)],
+                     labels = viz_sae$ID[!duplicated(viz_sae$ID)]) +
+  scale_y_log10(breaks = c(5,6,7,8,10,20,30,50,100,200,300),
+                labels = number_format(accuracy = 1)) +
+  coord_cartesian(ylim = c(ymin_log, ymax_log)) +
+  labs(
+    title = "Sum of Absolute Error (SAE) LOG: Sum of absolute value of line lengths",
+    subtitle = "\nBlack lines ==  ERROR = DATA - MODEL \n
+    • Blue planks = MODEL\n
+    • Dots = DATA",
+    x = "Ticket ID",
+    y = "Total ($, log10)"
+  ) +
+  theme_minimal(base_size = 12)
+
+SAElogplot
+```
+
+---
+
+### Sum of Squared Errors (SSE) Visualization
+
+Finally, we're going to plot the sum of squared errors but it's going to look a bit different because we need to represent that the eᵢ are being SQUARED to produce a nonlinear effect on our total error estimate. The best way to do that? Turn the error lines into SQUARES...literally.
+
+```{r}
+#| fig-height: 12
+
+# Set to 1:6 to include all tickets. 
+# Could change to 1:5 if you want to remove the outlier catering order and
+# see what things look like near the b0.
+ids_to_use <- 1:6
+
+# Long data with a b0 per panel
+viz_sse_base <- coffee %>%
+  filter(ID %in% ids_to_use) %>%
+  transmute(
+    ID, Total,
+    `Mode (b0 = 7)`        = b0_mode,
+    `Median (b0 = 7.5)`    = b0_median,
+    `Mean (b0 = 59.67…)`   = b0_mean,
+    `Your guess (b0 = 12)` = b0_your_guess
+  ) %>%
+  pivot_longer(
+    cols = -c(ID, Total),
+    names_to = "Model",
+    values_to = "b0"
+  )
+
+# Compute residual, square side, and per-panel square placement
+gap <- 0.6 
+viz_sse <- viz_sse_base %>%
+  mutate(
+    resid = Total - b0,
+    side  = abs(resid)
+  ) %>%
+  group_by(Model) %>%
+  arrange(Model, ID) %>%
+  mutate(
+    xmin = cumsum(dplyr::lag(side + gap, default = 0)),
+    xmax = xmin + side,
+    ymin = ifelse(resid >= 0, b0, b0 - side),
+    ymax = ifelse(resid >= 0, b0 + side, b0),
+    xmid = (xmin + xmax)/2
+  ) %>%
+  ungroup()
+
+# Baseline (b0) per panel
+baseline_df <- viz_sse %>%
+  group_by(Model) %>%
+  summarise(b0 = dplyr::first(b0), .groups = "drop")
+
+# compute global limits across all panels
+x_max <- max(viz_sse$xmax)
+y_min <- min(viz_sse$ymin)
+y_max <- max(viz_sse$ymax)
+pad_x <- 0.10 * x_max
+pad_y <- 0.10 * (y_max - y_min)
+
+# panel SSE labels 
+sse_annot <- viz_sse %>%
+  dplyr::group_by(Model) %>%
+  dplyr::summarise(SSE = sum(side^2), .groups = "drop") %>%
+  dplyr::mutate(
+    label = sprintf("SSE = %.2f", SSE),
+    x_pos = x_max,                 # place at common right edge
+    y_pos = y_max + pad_y * 0.5    # a bit above the tallest square
+  )
+
+# Plot: Now with squares!
+SSEplot <- ggplot(viz_sse) +
+  geom_rect(aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+            fill = "grey60", color = "grey35") +
+  geom_hline(data = baseline_df, aes(yintercept = b0),
+             linetype = "dashed", color = "grey30") +
+  geom_point(aes(x = (xmin + xmax)/2, y = Total), size = 2.4, color = "black") +
+  geom_text(data = sse_annot, aes(x = x_pos, y = y_pos, label = label),
+            inherit.aes = FALSE, hjust = 1, vjust = 1, size = 3.5) +
+  facet_wrap(~ Model, ncol = 1) +
+  coord_fixed(ratio = 1,
+              xlim = c(0, x_max + pad_x),
+              ylim = c(y_min - pad_y, y_max + pad_y)) +
+  scale_x_continuous(breaks=NULL, labels=NULL) +
+  labs(
+    title = "Sum of Squared Errors (SSE) \n(they're literal squared line lengths)\n",
+    subtitle = "Each side of each square = |DATA-MODEL|; \n
+    The summed area = our measure of ERROR which is now |ERROR|^2 \n
+    Dashed line is b0 (the model estimate)",
+    x = "",
+    y = "Total ($)",
+  ) +
+  theme_minimal(base_size = 12)
+
+SSEplot
+```
+
+---
+
+## Review All Plots
+
+Let's take a look at all the plots we just made:
+
+```{r}
+#| fig-height: 10
+CEplot
+```
+
+```{r}
+#| fig-height: 10
+CElogplot
+```
+
+```{r}
+#| fig-height: 10
+SoEplot
+```
+
+```{r}
+#| fig-height: 10
+SoElogplot
+```
+
+```{r}
+#| fig-height: 10
+SAEplot
+```
+
+```{r}
+#| fig-height: 10
+SAElogplot
+```
+
+```{r}
+#| fig-height: 12
+SSEplot
+```
