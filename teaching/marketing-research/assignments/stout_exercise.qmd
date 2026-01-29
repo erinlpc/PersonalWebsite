@@ -12,7 +12,9 @@ execute:
 If you prefer to work directly in RStudio, you can [download the R script version of this exercise](https://erinlpc.github.io/PersonalWebsite/files/Stout_Data_Exercise_FINAL.R).
 :::
 
-## Overview 
+## Overview
+
+So, here's the situation. We've been hired by a local brewery to help them figure out how to price this new stout they're putting on the menu. They've given us a bit of data (it's not much) and we have a recommended price from the Brewmaster and we're just going to make the most of it. Sound good? Alright, let's get to work.
 
 **Goals for this exercise:**
 
@@ -80,11 +82,13 @@ So same info as before, but a way to be more specific in asking R to focus on wh
 
 Our brewmaster says: "Price it at \$7 per pint." That's a model! It predicts 7 for everyone.
 
-So here's one way we can examine that prediction: we add a new column to the dataset literally predicting "7" for every single respondent. We'll call that new column/variable `Model_Brewmaster`:
+So here's how we can specify and examine that model: we add a new column to the dataset literally predicting "7" for every single respondent. We'll call that new column/variable `Model_Brewmaster`:
 
 ```{r}
 stout_data$Model_Brewmaster <- 7
 ```
+
+So, breaking down that code really quick, we're telling R "go into 'stout_data' dataset, look for the column/variable named 'Model_Brewmaster' and if there isn't such a thing create it, then make every observation in that column of the dataset = 7.
 
 Let's check to make sure that worked the way we expected...
 
@@ -92,9 +96,12 @@ Let's check to make sure that worked the way we expected...
 head(stout_data)
 ```
 
-Now let's calculate **ERROR = DATA - MODEL**
+OK, now let's calculate error according to our guiding light, \
+**ERROR = DATA - MODEL**
 
-Remember, the data in this case are the WTP data from our dataset, the model we're examining is the Brewmaster's suggested price of \$7. In this case, we can just ask R to calculate the difference between each person's reported amount in our dataset and that guess of 7. We'll call that value in our dataset `Error_Brewmaster`:
+Remember, the data in this case are the WTP data from the dataset we were given. The model we're examining is the Brewmaster's suggested price of \$7. The formula above tells us that error is just going to be the difference between those two things, the data I have (WTP) and the predictions made by my model (\$7).\
+\
+In this case, we can just ask R to calculate the difference between each person's reported amount in our dataset and that guess of 7. We'll call that value in our dataset `Error_Brewmaster`:
 
 ```{r}
 stout_data$Error_Brewmaster <- stout_data$WTP - stout_data$Model_Brewmaster
@@ -110,18 +117,22 @@ head(stout_data)
 
 ## Part 4 — Model 1: The Sample Mean
 
-Next, we try a data-based model: predict the average WTP for everyone.
+OK, so the brewmaster gave us a model but these clients are paying us to make a recommendation...so we should probably try at least a few things including some models of our own fit to the actual data. \
+\
+So, let's try a data-based model: predict the average WTP for everyone.
 
 Here we're going to create a value in R that is called `mean_wtp`. We could call it `FantasticBananas` and it wouldn't make a difference, R doesn't care what we name things. R does care that we specify how to calculate or define that value, though, which is everything that is happening to the right of the `<-`
 
-On that side, we're saying "R, that thing we asked you to create, here's how you create it: run the function `mean` on the variable `WTP` that you will find in the dataset we have loaded titled `stout_data`"
+On the right side of that operator where it says "mean(stout_data\$WTP)", we're saying "R, that thing we asked you to create, here's how you create it: run the function `mean` on the variable `WTP` that you will find in the dataset we have loaded titled `stout_data`".
+
+Now we can just enter "mean_wtp" and it will show us what that calculated value is.
 
 ```{r}
 mean_wtp <- mean(stout_data$WTP)
 mean_wtp   # this should come out to 7.425
 ```
 
-Add predictions and errors:
+Now, as before with our brewmaster models, we need to add predictions and errors for this model to our dataset:
 
 ```{r}
 stout_data$Model_Mean <- mean_wtp
@@ -134,7 +145,7 @@ head(stout_data)
 
 ## Part 5 — Model 2: Split by Stout Preference
 
-Now let's allow our model to use one variable: whether someone likes stout. We'll calculate the average WTP separately for "Yes" and "No."
+Finally, let's allow our model to use one variable to inform creating different estimates of WTP for customers with different characteristics. Namely, whether or not someone likes stout. We'll calculate the average WTP separately for people who responded to the question asking if they like stout with a "Yes" versus a "No" as follows:
 
 ```{r}
 mean_yes <- mean(stout_data$WTP[stout_data$LikesStout == "Yes"])
@@ -168,7 +179,7 @@ head(stout_data)
 
 ## Part 6 — Compare Models Visually
 
-For thsi section, here in just a second I am going to ask you to run some code as a block all at once and not worry too much about exactly what's happening — the point for now is to create the figure to look at what's going on with the performance of our models (as captured by the differences in ERROR) and not so much to try to learn the ins and outs of the ggplot code creating the figure (plenty of time for that later).
+For this section, here in just a second I am going to ask you to run some code as a block all at once and not worry too much about exactly what's happening — the point for now is to create the figure to look at what's going on with the performance of our models (as captured by the differences in ERROR) and not so much to try to learn the ins and outs of the ggplot code creating the figure (plenty of time for that later).
 
 That said, our goals for this plot:
 
@@ -183,7 +194,7 @@ In order to create this figure, you're going to need to use a couple of commands
 So the first time you run this, if you haven't installed these packages previously, you will need to run the following install code:
 
 ```{r}
-##### AFTER YOU RUN THE FOLLOWING THREE LINES ONE TIME, COMMENT THEM OUT BY ADDING
+##### AFTER YOU RUN THE FOLLOWING LINES ONE TIME, COMMENT THEM OUT BY ADDING
 ##### A "#" IN FRONT OF EACH OF THE THREE LINES BELOW. YOU DON'T NEED TO INSTALL THE
 ##### PACKAGES AGAIN
 #
@@ -196,7 +207,7 @@ install.packages("dplyr")
 install.packages("tidyr")
 ```
 
-OK, but then once the packages are installed you will need to make sure that they're loaded up and ready to go from the things in your library, so ALWAYS run the following three:
+OK, but then once the packages are installed you will need to make sure that they're loaded up and ready to go from the things in your library before you try to use them, so run the following three:
 
 ```{r}
 library(ggplot2)
@@ -269,7 +280,7 @@ This is **DATA = MODEL + ERROR** (and conversely **ERROR = DATA - MODEL**) in ac
 
 **PRE = (Error_baseline - Error_new) / Error_baseline**
 
-We'll use SSE (sum of squared errors) as our measure of error size here. Note there are alternative ways to measure/conceptualize error but we're going to just square it for now (we're squaring it to ensure all positive numbers so that we know the extent to which our predictions "missed" when we sum the "misses" for each observation).
+We'll use SSE (sum of squared errors) as our measure of error size here. Note there are alternative ways to measure/conceptualize error and we will discuss them in great detail next week but for now we're going to just square it.
 
 The code below will calculate SSE for each model:
 
@@ -291,7 +302,11 @@ SSE_likes_stout
 
 OK, now we want to compare some of our models using the PRE formula.
 
-As you look at these results, I want you to think about what we're really doing in the stout model compared to the others in marketing terms... instead of just having the same strategy for understanding/predicting an entire market, we're coming up with different strategies for understanding and predicting different segments of the market...which is a lot like... **SEGMENTATION!** That's right! A very rudimentary version of it, but look how well it performs compared to the others...
+As you look at these results, I want you to think about what we're really doing in the "likes stout" model compared to the others in marketing terms... instead of just having the same strategy for understanding/predicting an entire market, we're coming up with different strategies for understanding and predicting different segments of the market...which is a lot like...
+
+**SEGMENTATION!**
+
+That's right! A very rudimentary version of it, but look how well it performs compared to the others!
 
 Let's give it a go:
 

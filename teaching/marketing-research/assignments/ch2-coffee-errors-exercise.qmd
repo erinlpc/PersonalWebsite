@@ -87,9 +87,9 @@ Note we can also generate a similar table to try to calculate the modal ticket t
 table(coffee$Total) #You should see that the mode here is 7
 ```
 
-The problem is that for continuous data like income or ticket total or wtp, mode isn't necessarily THAT informative...it tells us what the most frequent amount people paid but we have no idea based on this value if that most frequent value is near the center of our distribution, if those tickets were similar in composition of the order or just happened by chance, etc.
+The problem is that for continuous data like income or ticket total or wtp, mode isn't necessarily THAT informative...it tells us what the most frequent amount people paid was but we have no idea based on this value if that most frequent value is near the center of our distribution, if those tickets were similar in composition of the order, or if they values just happened a lot by chance, etc.
 
-That said, we're going to go ahead and record it as our mode with a new column:
+That said, we're going to go ahead and record 7 as our mode with a new column:
 
 ```{r}
 b0_mode <- 7
