@@ -9,6 +9,7 @@ format:
     code-overflow: wrap
     self-contained: true
 execute:
+  eval: false
   warning: false
   message: false
 ---
