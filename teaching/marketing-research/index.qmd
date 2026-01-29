@@ -41,7 +41,7 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 2. [Week 2: Stout Exercise](assignments/stout_exercise.qmd) — Practice loading data, intro to model comparison
 
-3. [Week 3: Coffee Errors Exercise](assignmech2-coffee-errors-exercise.qmd) — In this exercise you will calculate A LOT (sorry but it's important for building understanding long term) of different types of error
+3. [Week 3: Coffee Errors Exercise](assignments/ch2-coffee-errors-exercise.qmd) — In this exercise you will calculate A LOT (sorry but it's important for building understanding long term) of different types of error
 
 4. [Week 3: Stout Festival Exercise](assignments/stout-festival-exercise.qmd) — New data from our week 2 client! Now we'll play with different measures of central tendency and error
 
