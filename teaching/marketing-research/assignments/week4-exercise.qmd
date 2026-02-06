@@ -1,0 +1,426 @@
+---
+title: "Week 4 Exercise: Variance, Standard Deviation & Z-Scores"
+subtitle: "Still Grappling with the Festival Data"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-overflow: wrap
+    self-contained: true
+execute:
+  eval: false
+  warning: false
+  message: false
+---
+
+## Overview and Goals
+
+We're continuing to work with our brewery client's festival data. This exercise covers:
+
+1.  (Re?)Familiarize ourselves with measures of how spread out or disperse our data are (variance and standard deviation)
+2.  Explore the idea of a standard normal distribution and z-scores
+3.  Build some intuitions about how standard deviations and z-scores of a normal distribution relate to probabilities and percentiles
+
+::: callout-note
+## Remember the fundamental equation
+
+DATA = MODEL + ERROR → ERROR = DATA - MODEL
+:::
+
+------------------------------------------------------------------------
+
+## Part 0 — Load the Dataset
+
+We're using the same "stout_festival.csv" dataset that we used previously, so you should already have it in your relevant folder. For me, loading it looks something like this:
+
+```{r}
+festival <- read.csv("Datasets/stout_festival.csv")
+
+# Let's take a quick peek at what's going on here to re-familiarize ourselves.
+head(festival)
+summary(festival$WTP)     # We're going to be thinking primarily about WTP again
+```
+
+------------------------------------------------------------------------
+
+## Part 1 — Variance and Standard Deviation
+
+OK, let's warm up with our measures of spread. Remember: mean, median, mode tell us about the "center" of the data, but we also need to know how spread out the data are around that center. That's where variance and standard deviation come in.
+
+### Variance
+
+Conceptually, variance is the "average squared distance" from the mean. Honestly, I don't find that very intuitive...I have a difficult time picturing average square distance but it's mathematically pretty convenient...
+
+Why squared? Well, much like when we were thinking about measures of total model error, squaring helps versus a simple sum because if we just summed up raw differences, positives and negatives cancel each other out. Again as in our model error discussion, squaring also makes the big deviations (outliers) count extra — so logically this measure is pretty consistent with the calls that we made when we identified mean and SSE as our preferred measures of central tendency and error, respectively. Still, variance is what you will often see in formulas but MOST (not all) people find it easier to THINK in terms of standard deviation.
+
+### Standard Deviation
+
+The standard deviation is just the square root of the variance. In other words, we un-square things. It puts things back in the original units (dollars, in our case). While it's not *exactly* the average distance from the mean, it's close enough to that that most of us can think of it that way. That makes SD more intuitive for thinking or talking about the spread of a distribution or how "typical" or "unusual" a given value is.
+
+### Population vs. Sample Formulas
+
+Let's get to work calculating both but first, one quick thing...there's a choice that we have to make as statisticians when we calculate the variance or standard deviation and that is whether we should use the population formulas or the sample formulas.
+
+Now I'm not going to say that you will ALWAYS use the sample formula...but I am going to say that if you wonder whether or not you should use the population formula, you're probably wrong because you should almost never use the population formula. Not never, but close enough. After all, the formulas are called "population" and "sample" and we've been saying all semester that the population will nearly always be some giant group you seek to understand but will never have access to the complete dataset with every member represented. You'll almost always have just a subset of the population you will examine and hope to generalize from to better understand the larger population.
+
+That said, the difference between the two formulas is that for a population (which you almost certainly don't have), you divide your squared deviations by n (the number of observations) and for a sample, you divide by n-1 (one fewer than the number of observations). If you've learned about degrees of freedom previously, this correction is akin to burning a degree of freedom generating a new predictor (if you're not familiar with degrees of freedom, get ready to get familiar in the coming weeks). Another way to think about this is that we're attempting to un-bias our estimate - we assume that our sample won't PERFECTLY describe our population (despite our best hopes), and so we kind of tweak the odds a bit, making the measure of spread guess be just a bit broader for a sample (but the penalty will be reduced as our sample grows in size).
+
+------------------------------------------------------------------------
+
+### Step 1: Calculate the mean
+
+```{r}
+wtp_mean <- mean(festival$WTP)
+wtp_mean
+```
+
+### Step 2: Compute deviations
+
+Deviation = DATA - MODEL = each value minus the mean. (This should feel familiar...if we summed this column, it would give us SoE)
+
+```{r}
+festival$dev <- festival$WTP - wtp_mean
+
+# OK, so we should see this new deviation column in our dataset...let's check:
+head(festival)
+```
+
+### Step 3: Square the deviations
+
+(This, too, should feel familiar...if we just summed this, we'd get SSE!)
+
+```{r}
+festival$dev_sq <- (festival$dev)^2
+
+#...and, once again, I want to prove it to myself, so let's check:
+head(festival)
+```
+
+### Step 4: Average (with a penalty) the squared deviations
+
+(This should NOT feel like SSE - in SSE we sum these squared values)
+
+OK, so what's the "penalty" I reference above...? That's right, I know you tattooed my aside about population and sample formulas above right onto your heart so you knew right away - this is a SAMPLE not the entire population we're interested in! We want to understand more than just these 50 people! So we'll be kind of taking that average with a little penalty by dividing by n-1 instead of by n.
+
+```{r}
+var_wtp <- sum(festival$dev_sq) / (nrow(festival) - 1)
+var_wtp # this should be ~0.7679
+```
+
+### Step 5: Square root of variance = StDev
+
+All we need to do to calculate our standard deviation is to take the square root of the variance:
+
+```{r}
+sd_wtp <- sqrt(var_wtp)
+sd_wtp
+```
+
+### Step 6: Check against built-in functions
+
+OK, so I made you calculate those two values "by hand" (or whatever the coding out the formulas equivalent term is) and you'll probably never do that again... but you did it once and maybe that will help you to remember the formulas and concepts!
+
+Henceforth, you have my permission to instead use the following commands in R:
+
+```{r}
+var_builtin <- var(festival$WTP)
+sd_builtin  <- sd(festival$WTP)
+
+# ...and now we confirm that everything worked correctly and the two versions
+# of calculating give us the same result...(trust but verify):
+
+var_wtp; var_builtin
+sd_wtp; sd_builtin
+```
+
+Sweet success.
+
+And just to be clear while we're here, the actual commands we are using to generate variance and sd above are the "var( )" and "sd( )" bits - everything before the "\<-" section is just a name we're specifying for this particular example that we assigned and then later called. Prior to assigning a meaning to those names, if you type in "var_builtin" or "sd_builtin", R would have had no idea whatsoever what you were talking about. Correspondingly, if you just run "var(festival\$WTP)" or "sd(festival\$WTP)", you will get those values (assuming that the dataset and variable you are requesting those statistics for exist and are loaded and the correct format) because those are commands that mean something to R without you having to specify anything.
+
+With that you understand perfectly, I'm sure. But what if we made a nice little figure to visualize?
+
+------------------------------------------------------------------------
+
+## Part 1.5 — A Tiny Picture of Spread
+
+Time for a quick visual. Same idea as the app, mini-version here:
+
+-   Bars = distribution of WTP (histogram)
+-   Thick green line = mean (our model's single-number "best guess" under SSE)
+-   Light shading = ±1 SD (darker) and ±2 SD (lighter) around the mean ...because "how many SDs from the mean" is how we oftem talk and think about degree of "unusualness."
+
+```{r}
+# install.packages("ggplot2")  # <- uncomment if you don't have it yet
+library(ggplot2)
+
+wtp_df <- data.frame(WTP = festival$WTP)
+
+g <- ggplot(wtp_df, aes(x = WTP)) +
+  # shade ±2 SD first (lightest)
+  annotate("rect",
+           xmin = wtp_mean - 2*sd_wtp, xmax = wtp_mean + 2*sd_wtp,
+           ymin = 0, ymax = Inf, alpha = 0.08, fill = "#1B7837") +
+  # shade ±1 SD (a bit darker)
+  annotate("rect",
+           xmin = wtp_mean - 1*sd_wtp, xmax = wtp_mean + 1*sd_wtp,
+           ymin = 0, ymax = Inf, alpha = 0.14, fill = "#1B7837") +
+  geom_histogram(bins = 30, fill = "grey80", color = "white") +
+  # mean line (dark green to match the app)
+  geom_vline(xintercept = wtp_mean, color = "#1B7837", linewidth = 1.1) +
+  # 1 SD guides (dashed)
+  geom_vline(xintercept = wtp_mean + c(-1, 1)*sd_wtp,
+             color = "#1B7837", linetype = "dashed", linewidth = 0.8) +
+  # 2 SD guides (dotted)
+  geom_vline(xintercept = wtp_mean + c(-2, 2)*sd_wtp,
+             color = "#1B7837", linetype = "dotted", linewidth = 0.8) +
+  labs(
+    title = "Willingness to Pay (WTP): mean (solid) and standard-deviation (dotted) lines",
+    subtitle = "Shaded bands: darker = ±1 SD, lighter = ±2 SD around the mean",
+    x = "WTP (dollars)", y = "Count"
+  ) +
+  theme_minimal(base_size = 13)
+
+g
+```
+
+### The 68-95-99.7 Rule
+
+While we're looking at that picture, let's quantify the "within k SD" idea. If WTP were *exactly* normally distributed, we'd expect ≈68% within ±1 SD, ≈95% within ±2 SD, and ≈99.7% within ±3 SD (the classic 68–95–99.7 rule).
+
+So just for fun (this is your idea of fun, right?!), let's check to see what % of our observations ACTUALLY fall within each one of those standard deviations from our mean...
+
+```{r}
+# Here we're going to calculate the ACTUAL % in our ACTUAL data:
+p_within_1_emp <- mean(abs(festival$WTP - wtp_mean) <= 1*sd_wtp, na.rm = TRUE)
+p_within_2_emp <- mean(abs(festival$WTP - wtp_mean) <= 2*sd_wtp, na.rm = TRUE)
+p_within_3_emp <- mean(abs(festival$WTP - wtp_mean) <= 3*sd_wtp, na.rm = TRUE)
+
+# And here we calculate what would happen in a perfectly normal distribution
+# (mostly so that we can see it looking all nice in a table together below -
+# and don't get hung up on the pnorm() of it all just yet, I'll explain that in
+# the next section):
+p_within_1_norm <- pnorm(1)  - pnorm(-1)   # ~0.6827
+p_within_2_norm <- pnorm(2)  - pnorm(-2)   # ~0.9545
+p_within_3_norm <- pnorm(3)  - pnorm(-3)   # ~0.9973
+
+# Oh look, a beautiful table where we can easily compare:
+data.frame(
+  band            = c("±1 SD", "±2 SD", "±3 SD"),
+  empirical_share = round(c(p_within_1_emp, p_within_2_emp, p_within_3_emp), 4),
+  normal_expected = round(c(p_within_1_norm, p_within_2_norm, p_within_3_norm), 4)
+)
+```
+
+I mean, nobody's perfect but that looks pretty darn close!
+
+------------------------------------------------------------------------
+
+## Part 2 — Z-Scores: Making It Better
+
+Standard deviation is about understanding the spread in our data. But it can be hard to compare how far out in the spread of the data a value is. It would be nice to have a bit of a shortcut to get that kind of information other than having to work it out yourself with the mean and standard deviation (and that's if we don't even attempt to deal with whether or not the data are normally distributed).
+
+This is where our friend the z-score comes in. We can standardize a value by calculating a z-score to put it on a *common scale*. It's as easy as: z = (value - mean)/SD
+
+So why exactly do we want this? A few reasons:
+
+-   **Comparability:** Raw WTP in dollars, time-on-site in minutes, or customer satisfaction on a 1–7 scale can't be compared directly. Once standardized, they're all in "SD units," so we can see which deviations are bigger relative to their own distributions.
+
+-   **Interpretability:** A z-score tells you immediately how unusual a value is. A z = +2 means "2 standard deviations above the mean" — regardless of whether the raw units were dollars, minutes, or survey points.
+
+-   **Probability connection:** If the variable is roughly normally distributed, the famous 68–95–99.7 rule applies. About 68% of values fall within ±1 SD, about 95% within ±2 SD, and about 99.7% within ±3 SD. That lets us go from a z-score straight to a probability with pnorm().
+
+-   **Modeling foundation:** Lots of the tools we'll use later (t-tests, regressions, ANOVAs) rely on this same idea of standardizing to build test statistics. So practicing it here gives you the muscle memory you'll need downstream.
+
+------------------------------------------------------------------------
+
+### Calculating Z-scores
+
+So to summarive: z = (value - mean) / SD.
+
+This puts everything on the same "SD units" scale.
+
+I'll do it once, then it's on you.
+
+```{r}
+festival$z_wtp <- (festival$WTP - wtp_mean) / wtp_sd
+```
+
+You probably got an error there...because I did while I was writing this (sometimes I plan things, sometimes they're real mistakes I leave in).
+
+Can you figure it out/fix it? The error code in your console is a pretty huge clue....
+
+::: {.callout-tip collapse="true"}
+## Click to reveal the answer
+
+Did you get it? I transposed the name for the standard deviation that I'd established earlier. R can't run that command because it's looking for "wtp_sd" but I only told it to create "sd_wtp" - my bad.
+:::
+
+If you didn't fix it already, let's go try the following:
+
+```{r}
+festival$z_wtp <- (festival$WTP - wtp_mean) / sd_wtp
+
+# Peek so you can see raw WTP next to standardized z:
+head(festival[, c("WTP", "z_wtp")], 10)
+
+# This might be a bit more intuitive if you remind yourself of what the mean was
+wtp_mean
+```
+
+So as you can see, with a z-score we're:
+
+1.  centering our distribution around 0 by subtracting the mean such that
+
+2.  any negative z-score was below the mean and
+
+3.  any positive z-score was above the mean, and
+
+4.  those positive and negative values are scaled by the spread (standard deviation) in the data.
+
+------------------------------------------------------------------------
+
+### Understanding pnorm() and qnorm()
+
+So remember when we used the `pnorm()` command just a little bit ago above? Let's return to that now that we know a bit more about z-scores. `pnorm()` and `qnorm()` are commands in R that allow us to interrogate our data a bit more in the context of z-scores.
+
+Specifically:
+
+-   **pnorm()** → "p" stands for probability. You feed it a z-score, and it tells you the probability of being less than or equal to that z (the left-tail area under the curve). Example: `pnorm(1.96) ≈ 0.975` → about 97.5% of a Normal distribution is below z = 1.96.
+
+-   **qnorm()** → "q" stands for quantile. You feed it a probability (between 0 and 1), and it gives you the z-score that cuts off that proportion of the distribution. Example: `qnorm(0.975) ≈ 1.96` → the 97.5th percentile sits about 1.96 SD above the mean.
+
+Together they're opposites: pnorm goes z → probability, qnorm goes probability → z. That's how we jump back and forth between "how many SDs away?" and "what percent of people fall there?"
+
+Managerially, having a good intuition for what's going on here is ***REALLY*** valuable. It's rare for the people you will be working with and reporting to to be as well-trained as you will be by the end of this course. Most people are pretty comfortable thinking in terms of percentiles though.
+
+Let's play around with that idea a bit below:
+
+------------------------------------------------------------------------
+
+### Outliers - How Often Do "Big" z's Show Up?
+
+Let's count how often \|z\| \> 2 and \|z\| \> 3 in our sample:
+
+```{r}
+prop_absz_gt2 <- mean(abs(festival$z_wtp) > 2, na.rm = TRUE)
+prop_absz_gt3 <- mean(abs(festival$z_wtp) > 3, na.rm = TRUE)
+prop_absz_gt2; prop_absz_gt3
+
+# As a point of reference, here's what we'd expect in a standard normal distribution:
+p_absz_gt2_normal <- 2 * (1 - pnorm(2))  # about 4.55%
+p_absz_gt3_normal <- 2 * (1 - pnorm(3))  # about 0.27%
+p_absz_gt2_normal; p_absz_gt3_normal
+```
+
+------------------------------------------------------------------------
+
+### From Dollars → z → Probability (pnorm)
+
+OK, but to the managerial relevance/translation point, here's the cool thing about z's: they make it really easy to get answers to specific, intuitive, practical questions.
+
+For example, suppose our brewery client asked:
+
+**"What fraction of customers have WTP \>= \$10?"\
+\
+**(First we would specify the sampling limitations here but then we could do the following)
+
+```{r}
+# Step 1: Convert $10 into z.
+z_for_10 <- (10 - wtp_mean) / sd_wtp
+z_for_10
+
+# Step 2: Identify the right-tail probability at that z:
+# (Right-tail refers to the right side of the distribution, so we're trying to 
+# identify the percentage of observations to the right of (or greater than) a
+# particular value)
+p_WTP_ge_10 <- 1 - pnorm(z_for_10)
+p_WTP_ge_10
+
+# Alternatively, you can specify within the command that you want a right-tail 
+# probability by including "lower.tail=FALSE" within the command as seen below:
+p_WTP_ge_10lt <- pnorm(z_for_10, lower.tail = FALSE)  # same as 1 - pnorm(z_for_10)
+p_WTP_ge_10lt
+```
+
+We get the same thing, so your preference. Specifying as 1-pnorm is just less typing and I'm lazy.
+
+Note: If you want a left-tail question - so if you are trying to identify the percentage of observations to the left of (or less than) a given value - you can just use `pnorm(z_for_8)` directly, you would not use `1-pnorm(z_for_8)`.)
+
+Similarly, our client could ask us something like:
+
+**"What WTP are we looking at around the 90th percentile?" \
+**
+
+In other words, "at what value of WTP are only 10% of responses higher amounts?" - if this is a super small batch, specialty product, we might be perfectly happy capturing only that top 10% of the market in terms of WTP.
+
+We can answer that question as follows:
+
+```{r}
+z_90   <- qnorm(0.90)                 # z for the 90th percentile
+wtp_90 <- wtp_mean + z_90 * sd_wtp    # back to dollars
+wtp_90
+```
+
+Handy rule of thumb: `qnorm(0.975) ≈ 1.96` (aka the 95% CI ±1.96 SD trick).
+
+------------------------------------------------------------------------
+
+### Comparing Two Customers Fairly (by Standardizing)
+
+Another question we might get from our client could be something like
+
+**"I asked two different client what their WTP was and got two pretty different answers - on said 8.50 and the other said 11.75. Which customer is farther from typical?"**
+
+We can do that, too!
+
+```{r}
+wtp_A <- 8.50
+wtp_B <- 11.75
+
+z_A <- (wtp_A - wtp_mean) / sd_wtp
+z_B <- (wtp_B - wtp_mean) / sd_wtp
+z_A; z_B
+```
+
+The bigger \|z\| is the more unusual the customer. That's the whole point of z: one scale to rule them all, whether the raw units are dollars, minutes, or tacos.
+
+------------------------------------------------------------------------
+
+That's it. You computed center and spread, standardized values, and mapped z to probabilities and percentiles. If you want to keep playing, try different dollar thresholds or percentiles (e.g., 25th, 75th) and see how the answers move or play with the little bonus example below:
+
+------------------------------------------------------------------------
+
+## Bonus — pnorm() and qnorm() are Opposites
+
+OK, you made it this far… here's a neat little trick to finish.
+
+`pnorm()` takes a z and gives you a probability (area under the curve). `qnorm()` takes a probability and gives you a z (the cutoff point). They're like two sides of the same coin.
+
+Let's start with z = 2. `pnorm(2)` gives us the probability of being ≤ 2 SD above the mean.
+
+```{r}
+pnorm(2)   # ≈ 0.9772 → about 97.7% of values are below z = 2
+
+# Now feed that probability right back into qnorm():
+qnorm(0.9772499)
+# …and you get 2 again (within tiny rounding error). 
+
+# Note also that instead of re-entering the value we got from pnorm, we can just
+# nest the commands as below:
+qnorm(pnorm(2))
+# That's the round-trip: z → p → z.
+```
+
+Try the reverse:
+
+```{r}
+qnorm(0.975)         # → 1.96 (the 97.5th percentile cutoff)
+pnorm(1.959964)
+# or with nested commands instead:
+pnorm(qnorm(0.975))  # → 0.975 (the probability we started with)
+```
+
+So `pnorm()` and `qnorm()` are mathematical opposites. That's why they're so useful: one jumps from SD-units to probabilities, the other jumps back from probabilities to SD-units.
+
+Not a ton of use to going roundtrip here but it is a fun way to check your intuition and your code.

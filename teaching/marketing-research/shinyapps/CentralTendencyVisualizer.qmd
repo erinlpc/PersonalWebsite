@@ -1,0 +1,15 @@
+---
+title: "Central Tendency and CLT Explorer"
+author: "Erin L Percival Carter"
+format: html
+---
+
+::: callout-tip
+## Alternative Access
+
+If the embedded app below doesn't display correctly in your browser, you can [open it directly in a new tab](https://erinpcarter.shinyapps.io/CentralTendencyVisualizerUpdated/){target="_blank"}.
+:::
+
+<iframe src="https://erinpcarter.shinyapps.io/CentralTendencyVisualizerUpdated/" width="100%" height="900px" style="border:none;" title="Central Tendency and CLT Explorer">
+
+</iframe>
