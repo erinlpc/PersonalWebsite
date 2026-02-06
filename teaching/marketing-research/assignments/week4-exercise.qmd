@@ -349,7 +349,7 @@ Note: If you want a left-tail question - so if you are trying to identify the pe
 
 Similarly, our client could ask us something like:
 
-**"What WTP are we looking at around the 90th percentile?" \
+**"What WTP are we looking at around the 90th percentile?"\
 **
 
 In other words, "at what value of WTP are only 10% of responses higher amounts?" - if this is a super small batch, specialty product, we might be perfectly happy capturing only that top 10% of the market in terms of WTP.
