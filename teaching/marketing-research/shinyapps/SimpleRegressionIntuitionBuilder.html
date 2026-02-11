@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Erin L Percival Carter">
 
-<title>Marketing Research &amp; Analytics – Erin Percival Carter</title>
+<title>Simple Regression Intuition Builder – Erin Percival Carter</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,25 +24,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<link href="../../images/favicon.png" rel="icon" type="image/png">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-edad393940abb5f3c6973fe701e515d2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-64dd0724fc1e4373aaf13a50643b6aa4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../images/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-edad393940abb5f3c6973fe701e515d2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-64dd0724fc1e4373aaf13a50643b6aa4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -81,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Erin Percival Carter</span>
     </a>
   </div>
@@ -92,29 +93,29 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Erin Percival Carter</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../research.html"> 
+    <a class="nav-link" href="../../../research.html"> 
 <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../teaching/index.html"> 
+    <a class="nav-link" href="../../../teaching/index.html"> 
 <span class="menu-text">Teaching</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../cv.html"> 
+    <a class="nav-link" href="../../../cv.html"> 
 <span class="menu-text">CV</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../bard.html"> 
+    <a class="nav-link" href="../../../bard.html"> 
 <span class="menu-text">BARD</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../contact.html"> 
+    <a class="nav-link" href="../../../contact.html"> 
 <span class="menu-text">Contact</span></a>
   </li>  
 </ul>
@@ -128,30 +129,27 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul class="collapse">
-  <li><a href="#interactive-tools" id="toc-interactive-tools" class="nav-link active" data-scroll-target="#interactive-tools">Interactive Tools</a></li>
-  <li><a href="#coding-assignments" id="toc-coding-assignments" class="nav-link" data-scroll-target="#coding-assignments">Coding Assignments</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Marketing Research &amp; Analytics</h1>
-<p class="subtitle lead">MKT 378</p>
+<h1 class="title">Simple Regression Intuition Builder</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Erin L Percival Carter </p>
+          </div>
+  </div>
     
   
     
@@ -162,104 +160,24 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This course provides hands-on training in research design, data collection, and analysis using R. You’ll learn to translate quantitative findings into actionable marketing insights—and build skills that transfer to any data-driven role.</p>
-<hr>
-<section id="interactive-tools" class="level2">
-<h2 class="anchored" data-anchor-id="interactive-tools">Interactive Tools</h2>
-<p>These Shiny applications help you explore statistical concepts visually. Play with them to build intuition before diving into the math.</p>
-<ol type="1">
-<li><p><a href="../../teaching/marketing-research/shinyapps/BagelRunPredictor.html">Bagel Run Predictor</a> — Our first attempts at some basic model comparisons…but make it about bagels…</p></li>
-<li><p><a href="../../teaching/marketing-research/shinyapps/CentralTendencyVisualizer.html">Central Tendency &amp; CLT Explorer</a> — Visualizing samples, distributions, measures of central tendency, and Z scores</p></li>
-<li><p><a href="../../teaching/marketing-research/shinyapps/SimpleModelsFStats.html">Simple Models and F Stats</a> — This week we are beginning to do some very simple model comparisons and start working with new model comparison statistics</p></li>
-<li><p><a href="../../teaching/marketing-research/shinyapps/SimpleRegressionIntuitionBuilder.html">Simple Models and F Stats</a> — We’re officially working with model comparisons of mean only versus simple regression models!</p></li>
-</ol>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p><strong>More Coming Soon</strong> · Links to Shiny apps will be added as they’re migrated to the new site.</p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Alternative Access
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>If the embedded app below doesn’t display correctly in your browser, you can <a href="https://erinpcarter.shinyapps.io/SimpleRegressionIntuitionBuilderWk8/" target="_blank">open it directly in a new tab</a>.</p>
 </div>
-<!-- 
-Example structure:
-### Sampling & Distributions
-- [Central Limit Theorem Explorer](https://your-account.shinyapps.io/clt/) — Watch sampling distributions emerge
-- [Confidence Interval Simulator](https://your-account.shinyapps.io/ci/) — Understand what 95% confidence really means
-
-### Regression
-- [Simple Regression Visualizer](https://your-account.shinyapps.io/regression/) — See how data points influence the line
--->
+</div>
+<iframe src="https://erinpcarter.shinyapps.io/SimpleRegressionIntuitionBuilderWk8/" width="100%" height="900px" style="border:none;" title="Simple Regression Intuition Builder">
+</iframe>
 <hr>
-</section>
-<section id="coding-assignments" class="level2">
-<h2 class="anchored" data-anchor-id="coding-assignments">Coding Assignments</h2>
-<p>These assignments build your R skills progressively. Each is designed to be accessible—you don’t need prior programming experience.</p>
-<section id="getting-started" class="level3">
-<h3 class="anchored" data-anchor-id="getting-started">Getting Started</h3>
-<ol type="1">
-<li><p><a href="../../teaching/marketing-research/assignments/hw1-file-management.html">Week 1: File Management Practice</a> — Install R/RStudio, set up your folders, learn relative paths</p></li>
-<li><p><a href="../../teaching/marketing-research/assignments/stout_exercise.html">Week 2: Stout Exercise</a> — Practice loading data, intro to model comparison</p></li>
-<li><p><a href="../../teaching/marketing-research/assignments/ch2-coffee-errors-exercise.html">Week 3: Coffee Errors Exercise</a> — In this exercise you will calculate A LOT (sorry but it’s important for building understanding long term) of different types of error</p></li>
-<li><p><a href="../../teaching/marketing-research/assignments/stout-festival-exercise.html">Week 3: Stout Festival Exercise</a> — New data from our week 2 client! Now we’ll play with different measures of central tendency and error</p></li>
-<li><p><a href="../../teaching/marketing-research/assignments/week4-exercise.html">Week 4: Examining Spread and Standardization</a> — In this exercise we examine why and how to examine the spread or variability of our data. We also have some fun (maybe?) with Z scores</p></li>
-</ol>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>More coming</strong> · Additional assignments will be added throughout the semester.</p>
-</div>
-</div>
-</div>
-<!--
-### Getting Started
-1. [Assignment 1: R Basics](assignments/01-r-basics.qmd) — Variables, vectors, and data frames
-2. [Assignment 2: Data Visualization](assignments/02-visualization.qmd) — ggplot2 fundamentals
-
-### Analysis
-3. [Assignment 3: Descriptive Statistics](assignments/03-descriptives.qmd) — Summarizing data
-4. [Assignment 4: Hypothesis Testing](assignments/04-hypothesis-testing.qmd) — t-tests and beyond
--->
-<hr>
-</section>
-</section>
-<section id="resources" class="level2">
-<h2 class="anchored" data-anchor-id="resources">Resources</h2>
-<section id="setup" class="level3">
-<h3 class="anchored" data-anchor-id="setup">Setup</h3>
-<p>Before the first assignment, you’ll need:</p>
-<ol type="1">
-<li><strong>R</strong> — <a href="https://cran.r-project.org/">Download from CRAN</a></li>
-<li><strong>RStudio</strong> — <a href="https://posit.co/download/rstudio-desktop/">Download from Posit</a></li>
-</ol>
-<p>I’ll walk through installation in class, but these links have everything you need.</p>
-</section>
-<section id="references" class="level3">
-<h3 class="anchored" data-anchor-id="references">References</h3>
-<ul>
-<li><a href="https://r4ds.hadley.nz/">R for Data Science</a> — Free online textbook; excellent for beginners</li>
-<li><a href="https://quarto.org/">Quarto Documentation</a> — For when you’re ready to create your own reports</li>
-<li><a href="https://rstudio.github.io/cheatsheets/data-visualization.pdf">ggplot2 Cheat Sheet</a> — Keep this handy</li>
-</ul>
-</section>
-<section id="getting-help" class="level3">
-<h3 class="anchored" data-anchor-id="getting-help">Getting Help</h3>
-<p>Stuck on an assignment? In order:</p>
-<ol type="1">
-<li>Re-read the error message carefully</li>
-<li>Google the error message (seriously—this is what professionals do)</li>
-<li>Check the course discussion board</li>
-<li>Come to office hours</li>
-</ol>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -687,5 +605,5 @@ Example structure:
 
 
 
-<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

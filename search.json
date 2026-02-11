@@ -196,9 +196,16 @@
     "text": "Review All Plots\nLet’s take a look at all the plots we just made:\n\nCEplot\n\n\nCElogplot\n\n\nSoEplot\n\n\nSoElogplot\n\n\nSAEplot\n\n\nSAElogplot\n\n\nSSEplot"
   },
   {
-    "objectID": "teaching/marketing-research/shinyapps/CentralTendencyVisualizer.html",
-    "href": "teaching/marketing-research/shinyapps/CentralTendencyVisualizer.html",
-    "title": "Central Tendency and CLT Explorer",
+    "objectID": "teaching/marketing-research/shinyapps/SimpleRegressionIntuitionBuilder.html",
+    "href": "teaching/marketing-research/shinyapps/SimpleRegressionIntuitionBuilder.html",
+    "title": "Simple Regression Intuition Builder",
+    "section": "",
+    "text": "TipAlternative Access\n\n\n\nIf the embedded app below doesn’t display correctly in your browser, you can open it directly in a new tab."
+  },
+  {
+    "objectID": "teaching/marketing-research/shinyapps/SimpleModelsFStats.html",
+    "href": "teaching/marketing-research/shinyapps/SimpleModelsFStats.html",
+    "title": "Simple Models F Stats",
     "section": "",
     "text": "TipAlternative Access\n\n\n\nIf the embedded app below doesn’t display correctly in your browser, you can open it directly in a new tab."
   },
@@ -214,7 +221,7 @@
     "href": "teaching/marketing-research/index.html#interactive-tools",
     "title": "Marketing Research & Analytics",
     "section": "Interactive Tools",
-    "text": "Interactive Tools\nThese Shiny applications help you explore statistical concepts visually. Play with them to build intuition before diving into the math.\n\nWeek 2: Bagel Run Predictor — Our first attempts at some basic model comparisons…but make it about bagels…\nWeek 4: Central Tendency & CLT Explorer — Visualizing samples, distributions, measures of central tendency, and Z scores\n\n\n\n\n\n\n\nMore Coming Soon · Links to Shiny apps will be added as they’re migrated to the new site."
+    "text": "Interactive Tools\nThese Shiny applications help you explore statistical concepts visually. Play with them to build intuition before diving into the math.\n\nBagel Run Predictor — Our first attempts at some basic model comparisons…but make it about bagels…\nCentral Tendency & CLT Explorer — Visualizing samples, distributions, measures of central tendency, and Z scores\nSimple Models and F Stats — This week we are beginning to do some very simple model comparisons and start working with new model comparison statistics\nSimple Models and F Stats — We’re officially working with model comparisons of mean only versus simple regression models!\n\n\n\n\n\n\n\nMore Coming Soon · Links to Shiny apps will be added as they’re migrated to the new site."
   },
   {
     "objectID": "teaching/marketing-research/index.html#coding-assignments",
@@ -563,6 +570,13 @@
     "objectID": "teaching/marketing-research/shinyapps/BagelRunPredictor.html",
     "href": "teaching/marketing-research/shinyapps/BagelRunPredictor.html",
     "title": "Bagel Run Predictor App",
+    "section": "",
+    "text": "TipAlternative Access\n\n\n\nIf the embedded app below doesn’t display correctly in your browser, you can open it directly in a new tab."
+  },
+  {
+    "objectID": "teaching/marketing-research/shinyapps/CentralTendencyVisualizer.html",
+    "href": "teaching/marketing-research/shinyapps/CentralTendencyVisualizer.html",
+    "title": "Central Tendency and CLT Explorer",
     "section": "",
     "text": "TipAlternative Access\n\n\n\nIf the embedded app below doesn’t display correctly in your browser, you can open it directly in a new tab."
   },
