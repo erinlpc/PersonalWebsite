@@ -1,0 +1,17 @@
+---
+title: "Simple Regression Intuition Builder"
+author: "Erin L Percival Carter"
+format: html
+---
+
+::: callout-tip
+## Alternative Access
+
+If the embedded app below doesn't display correctly in your browser, you can [open it directly in a new tab](https://erinpcarter.shinyapps.io/SimpleRegressionIntuitionBuilderWk8/){target="_blank"}.
+:::
+
+<iframe src="https://erinpcarter.shinyapps.io/SimpleRegressionIntuitionBuilderWk8/" width="100%" height="900px" style="border:none;" title="Simple Regression Intuition Builder">
+
+</iframe>
+
+---
