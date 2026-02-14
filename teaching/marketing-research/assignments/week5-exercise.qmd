@@ -1,0 +1,301 @@
+---
+title: "Week 5 Exercise: PRE, Critical Values, and the F Test"
+subtitle: "Dataset: stout_festival.csv (n = 50)"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-overflow: wrap
+    self-contained: true
+execute:
+  eval: false
+  warning: false
+  message: false
+---
+
+## Notation Reminders
+
+Before we get going, here's a quick reference:
+
+| Term | Definition |
+|------|------------|
+| Model C (compact) | In this exercise/chapter, predicts a constant C for all observations |
+| Model A (augmented) | In this exercise/chapter, predicts the sample mean ȳ for all observations |
+| SSE | Sum of Squared Errors |
+| SSR | SSE(C) - SSE(A) — Sum of Squares Reduced by moving to A from C |
+| PRE | SSR / SSE(C) — Proportional Reduction in Error |
+| df1 | p_A - p_C = 1 - 0 = 1 — degrees of freedom for numerator |
+| df2 | n - p_A = n - 1 — degrees of freedom for denominator |
+| MSR | SSR / df1 |
+| MSE | SSE(A) / df2 |
+| F | MSR / MSE |
+
+::: {.callout-note}
+## Remember the fundamental equation
+DATA = MODEL + ERROR
+:::
+
+---
+
+## Part 0 — Load the Dataset
+
+We're still rocking good ol' stout_festival.csv so load it up.
+
+```{r}
+festival <- read.csv("Datasets/stout_festival.csv")
+
+# Quick peeks 
+head(festival)
+str(festival)
+summary(festival) 
+```
+
+There's another command I really like when I'm loading up/re-familiarizing myself with a dataset and it's called `describe()` but it lives in the psych package.
+
+You may need to install it if you haven't...uncomment the install.packages line below if library doesn't work, run it, then try the library command again. Remember, once you've installed a package once, you don't need to install it again, just call it with the library command.
+
+```{r}
+library(psych)
+#install.packages("psych")
+
+# OK, and here's the describe command I actually wanted to use:
+describe(festival)
+```
+
+I just personally prefer this to the summary output.
+
+---
+
+## Part 1 — PRE Refresher with Mean-Only Models
+
+Here we compare:
+
+- **Model C:** constant prediction C
+- **Model A:** mean-only prediction
+
+```{r}
+# Choose a constant C to compare against the mean (feel free to change)
+C <- 9.33
+
+# Compute sample mean (ȳ)
+ybar <- mean(festival$WTP, na.rm = TRUE)
+
+# Build the two sets of predictions
+festival$yhat_C <- C   
+festival$yhat_A <- ybar
+
+festival$eiC <- festival$WTP - festival$yhat_C
+festival$eiA <- festival$WTP - festival$yhat_A
+
+head(festival)
+```
+
+### Compute SSEs
+
+```{r}
+SSE_C <- sum(festival$eiC^2)
+SSE_A <- sum(festival$eiA^2)
+
+SSE_C
+SSE_A
+```
+
+### How much did Model A reduce the error relative to Model C?
+
+```{r}
+SSR <- SSE_C - SSE_A
+SSR
+
+# Proportional reduction in error
+PRE <- SSR / SSE_C
+PRE
+```
+
+### Quick Check
+
+If you go back to the line of code where you set the value for C and change C so that it is now defined as being equal to ybar and RERUN the code from that point to here, you should wind up with PRE == 0.
+
+Try it to prove it to yourself and think about why/what's going on to make that happen...
+
+Note: because the mean minimizes SSE, SSE(A) ≤ SSE(C) for any constant C, so PRE ≥ 0 here.
+
+(Note, depending on how you ask for the mean of WTP/ybar, it might round the value... the values that appear from the `describe()` function, for example, will be rounded to 2 decimal places while in the `summary()` function it's rounded to three...those values for C will give you something close to 0 but it won't be quite there. You can get the true, not rounded value quickly by explicitly asking for the mean using the command below)
+
+```{r}
+mean(festival$WTP)
+
+# For the record, you can also get it from summary() and describe(), you just have to
+# specify it:
+summary(festival, digits=10)
+
+fully.describe <- describe(festival)
+fully.describe
+print(fully.describe, digits=10)
+```
+
+---
+
+## Part 2 — Hand-coded F Test
+
+Remember, with an F Test we're trying to understand whether the improvement in PRE we're seeing for the number of predictors we add when we move from Model C to Model A is THAT much better than what we would expect to see from any old predictor just by chance. So we work through/build on the following:
+
+| Step | Formula | Description |
+|------|---------|-------------|
+| SSR | SSE(C) - SSE(A) | The improvement in squared error between models |
+| MSR | SSR / df1 | The improvement per additional predictor |
+| MSE | SSE(A) / df2 | Residual MS in Model A divided by the total number of available predictors that remain |
+| F | MSR / MSE | The final ratio we're looking to calculate - performance we're seeing versus average performance expected |
+
+### Degrees of Freedom
+
+```{r}
+# Degrees of freedom for our contrast (this corresponds to the parameters in each model):
+n   <- nrow(festival) # nrow() is what it sounds like - it returns the number of rows in
+# (and thus the sample size of) the dataset (and the maximmum number of parameters)
+df1 <- 1           # this is # parameters in Model A - # parameters in Model C, (1 - 0 = 1)
+df2 <- n - 1       # n - # parameters in Model A, (50 - 1 = 49)
+```
+
+### Calculate F and p-value
+
+Larger F supports Model A.
+
+```{r}
+MSR <- SSR / df1
+MSR
+MSE <- SSE_A / df2
+MSE
+Fval <- MSR / MSE
+Fval
+pval <- 1 - pf(Fval, df1, df2)
+pval
+
+cat("MSR =", round(MSR, 4), "  MSE =", round(MSE, 4), "\n")
+cat("F   =", round(Fval, 4), "  p   =", round(pval, 4), "\n\n")
+```
+
+### Decision Rule Examples
+
+- Compare F to the α=.05 cutoff in crit_table$F_crit.
+- Or compare PRE to the α=.05 PRE_crit. They agree.
+
+---
+
+## Part 3 — Write a Tiny Helper Function
+
+Let's wrap the logic into a small utility. This will be handy for experimenting with different constants C without retyping:
+
+```{r}
+simple_f_test <- function(y, C) {
+  n   <- length(y)
+  ybar<- mean(y, na.rm = TRUE)
+  SSE_C <- sum((y - C)^2, na.rm = TRUE)
+  SSE_A <- sum((y - ybar)^2, na.rm = TRUE)
+  SSR   <- SSE_C - SSE_A
+  PRE   <- SSR / SSE_C
+  df1 <- 1
+  df2 <- n - 1
+  MSR <- SSR / df1
+  MSE <- SSE_A / df2
+  Fval<- MSR / MSE
+  p   <- 1 - pf(Fval, df1, df2)
+  c(PRE = PRE, F = Fval, p = p, df1 = df1, df2 = df2, ybar = ybar,
+    SSE_C = SSE_C, SSE_A = SSE_A, SSR = SSR, MSR = MSR, MSE = MSE)
+}
+
+# Try it out with C = 9.5 and 9.33 (or any other constant you want to test)
+simple_f_test(festival$WTP, 9.5)
+simple_f_test(festival$WTP, 9.33)
+
+# Quick sanity check: using C = ybar should give PRE = 0, F = 0, p = 1
+simple_f_test(festival$WTP, mean(festival$WTP))
+```
+
+---
+
+## Part 4 — Critical Values for F and for PRE
+
+As we learned from the reading this week, the thing about adding predictors is that even if Model C were "true" and Model A were not an improvement, we would still expect PRE to bounce above zero by chance...so we need to decide how big of an improvement in PRE we need to see before we feel like there's a meaningful, not-as-likely-to-be-just-chance improvement present in Model A.
+
+We use "critical values" to decide when the improvement is enough for us to take seriously and feel confident in rejecting Model C for the superior Model A.
+
+### F Critical Values
+
+```{r}
+# F critical values for common alphas (right tail)
+F_crit_10 <- qf(0.90, df1 = df1, df2 = df2)   # alpha = .10
+F_crit_07 <- qf(0.93, df1 = df1, df2 = df2)   # alpha = .07 (approx)
+F_crit_05 <- qf(0.95, df1 = df1, df2 = df2)   # alpha = .05
+F_crit_01 <- qf(0.99, df1 = df1, df2 = df2)   # alpha = .01
+F_crit_001<- qf(0.999,df1 = df1, df2 = df2)   # alpha = .001
+
+crit_table <- data.frame(
+  alpha = c(0.10, 0.07, 0.05, 0.01, 0.001),
+  F_crit = round(c(F_crit_10, F_crit_07, F_crit_05, F_crit_01, F_crit_001), 4)
+)
+crit_table
+```
+
+### Convert F Critical to PRE Critical
+
+We can also convert F criticals into PRE criticals (remember, there's a one-to-one mapping):
+
+PRE = (df1 × F) / (df1 × F + df2)
+
+Let's go ahead and write another function to do exactly that:
+
+```{r}
+PRE_from_F <- function(Fval, df1, df2) (df1 * Fval) / (df1 * Fval + df2)
+
+crit_table$PRE_crit <- round(PRE_from_F(crit_table$F_crit, df1, df2), 4)
+crit_table
+
+#...and just for fun, let's do it in reverse, too:
+F_from_pre <- function(PRE, df1, df2) (PRE/df1) / ((1 - PRE)/df2)
+
+# Compare your observed PRE to PRE_crit at alpha = .05, .01, etc.
+cat("Observed PRE =", round(PRE, 4), "\n\n")
+```
+
+### This is Kind of Badass
+
+OK, so just to be clear because this is kind of badass for the first 5 weeks of your undergraduate level class...
+
+You have written three different functions in the code above - like from scratch - that for a simple model comparison can perform a simple F test comparing an input value for Model C to that function to the Model A that uses the mean as the sole predictor as well as a function that can calculate PRE values that correspond to that F OR F from PRE.
+
+```{r}
+# For example, I could examine the F test comparing a Model C of 9.19:
+simple_f_test(festival$WTP, 9.19)
+
+# with the f test I get from a Model C with an estimate of 8.88:
+simple_f_test(festival$WTP, 8.88)
+
+# and I can generate the F from the PRE as well:
+F_from_pre(.125, 1, 49)
+```
+
+### Exploring: What C Gives a 30% PRE?
+
+Now I can also figure out what F I need/would correspond to a 30% reduction in error:
+
+```{r}
+F_from_pre(.3, 1, 49)
+
+# and I could iterate with the simple_F_test function to determine what mean produces
+# that F...
+simple_f_test(festival$WTP, 3.33)
+simple_f_test(festival$WTP, 5.55)
+simple_f_test(festival$WTP, 7.77)
+simple_f_test(festival$WTP, 8.30)
+simple_f_test(festival$WTP, 8.35)
+simple_f_test(festival$WTP, 8.45)              
+simple_f_test(festival$WTP, 8.59)
+simple_f_test(festival$WTP, 8.62)
+simple_f_test(festival$WTP, 8.65)
+simple_f_test(festival$WTP, 8.64)
+```
+
+Well, that's pretty darn close! So the low estimate for Model C that corresponds to a PRE of 30% and a corresponding F of 21 (within rounding error and limited to two decimal points) is 8.64...
+
+What's the high estimate...?

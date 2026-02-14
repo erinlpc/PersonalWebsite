@@ -51,7 +51,9 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 4. [Week 3: Stout Festival Exercise](assignments/stout-festival-exercise.qmd) — New data from our week 2 client! Now we'll play with different measures of central tendency and error
 
-4. [Week 4: Examining Spread and Standardization](assignments/week4-exercise.qmd) — In this exercise we examine why and how to examine the spread or variability of our data. We also have some fun (maybe?) with Z scores
+5. [Week 4: Examining Spread and Standardization](assignments/week4-exercise.qmd) — In this exercise we examine why and how to examine the spread or variability of our data. We also have some fun (maybe?) with Z scores
+
+6. [Week 5: PRE, Critical Values, and F Tests](assignments/week5-exercise.qmd) — In this exercise we start really working on some more substantial model comparisons and the PRE, critical value, and F Test conversations that allows follow
 
 ::: {.callout-note appearance="minimal"}
 **More coming** · Additional assignments will be added throughout the semester.
