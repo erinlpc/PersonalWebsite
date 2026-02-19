@@ -1,0 +1,37 @@
+/*-- scss:defaults --*/
+
+// Import Inter for teaching pages
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+// Override body font for teaching pages
+$font-family-sans-serif: "Inter", system-ui, sans-serif;
+
+/*-- scss:rules --*/
+
+// Teaching-specific adjustments for Inter
+// Inter benefits from slightly tighter line-height than serif fonts
+body {
+  line-height: 1.7;
+}
+
+// Adjust paragraph spacing for sans-serif readability
+p {
+  margin-bottom: 1.25rem;
+}
+
+// Code blocks can have slightly less contrast against sans-serif body
+code {
+  font-size: 0.88em;
+}
+
+// Lists benefit from a bit more spacing with sans-serif
+li {
+  margin-bottom: 0.4rem;
+}
+
+// Callout body text adjustment
+.callout {
+  p {
+    line-height: 1.65;
+  }
+}
