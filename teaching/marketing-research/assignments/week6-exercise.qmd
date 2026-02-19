@@ -1,0 +1,478 @@
+---
+title: "Week 6 Exercise: Power, Sensitivity, SESOI, Effect Size, and CIs"
+subtitle: "Dataset: stout_festival.csv"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-overflow: wrap
+    self-contained: true
+execute:
+  eval: false
+  warning: false
+  message: false
+---
+
+## Reminders Before We Get Started
+
+We're still focused on only the simplest model comparisons; comparing a model with a prediction that required no "peek" at the data with a model that requires one "peek" at the data — which we will use to calculate the mean and use that as our augmented model for reasons we've discussed previously. So, that means throughout this exercise:
+
+| Term                | Definition                            |
+|---------------------|---------------------------------------|
+| Model C (Compact)   | Predicts a fixed constant C (p_C = 0) |
+| Model A (Augmented) | Predicts the sample mean (p_A = 1)    |
+| df1                 | p_A - p_C = 1 - 0 = 1                 |
+| df2                 | n - p_A = n - 1 = 50 - 1 = 49         |
+
+F(1, n-1; or 1, 49) is the reference distribution.
+
+Throughout this exercise, you'll explore:
+
+1.  Power from a "true" PRE (design stage)
+2.  Power from an observed PRE (post-hoc)
+3.  Bias adjustment for observed PRE
+4.  Sensitivity analysis: smallest detectable PRE and Smallest Effect Size of Interest (SESOI)
+5.  Interpreting and communicating findings (effect size and CI)
+
+------------------------------------------------------------------------
+
+## Load the Data
+
+```{r}
+# Load data (note, we're using our old friend stout_festival.csv)
+festival <- read.csv("Datasets/stout_festival.csv")
+n <- nrow(festival)
+```
+
+------------------------------------------------------------------------
+
+## Part 1 — Design Power from a True PRE
+
+This is the "ideal" calculation you'd use when designing a study. It asks: If the *true* PRE were X, how often would we detect it?
+
+So it's kind of wild that "we're just going to write a quick custom function" is just a thing we've been doing in this class for a while now...but we're just going to write a quick custom function.
+
+Before we write the "big" function, we're going to write/define a couple of helper functions — you'll see that `f2_from_PRE` that I define here is then referenced in the `power_from_PRE_true` function we define below that. Functions on functions.
+
+### Helper Functions
+
+```{r}
+f2_from_PRE <- function(PRE) PRE / (1 - PRE)
+PRE_from_f2 <- function(f2)  f2 / (1 + f2)
+```
+
+### The "Big" Function
+
+```{r}
+power_from_PRE_true <- function(PRE_true, n, alpha = 0.05) {
+  df1 <- 1
+  df2 <- n - 1
+  Fcrit  <- qf(1 - alpha, df1, df2)
+  f2     <- f2_from_PRE(PRE_true)
+  lambda <- df2 * f2
+  1 - pf(Fcrit, df1, df2, ncp = lambda)
+}
+```
+
+OK, now with that defined, we can use our function. First let's try an example that you'll be able to confirm with Table 5.3 in the textbook: true PRE = .20, n = 50, alpha = .05 (though if we want alpha = .05, we don't have to specify anything, we set alpha = .05 as a default when we wrote the function above, so it will default to that):
+
+```{r}
+power_from_PRE_true(0.20, n = 50, alpha = .05)
+
+power_from_PRE_true(0.20, n = 50)
+```
+
+So this answers the question: "If the true proportional reduction in error were 20%, how often would we detect it with n = 50 and α = .05?"
+
+### What if the True PRE is Smaller?
+
+What if we want to change the question a bit? What happens if the true PRE is smaller than .2 (which is a pretty whopping PRE in behavioral research, fwiw)? Let's make our effect size estimate a bit more conservative, and say it's more like .1:
+
+```{r}
+power_from_PRE_true(0.10, n = 50)
+```
+
+Hmmm...not horrible but not what I want to see...assuming we leave the effect size at .1, what are the two things we could further alter when using this function to calculate power from a "true" PRE value to increase our power...?
+
+::: {.callout-tip collapse="true"}
+## Click to reveal hint
+
+Come up with any ideas yet?
+
+Right! You could try changing the **sample size (n)** OR the **alpha (Type I error)**.
+
+Play around a bit with that and see what you can get to happen before moving on.
+:::
+
+------------------------------------------------------------------------
+
+## Part 2 — Post-hoc Power from Observed PRE
+
+OK, now we need to consider a different situation in which you might want to calculate power, and that is when you've already conducted a study — the ideal situation in which this would happen is when you're planning/designing a new study and can refer to a similar enough previous study in order to determine the power of the soon-to-be study. Anyway, here we go...
+
+Let's say we fit Model C = 9.44 and Model A = mean(WTP):
+
+```{r}
+# Observed PRE from your C vs mean model
+C     <- 9.44
+y     <- festival$WTP
+n     <- length(y)
+ybar  <- mean(y)
+SSE_C <- sum((y - C)^2)
+SSE_A <- sum((y - ybar)^2)
+PRE_obs <- (SSE_C - SSE_A) / SSE_C
+
+# Naïve post-hoc power (treating observed PRE as true)
+power_naive <- power_from_PRE_true(PRE_obs, n)
+```
+
+Post-hoc "naïve" power here is pretending observed PRE is the true one. The problem? Observed PRE tends to be too high (just like R²). So we use the simplified formula to adjust for bias given our super simple models:
+
+PRE_adj = 1 - (1 - PRE_obs) × (n / (n - 1))
+
+(Remember, Model C df = 0, Model A df = 1)
+
+------------------------------------------------------------------------
+
+## Part 3 — Adjusting PRE for Bias
+
+```{r}
+# Bias-adjusted observed PRE (book formula), then power
+PRE_adj <- 1 - (1 - PRE_obs) * (n / (n - 1))
+power_adj <- power_from_PRE_true(PRE_adj, n)
+
+c(
+  PRE_observed   = round(PRE_obs, 4),
+  PRE_adjusted   = round(PRE_adj, 4),
+  power_naive    = round(power_naive, 3),
+  power_adjusted = round(power_adj, 3)
+)
+```
+
+So that's basically the adjustment factor we're going to use to correct for the fact that calculated PRE's tend to overestimate TRUE PRE's.
+
+------------------------------------------------------------------------
+
+## Part 4 — Sensitivity Analysis and SESOI
+
+Now let's ask some more managerial questions...like: "Given our n and α, what is the smallest PRE we could detect with 80% power?"
+
+In other words: "What's the smallest effect size our study was sensitive to?"
+
+```{r}
+target_power <- 0.80
+grid_PRE <- seq(0.01, 0.30, by = 0.001)
+
+pwr_curve_PRE <- sapply(grid_PRE, function(pre) power_from_PRE_true(pre, n))
+min_PRE_detectable <- min(grid_PRE[pwr_curve_PRE >= target_power])
+min_PRE_detectable
+```
+
+### Smallest Effect Size of Interest (SESOI)
+
+Alternatively, instead of just asking if Model A is different or the sensitivity of our model, we could ask whether a study is sufficiently powered to detect the smallest possible effect size that would still be different enough to matter.
+
+So, let's assume that in this context (predicting Willingness to Pay for a stout), even a *5% reduction in error* (PRE = .05) would be valuable from a managerial perspective — enough to affect pricing or marketing strategy.
+
+The question: Are we powered to detect that level of improvement with our current design (n = 50, α = .05)?
+
+```{r}
+# Step 1 — Define our SESOI (smallest meaningful effect)
+SESOI_PRE <- 0.05      # "A 5% reduction in error is meaningful for this problem"
+alpha_now <- 0.05
+n_now     <- n         # our current sample size, 50
+
+# Step 2 — Estimate our power to detect that effect
+power_SESOI_now <- power_from_PRE_true(SESOI_PRE, n_now, alpha_now)
+power_SESOI_now
+```
+
+**Step 3 — Interpret the output:**
+
+Remember, this number is the probability that, if the TRUE PRE = .05, we would actually detect it (i.e., get a statistically significant F). Rule of thumb: we usually want power ≈ .80 (or 80%) or higher.
+
+So if you're seeing something like .40 or .50 here, that means there's a 50–60% chance you'd miss a true 5% effect. That's not "no effect"; that's a study too small to tell.
+
+------------------------------------------------------------------------
+
+### OK… So What Could We Do About That?
+
+There are three main knobs we can turn:
+
+1.  Increase n (sample size)
+2.  Increase α (our tolerance for false positives)
+3.  Improve design (reduce residual noise → increase PRE)
+
+Let's explore all three.
+
+------------------------------------------------------------------------
+
+### Option 1 — Increase Sample Size
+
+We can write a short loop to see how power changes with n. (The goal: find the smallest n that gives us \~.80 power for our SESOI)
+
+```{r}
+target_power <- 0.80
+grid_n <- 30:250
+
+pwr_curve <- sapply(grid_n, function(nn) power_from_PRE_true(SESOI_PRE, nn, alpha_now))
+min_n_ok <- min(grid_n[pwr_curve >= target_power])
+min_n_ok
+```
+
+**Managerial translation:** "To have roughly 80% power to detect a 5% reduction in error, we'd need around `min_n_ok` observations." That gives us an evidence-based sample size goal rather than a guess.
+
+------------------------------------------------------------------------
+
+### Option 2 — Adjust Alpha (α)
+
+Alpha reflects how cautious we are about Type I errors. In many marketing contexts, a slightly higher α (say, .10) is reasonable for exploratory research — we'd rather risk a false alarm than miss an actionable pattern.
+
+```{r}
+alphas <- c(.10, .07, .05, .01)
+alpha_results <- sapply(alphas, function(a) power_from_PRE_true(SESOI_PRE, n_now, a))
+alpha_results
+```
+
+**Talking points:**
+
+-   "At α = .10, power increases to X."
+-   "At α = .01, power drops dramatically."
+
+It's all about the tradeoff: a higher α = fewer false negatives, but more false positives.
+
+------------------------------------------------------------------------
+
+### Option 3 — Improve Design (Increase Effect, Reduce Noise)
+
+Here we can't change n or α in code — but we can change the *data quality*. Strategies include:
+
+-   Using a more reliable measure of WTP (reduces residual variance)
+-   Blocking by obvious subgroups (e.g., heavy vs. light stout drinkers)
+-   Ensuring consistent experimental procedures (reduces measurement error)
+-   Reducing heterogeneity (e.g., focus on one product line)
+
+All of these reduce error (SSE(A)), which increases PRE and power.
+
+You can demonstrate this numerically by pretending PRE_true = .08 or .10 and recalculating power — just to see the difference:
+
+```{r}
+power_from_PRE_true(0.08, n_now)
+power_from_PRE_true(0.10, n_now)
+```
+
+Those small changes in effect size make a difference in power.
+
+------------------------------------------------------------------------
+
+## Part 5 — Effect Sizes and Confidence Intervals
+
+So far we've been asking *prospective* questions: How likely are we to detect an effect? How big does it need to be? How many participants do we need?
+
+But once we've run a study and have results in hand, the questions shift: How big *was* the effect? And how confident can we be in that estimate? That's where effect sizes and confidence intervals come in.
+
+------------------------------------------------------------------------
+
+### Step 1 — Compute an Effect Size (Cohen's f²)
+
+Remember, we can translate PRE into f², a standardized measure of effect size used across regression and ANOVA analyses (totally germane to what we've been doing with our simple models and stout_festival).
+
+f² = PRE / (1 − PRE)
+
+(We've already got a helper function for that from earlier in this exercise!)
+
+```{r}
+f2_obs <- f2_from_PRE(PRE_obs)
+f2_adj <- f2_from_PRE(PRE_adj)
+
+c(
+  Observed_f2 = round(f2_obs, 3),
+  Adjusted_f2 = round(f2_adj, 3)
+)
+```
+
+**Rules of thumb** (your book is — mostly rightfully — against these but they're very commonly used/discussed in statistics and marketing research so I'm providing them here...just know these are imperfect to say the least; Cohen, 1988):
+
+| Effect Size | f²    |
+|-------------|-------|
+| Small       | ≈ .02 |
+| Medium      | ≈ .15 |
+| Large       | ≈ .35 |
+
+Marketing and behavioral research often lives in the small–medium range. So even something like f² = .02 might actually be meaningful in practice.
+
+------------------------------------------------------------------------
+
+### Step 2 — Calculate Confidence Intervals (CIs) for PRE
+
+The PRE we observe is an estimate. We can calculate a CI around it using the F distribution. This gives us a range of plausible values for the true proportional reduction in error.
+
+```{r}
+ci_PRE <- function(PRE, df1, df2, alpha = 0.05) {
+  # Compute confidence interval for PRE using F-based limits
+  F_obs <- (PRE / (1 - PRE)) * (df2 / df1)
+  F_low <- F_obs / qf(1 - alpha / 2, df1, df2)
+  F_high <- F_obs * qf(1 - alpha / 2, df1, df2)
+  PRE_low  <- F_low / (F_low + df2 / df1)
+  PRE_high <- F_high / (F_high + df2 / df1)
+  c(Lower = PRE_low, Upper = PRE_high)
+}
+
+PRE_CI <- ci_PRE(PRE_obs, df1 = 1, df2 = (n - 1))
+PRE_CI
+```
+
+**Interpretation:** This gives a range of plausible values for the true PRE. For example, if PRE_obs = 7% with CI \[1.3%, 28%\], it means: "We estimate that the new model reduces error by 7%, but the true reduction could plausibly be anywhere between 1.3% and 28%."
+
+That's much richer information than just "p \< .05."
+
+------------------------------------------------------------------------
+
+### Step 3 — Connect the Dots: Power, Effect Size, and CI
+
+Let's put this all together conceptually.
+
+-   **Effect size (PRE, f²):** tells us how big the improvement is.
+-   **Power:** tells us how likely we were to detect it if it exists.
+-   **Confidence interval:** tells us how precisely we can estimate it.
+
+In practice:
+
+-   High power + narrow CI = strong, credible finding.
+-   Low power + wide CI = weak evidence; result might be noise.
+-   Moderate power + medium CI = "suggestive but uncertain" result.
+
+------------------------------------------------------------------------
+
+## Try It Yourself
+
+Now it's your turn to explore. Try answering the following questions by modifying the code above:
+
+**Question 1:** What happens to the CI width if you increase n to 100?
+
+::: {.callout-tip collapse="true"}
+## Click to reveal solution
+
+```{r}
+# With n = 100, df2 changes to 99
+ci_PRE(PRE_obs, df1 = 1, df2 = 99)
+```
+
+You should see a narrower confidence interval — more data = more precision in our estimate.
+:::
+
+**Question 2:** Calculate the CI for C = 10 instead of 9.44. How does it change?
+
+::: {.callout-tip collapse="true"}
+## Click to reveal solution
+
+```{r}
+# First, recalculate PRE with C = 10
+C_new <- 10
+SSE_C_new <- sum((y - C_new)^2)
+PRE_new <- (SSE_C_new - SSE_A) / SSE_C_new
+PRE_new
+
+# Then calculate the CI
+ci_PRE(PRE_new, df1 = 1, df2 = (n - 1))
+```
+
+A different value of C will give you a different PRE (and thus different CI). Notice how the CI shifts depending on your choice of compact model.
+:::
+
+**Question 3:** What sample size would you need to get 80% power if your SESOI were PRE = .03 (a 3% reduction in error)?
+
+::: {.callout-tip collapse="true"}
+## Click to reveal solution
+
+```{r}
+SESOI_small <- 0.03
+grid_n_large <- 50:500
+
+pwr_curve_small <- sapply(grid_n_large, function(nn) power_from_PRE_true(SESOI_small, nn, 0.05))
+min_n_small <- min(grid_n_large[pwr_curve_small >= 0.80])
+min_n_small
+```
+
+Detecting smaller effects requires substantially larger samples!
+:::
+
+------------------------------------------------------------------------
+
+## OPTIONAL: Bootstrapping Confidence Intervals
+
+::: callout-note
+## This section is entirely optional
+
+The material below is for students who want to explore an alternative approach to calculating confidence intervals. It's not required and won't be tested — but if you're curious about resampling methods, read on!
+:::
+
+### What is Bootstrapping?
+
+So far, we've calculated confidence intervals using the F distribution, which assumes our data are roughly normally distributed. But what if we're not sure that assumption holds? Or what if we want a CI for some statistic where there's no nice formula?
+
+**Bootstrapping** is a resampling technique that lets us estimate uncertainty *empirically* — by repeatedly sampling from our own data. Here's the basic idea:
+
+1.  Take your original sample of n observations
+2.  Draw a new sample of n observations *with replacement* (some observations get picked multiple times, others not at all)
+3.  Calculate the statistic of interest (in our case, PRE) on this resampled data
+4.  Repeat steps 2-3 many times (e.g., 1000 or 10000 times)
+5.  The distribution of those bootstrapped statistics gives you an empirical estimate of uncertainty
+
+The 2.5th and 97.5th percentiles of the bootstrapped distribution give you a 95% CI — no normality assumption required.
+
+### Quick Demo
+
+```{r}
+set.seed(42)  # for reproducibility
+
+# Number of bootstrap iterations
+n_boot <- 2000
+
+# Storage for bootstrapped PRE values
+boot_PREs <- numeric(n_boot)
+
+# The bootstrap loop
+for (i in 1:n_boot) {
+  # Resample the data with replacement
+  boot_indices <- sample(1:n, size = n, replace = TRUE)
+  boot_WTP <- festival$WTP[boot_indices]
+  
+  # Calculate PRE on the resampled data
+  boot_ybar <- mean(boot_WTP)
+  boot_SSE_C <- sum((boot_WTP - C)^2)
+  boot_SSE_A <- sum((boot_WTP - boot_ybar)^2)
+  boot_PREs[i] <- (boot_SSE_C - boot_SSE_A) / boot_SSE_C
+}
+
+# Bootstrap 95% CI (2.5th and 97.5th percentiles)
+boot_CI <- quantile(boot_PREs, probs = c(0.025, 0.975))
+boot_CI
+```
+
+### Compare the Two Approaches
+
+```{r}
+# F-based CI (from earlier)
+F_based_CI <- ci_PRE(PRE_obs, df1 = 1, df2 = (n - 1))
+
+# Put them side by side
+comparison <- data.frame(
+  Method = c("F-based", "Bootstrap"),
+  Lower = c(F_based_CI[1], boot_CI[1]),
+  Upper = c(F_based_CI[2], boot_CI[2])
+)
+comparison
+```
+
+In many cases, the two methods give similar results. But when your data are skewed or have outliers, bootstrapping can provide a more robust estimate. It's also useful when you want a CI for something more complex (like a ratio of two statistics) where deriving a formula would be difficult.
+
+### When to Use Bootstrapping
+
+-   When you're unsure about distributional assumptions
+-   When sample sizes are small and normality is questionable
+-   When you want a CI for a complex or non-standard statistic
+-   When you want to double-check your parametric CI
+
+The main downside? It's computationally more intensive (though with modern computers, 2000 iterations takes only a second or two).
