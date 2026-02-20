@@ -422,9 +422,8 @@ So far, we've calculated confidence intervals using the F distribution, which as
 
 The 2.5th and 97.5th percentiles of the bootstrapped distribution give you a 95% CI — no normality assumption required.
 
-### Quick Demo
 
-### First, Step-By-Step What Bootstrapping Actually Does
+### Step-By-Step What Bootstrapping Actually Does
 Before we automate anything, let's walk through exactly what happens in a single bootstrap iteration. This will help you understand what the loop is doing.
 
 Step 1: Resample the data with replacement
@@ -506,7 +505,7 @@ boot_CI <- quantile(boot_PREs, probs = c(0.025, 0.975))
 boot_CI
 ```
 
-###Visualizing the Bootstrap Distribution
+### Visualizing the Bootstrap Distribution
 Let's see what we just created — a distribution of 2,000 PRE estimates, each from a different resampled version of our data:
 
 ```{r}
