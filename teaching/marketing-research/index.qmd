@@ -55,6 +55,8 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 6. [Week 5: PRE, Critical Values, and F Tests](assignments/week5-exercise.qmd) — In this exercise we start really working on some more substantial model comparisons and the PRE, critical value, and F Test conversations that allows follow
 
+7. [Week 6: Power, Sensitivity, SESOI, Effect Size, CIs, and OPTIONAL Intro to Bootstrapping](assignments/week6-exercise.qmd) — This week we examine different ways of measuring how sure we are of an effect - that we'll find it, that it is "big enough" to matter, and how to talk about these concerns with statistics or otherwise
+
 ::: {.callout-note appearance="minimal"}
 **More coming** · Additional assignments will be added throughout the semester.
 :::

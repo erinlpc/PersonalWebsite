@@ -1,0 +1,472 @@
+---
+title: "Teaching Evaluation Visualizations"
+subtitle: "Generating word clouds and sentiment analysis for the teaching page"
+format:
+  html:
+    toc: true
+    code-fold: true
+execute:
+  warning: false
+  message: false
+---
+
+```{r setup}
+#| include: false
+
+# Install packages if needed
+# install.packages(c("tidyverse", "tidytext", "wordcloud", "wordcloud2", 
+#                    "RColorBrewer", "scales", "ggwordcloud"))
+
+library(tidyverse)
+library(tidytext)
+library(wordcloud)
+library(RColorBrewer)
+library(scales)
+```
+
+## Load and Prepare Data
+
+```{r load-data}
+# Load the teaching evaluation data
+evals <- read_csv("teaching_evaluations.csv")
+
+# Define stop words (standard + custom)
+data("stop_words")
+
+custom_stops <- tibble(word = c(
+  # Course/university terms
+  "class", "course", "professor", "semester", "classes", "courses",
+  "umaine", "mbs", "maine", "university", "business", "school",
+  # My name variations
+
+  "carter", "erin", "dr", "percival",
+  # Common contractions/fragments
+ "i'm", "i've", "it's", "don't", "didn't", "wasn't", "wouldn't", "couldn't",
+  "i'll", "we're", "they're", "you're", "isn't", "aren't", "won't", "can't",
+  # Other common but meaningless terms
+  "lot", "much", "well", "really", "also", "even", "always", "never",
+  "feel", "felt", "thing", "things", "made", "make", "time", "week"
+))
+
+# Tokenize and clean
+words_clean <- evals %>%
+  unnest_tokens(word, comment_text) %>%
+  anti_join(stop_words, by = "word") %>%
+  anti_join(custom_stops, by = "word") %>%
+  filter(
+    str_detect(word, "^[a-z]+$"),  # Only alphabetic
+    nchar(word) > 2                 # At least 3 characters
+  )
+```
+
+## Overall Word Cloud
+
+This word cloud represents all teaching evaluation comments from 2017-2025.
+
+```{r overall-wordcloud}
+#| fig-width: 10
+#| fig-height: 8
+
+# Get word counts
+word_counts <- words_clean %>%
+  count(word, sort = TRUE)
+
+# Color palette - Maine/forest inspired
+forest_colors <- c("#1B4332", "#2D6A4F", "#40916C", "#52796F", "#74C69D", "#84A98C")
+
+# Generate word cloud
+set.seed(42)
+png("/home/claude/wordcloud_overall.png", width = 1200, height = 900, res = 150)
+par(mar = c(0, 0, 0, 0))
+wordcloud(
+  words = word_counts$word,
+  freq = word_counts$n,
+  min.freq = 2,
+  max.words = 150,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = forest_colors,
+  scale = c(4, 0.5)
+)
+dev.off()
+
+# Also display in document
+wordcloud(
+  words = word_counts$word,
+  freq = word_counts$n,
+  min.freq = 2,
+  max.words = 150,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = forest_colors,
+  scale = c(4, 0.5)
+)
+```
+
+## Word Clouds by Course
+
+### Consumer Behavior
+
+```{r cb-wordcloud}
+#| fig-width: 10
+#| fig-height: 7
+
+cb_words <- words_clean %>%
+  filter(course_name == "Consumer Behavior") %>%
+  count(word, sort = TRUE)
+
+set.seed(42)
+png("/home/claude/wordcloud_consumer_behavior.png", width = 1000, height = 700, res = 150)
+par(mar = c(0, 0, 0, 0))
+wordcloud(
+  words = cb_words$word,
+  freq = cb_words$n,
+  min.freq = 2,
+  max.words = 100,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = brewer.pal(6, "Greens")[2:6],
+  scale = c(3.5, 0.4)
+)
+dev.off()
+
+wordcloud(
+  words = cb_words$word,
+  freq = cb_words$n,
+  min.freq = 2,
+  max.words = 100,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = brewer.pal(6, "Greens")[2:6],
+  scale = c(3.5, 0.4)
+)
+```
+
+### Personal Selling & Sales Management
+
+```{r sales-wordcloud}
+#| fig-width: 10
+#| fig-height: 7
+
+sales_words <- words_clean %>%
+  filter(course_name == "Personal Selling & Sales Management") %>%
+  count(word, sort = TRUE)
+
+set.seed(42)
+png("/home/claude/wordcloud_sales.png", width = 1000, height = 700, res = 150)
+par(mar = c(0, 0, 0, 0))
+wordcloud(
+  words = sales_words$word,
+  freq = sales_words$n,
+  min.freq = 2,
+  max.words = 80,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = brewer.pal(6, "Blues")[2:6],
+  scale = c(3.5, 0.4)
+)
+dev.off()
+
+wordcloud(
+  words = sales_words$word,
+  freq = sales_words$n,
+  min.freq = 2,
+  max.words = 80,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = brewer.pal(6, "Blues")[2:6],
+  scale = c(3.5, 0.4)
+)
+```
+
+### Marketing Research
+
+```{r research-wordcloud}
+#| fig-width: 10
+#| fig-height: 7
+
+research_words <- words_clean %>%
+  filter(course_name == "Marketing Research") %>%
+  count(word, sort = TRUE)
+
+set.seed(42)
+png("/home/claude/wordcloud_research.png", width = 1000, height = 700, res = 150)
+par(mar = c(0, 0, 0, 0))
+wordcloud(
+  words = research_words$word,
+  freq = research_words$n,
+  min.freq = 1,
+  max.words = 60,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = brewer.pal(6, "Oranges")[2:6],
+  scale = c(3, 0.4)
+)
+dev.off()
+
+wordcloud(
+  words = research_words$word,
+  freq = research_words$n,
+  min.freq = 1,
+  max.words = 60,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = brewer.pal(6, "Oranges")[2:6],
+  scale = c(3, 0.4)
+)
+```
+
+## Word Clouds by Modality
+
+### In-Person Courses
+
+```{r inperson-wordcloud}
+#| fig-width: 10
+#| fig-height: 7
+
+inperson_words <- words_clean %>%
+  filter(modality == "in-person") %>%
+  count(word, sort = TRUE)
+
+set.seed(42)
+png("/home/claude/wordcloud_inperson.png", width = 1000, height = 700, res = 150)
+par(mar = c(0, 0, 0, 0))
+wordcloud(
+  words = inperson_words$word,
+  freq = inperson_words$n,
+  min.freq = 2,
+  max.words = 100,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = c("#1B4332", "#2D6A4F", "#40916C", "#52796F", "#74C69D"),
+  scale = c(3.5, 0.4)
+)
+dev.off()
+
+wordcloud(
+  words = inperson_words$word,
+  freq = inperson_words$n,
+  min.freq = 2,
+  max.words = 100,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = c("#1B4332", "#2D6A4F", "#40916C", "#52796F", "#74C69D"),
+  scale = c(3.5, 0.4)
+)
+```
+
+### Online/Asynchronous Courses
+
+```{r online-wordcloud}
+#| fig-width: 10
+#| fig-height: 7
+
+online_words <- words_clean %>%
+  filter(modality == "online") %>%
+  count(word, sort = TRUE)
+
+set.seed(42)
+png("/home/claude/wordcloud_online.png", width = 1000, height = 700, res = 150)
+par(mar = c(0, 0, 0, 0))
+wordcloud(
+  words = online_words$word,
+  freq = online_words$n,
+  min.freq = 2,
+  max.words = 80,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = c("#4A5568", "#2D3748", "#1A202C", "#718096", "#A0AEC0"),
+  scale = c(3.5, 0.4)
+)
+dev.off()
+
+wordcloud(
+  words = online_words$word,
+  freq = online_words$n,
+  min.freq = 2,
+  max.words = 80,
+  random.order = FALSE,
+  rot.per = 0.15,
+  colors = c("#4A5568", "#2D3748", "#1A202C", "#718096", "#A0AEC0"),
+  scale = c(3.5, 0.4)
+)
+```
+
+## Sentiment Analysis
+
+```{r sentiment-setup}
+# Load bing sentiment lexicon
+bing <- get_sentiments("bing")
+
+# Join with words
+word_sentiments <- words_clean %>%
+  inner_join(bing, by = "word")
+```
+
+### Sentiment by Course
+
+```{r sentiment-by-course}
+#| fig-width: 9
+#| fig-height: 5
+
+sentiment_by_course <- word_sentiments %>%
+  count(course_name, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>%
+  mutate(
+    total = positive + negative,
+    pct_positive = positive / total
+  )
+
+# Create stacked bar chart
+sentiment_plot_course <- word_sentiments %>%
+  count(course_name, sentiment) %>%
+  ggplot(aes(x = reorder(course_name, -n), y = n, fill = sentiment)) +
+  geom_col(position = "fill") +
+  scale_fill_manual(
+    values = c("negative" = "#C85A3B", "positive" = "#2D6A4F"),
+    labels = c("Negative", "Positive")
+  ) +
+  scale_y_continuous(labels = percent) +
+  coord_flip() +
+  labs(
+    title = "Sentiment in Teaching Evaluations by Course",
+    subtitle = "Proportion of positive vs. negative sentiment-bearing words",
+    x = NULL,
+    y = NULL,
+    fill = "Sentiment"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    legend.position = "bottom"
+  )
+
+ggsave("/sentiment_by_course.png", sentiment_plot_course, 
+       width = 9, height = 5, dpi = 150)
+sentiment_plot_course
+```
+
+### Sentiment by Modality
+
+```{r sentiment-by-modality}
+#| fig-width: 8
+#| fig-height: 4
+
+sentiment_by_modality <- word_sentiments %>%
+  count(modality, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>%
+  mutate(
+    total = positive + negative,
+    pct_positive = positive / total
+  )
+
+sentiment_plot_modality <- word_sentiments %>%
+  count(modality, sentiment) %>%
+  mutate(modality = ifelse(modality == "in-person", "In-Person", "Online")) %>%
+  ggplot(aes(x = modality, y = n, fill = sentiment)) +
+  geom_col(position = "fill") +
+  scale_fill_manual(
+    values = c("negative" = "#C85A3B", "positive" = "#2D6A4F"),
+    labels = c("Negative", "Positive")
+  ) +
+  scale_y_continuous(labels = percent) +
+  coord_flip() +
+  labs(
+    title = "Sentiment by Course Modality",
+    x = NULL,
+    y = NULL,
+    fill = "Sentiment"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    legend.position = "bottom"
+  )
+
+ggsave("sentiment_by_modality.png", sentiment_plot_modality, 
+       width = 8, height = 4, dpi = 150)
+sentiment_plot_modality
+```
+
+### Top Positive and Negative Words
+
+```{r top-sentiment-words}
+#| fig-width: 10
+#| fig-height: 5
+
+# Top positive words
+top_positive <- word_sentiments %>%
+  filter(sentiment == "positive") %>%
+  count(word, sort = TRUE) %>%
+  head(12) %>%
+  mutate(word = fct_reorder(word, n))
+
+# Top negative words
+top_negative <- word_sentiments %>%
+  filter(sentiment == "negative") %>%
+  count(word, sort = TRUE) %>%
+  head(12) %>%
+  mutate(word = fct_reorder(word, n))
+
+# Combine plots
+library(patchwork)
+
+p1 <- ggplot(top_positive, aes(x = n, y = word)) +
+  geom_col(fill = "#2D6A4F") +
+  labs(title = "Most Common Positive Words", x = "Frequency", y = NULL) +
+  theme_minimal(base_size = 11)
+
+p2 <- ggplot(top_negative, aes(x = n, y = word)) +
+  geom_col(fill = "#C85A3B") +
+  labs(title = "Most Common Negative Words", x = "Frequency", y = NULL) +
+  theme_minimal(base_size = 11)
+
+combined_sentiment <- p1 + p2
+
+ggsave("top_sentiment_words.png", combined_sentiment, 
+       width = 10, height = 5, dpi = 150)
+combined_sentiment
+```
+
+## Summary Statistics
+
+```{r summary-stats}
+# Overall stats
+cat("Total comments:", nrow(evals), "\n")
+cat("Total words (after cleaning):", nrow(words_clean), "\n")
+cat("Unique words:", n_distinct(words_clean$word), "\n\n")
+
+# By course
+evals %>%
+  count(course_name, name = "n_comments") %>%
+  arrange(desc(n_comments)) %>%
+  knitr::kable(col.names = c("Course", "Number of Comments"))
+
+# By modality
+evals %>%
+  count(modality, name = "n_comments") %>%
+  knitr::kable(col.names = c("Modality", "Number of Comments"))
+
+# Sentiment summary
+cat("\nOverall Sentiment:\n")
+word_sentiments %>%
+  count(sentiment) %>%
+  mutate(pct = n / sum(n)) %>%
+  knitr::kable(col.names = c("Sentiment", "Count", "Percentage"), digits = 3)
+```
+
+## Files Generated
+
+The following image files have been saved:
+
+- `wordcloud_overall.png` - All courses combined
+- `wordcloud_consumer_behavior.png` - Consumer Behavior only
+- `wordcloud_sales.png` - Personal Selling & Sales Management only
+- `wordcloud_research.png` - Marketing Research only
+- `wordcloud_inperson.png` - In-person courses only
+- `wordcloud_online.png` - Online courses only
+- `sentiment_by_course.png` - Sentiment breakdown by course
+- `sentiment_by_modality.png` - Sentiment breakdown by modality
+- `top_sentiment_words.png` - Most common positive/negative words
+
+Copy these to your website's images folder and reference them in your teaching index page.

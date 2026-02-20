@@ -405,27 +405,82 @@ Detecting smaller effects requires substantially larger samples!
 ::: callout-note
 ## This section is entirely optional
 
-The material below is for students who want to explore an alternative approach to calculating confidence intervals. It's not required and won't be tested — but if you're curious about resampling methods, read on!
+The material below is for students who want to explore an alternative approach to calculating confidence intervals. It's not required and won't be tested — but if you're curious about resampling methods (which are very cool), read on!
 :::
 
 ### What is Bootstrapping?
 
 So far, we've calculated confidence intervals using the F distribution, which assumes our data are roughly normally distributed. But what if we're not sure that assumption holds? Or what if we want a CI for some statistic where there's no nice formula?
 
-**Bootstrapping** is a resampling technique that lets us estimate uncertainty *empirically* — by repeatedly sampling from our own data. Here's the basic idea:
+**Bootstrapping** is a resampling technique that lets us estimate uncertainty by repeatedly sampling from our own data. Here's the basic idea:
 
 1.  Take your original sample of n observations
-2.  Draw a new sample of n observations *with replacement* (some observations get picked multiple times, others not at all)
+2.  Draw a new sample of n observations *with replacement* (in other words, after being drawn each observations gets added back to the bag...so some observations get picked multiple times and others not at all)
 3.  Calculate the statistic of interest (in our case, PRE) on this resampled data
-4.  Repeat steps 2-3 many times (e.g., 1000 or 10000 times)
-5.  The distribution of those bootstrapped statistics gives you an empirical estimate of uncertainty
+4.  Repeat steps 2-3 many times (e.g., 1000 or 10000 times - you specify)
+5.  The distribution of those bootstrapped statistics gives you an empirical estimate of uncertainty - but like, an actual distribution, not an in theory distribution. We actually created these statistics and then actually construct the distribution.
 
 The 2.5th and 97.5th percentiles of the bootstrapped distribution give you a 95% CI — no normality assumption required.
 
 ### Quick Demo
 
+# First, Step-By-Step What Bootstrapping Actually Does
+Before we automate anything, let's walk through exactly what happens in a single bootstrap iteration. This will help you understand what the loop is doing.
+
+Step 1: Resample the data with replacement
 ```{r}
 set.seed(42)  # for reproducibility
+
+# Our original sample has n observations
+n <- nrow(festival)
+
+# Draw a new sample of the same size, WITH REPLACEMENT
+# This means some observations will be picked multiple times, others not at all
+boot_indices <- sample(1:n, size = n, replace = TRUE)
+
+# Look at the first 20 indices we drew - notice some repeats!
+boot_indices[1:20]
+```
+
+Step 2. Create the resampled dataset
+```{r}
+# Pull the WTP values for our resampled indices
+boot_WTP <- festival$WTP[boot_indices]
+
+# Compare: original vs bootstrapped sample
+length(festival$WTP)  # same length
+length(boot_WTP)      # same length, but different composition
+```
+
+Step 3. Calculate PRE on the resampled data
+```{r}
+# Calculate the mean of our bootstrapped sample
+boot_ybar <- mean(boot_WTP)
+boot_ybar  # slightly different from our original ybar!
+
+# Calculate SSE for Model C (using our original constant C)
+boot_SSE_C <- sum((boot_WTP - C)^2)
+
+# Calculate SSE for Model A (using the bootstrapped mean)
+boot_SSE_A <- sum((boot_WTP - boot_ybar)^2)
+
+# Calculate PRE for this bootstrapped sample
+boot_PRE_single <- (boot_SSE_C - boot_SSE_A) / boot_SSE_C
+boot_PRE_single  # one estimate of PRE from one resampled dataset
+```
+
+That's it - we did one bootsrap iteration. 
+
+We drew a random resample, calculated PRE, and got a slightly different answer than our original PRE. The magic of bootstrapping is that we do this thousands of times to build up a distribution of plausible PRE values.
+
+Now that you've done it once, let's just automate that process and have R do it a specified number of times
+
+# Now We Automate a Bootstrap Loop
+
+Now that you understand what's happening in each iteration, let's automate the process and do it 2,000 times:
+
+```{r}
+set.seed(42)  # we need to do this for reproducibility - so the values I generate are the same you will generate
 
 # Number of bootstrap iterations
 n_boot <- 2000
@@ -450,6 +505,68 @@ for (i in 1:n_boot) {
 boot_CI <- quantile(boot_PREs, probs = c(0.025, 0.975))
 boot_CI
 ```
+
+##Visualizing the Bootstrap Distribution
+Let's see what we just created — a distribution of 2,000 PRE estimates, each from a different resampled version of our data:
+
+```{r}
+#| fig-height: 6
+
+# Create a data frame for plotting
+boot_df <- data.frame(PRE = boot_PREs)
+
+# Get the CI bounds for annotation
+ci_lower <- boot_CI[1]
+ci_upper <- boot_CI[2]
+
+# Plot the bootstrap distribution
+ggplot(boot_df, aes(x = PRE)) +
+  # Histogram of bootstrapped PRE values
+  geom_histogram(bins = 50, fill = "grey70", color = "white", alpha = 0.8) +
+  
+  # Shade the middle 95% (the confidence interval)
+  annotate("rect", 
+           xmin = ci_lower, xmax = ci_upper, 
+           ymin = 0, ymax = Inf, 
+           alpha = 0.2, fill = "#1B7837") +
+  
+  # Vertical lines at the CI bounds
+  geom_vline(xintercept = ci_lower, color = "#1B7837", linewidth = 1.2, linetype = "dashed") +
+  geom_vline(xintercept = ci_upper, color = "#1B7837", linewidth = 1.2, linetype = "dashed") +
+  
+  # Vertical line at the observed PRE
+  geom_vline(xintercept = PRE_obs, color = "#C85A3B", linewidth = 1.2) +
+  
+  # Labels for the CI bounds
+  annotate("text", x = ci_lower, y = Inf, 
+           label = paste0("2.5%\n", round(ci_lower, 3)), 
+           vjust = 1.5, hjust = 1.1, size = 3.5, color = "#1B7837", fontface = "bold") +
+  annotate("text", x = ci_upper, y = Inf, 
+           label = paste0("97.5%\n", round(ci_upper, 3)), 
+           vjust = 1.5, hjust = -0.1, size = 3.5, color = "#1B7837", fontface = "bold") +
+  
+  # Label for observed PRE
+  annotate("text", x = PRE_obs, y = Inf, 
+           label = paste0("Observed PRE\n", round(PRE_obs, 3)), 
+           vjust = 1.5, hjust = -0.1, size = 3.5, color = "#C85A3B", fontface = "bold") +
+  
+  # Labels and theme
+  labs(
+    title = "Bootstrap Distribution of PRE (2,000 iterations)",
+    subtitle = "Green shaded region = 95% confidence interval",
+    x = "PRE",
+    y = "Count"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    plot.subtitle = element_text(color = "grey40")
+  )
+```
+
+The histogram shows all 2,000 PRE values we calculated from our resampled datasets. The green dashed lines mark the 2.5th and 97.5th percentiles. Everything between them is our 95% confidence interval. The orange line shows our original observed PRE.
+
+Notice how the distribution is roughly centered on our observed PRE, but there's quite a bit of spread. That spread represents our uncertainty about the true PRE given the variability in our data.
 
 ### Compare the Two Approaches
 
