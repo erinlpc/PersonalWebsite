@@ -424,7 +424,7 @@ The 2.5th and 97.5th percentiles of the bootstrapped distribution give you a 95%
 
 ### Quick Demo
 
-## First, Step-By-Step What Bootstrapping Actually Does
+### First, Step-By-Step What Bootstrapping Actually Does
 Before we automate anything, let's walk through exactly what happens in a single bootstrap iteration. This will help you understand what the loop is doing.
 
 Step 1: Resample the data with replacement
@@ -475,7 +475,7 @@ We drew a random resample, calculated PRE, and got a slightly different answer t
 
 Now that you've done it once, let's just automate that process and have R do it a specified number of times
 
-## Now We Automate a Bootstrap Loop
+### Now We Automate a Bootstrap Loop
 
 Now that you understand what's happening in each iteration, let's automate the process and do it 2,000 times:
 
@@ -506,7 +506,7 @@ boot_CI <- quantile(boot_PREs, probs = c(0.025, 0.975))
 boot_CI
 ```
 
-##Visualizing the Bootstrap Distribution
+###Visualizing the Bootstrap Distribution
 Let's see what we just created — a distribution of 2,000 PRE estimates, each from a different resampled version of our data:
 
 ```{r}
