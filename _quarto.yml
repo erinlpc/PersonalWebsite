@@ -49,6 +49,9 @@ format:
     code-copy: true
     code-overflow: wrap
     highlight-style: github
+    Include-in-header:
+      - text: |
+          <link rel="apple-touch-icon" href="favicon_180x180.png">
     include-after-body: 
       - text: |
           <script src="sheep.js"></script>
