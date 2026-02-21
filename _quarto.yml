@@ -9,9 +9,8 @@ website:
   
   navbar:
     background: light
-    left:
-      - text: "Erin Percival Carter"
-        href: index.qmd
+    logo: images/favicon_180X180.png
+    title: "Erin Percival Carter"
     right:
       - text: "Research"
         href: research.qmd
