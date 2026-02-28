@@ -163,10 +163,10 @@ window.Quarto = {
   <li><a href="#the-scenario" id="toc-the-scenario" class="nav-link active" data-scroll-target="#the-scenario">The Scenario</a></li>
   <li><a href="#the-dataset" id="toc-the-dataset" class="nav-link" data-scroll-target="#the-dataset">The Dataset</a></li>
   <li><a href="#part-0-setup-verification" id="toc-part-0-setup-verification" class="nav-link" data-scroll-target="#part-0-setup-verification">Part 0: Setup &amp; Verification</a></li>
-  <li><a href="#part-1-price-deep-dive" id="toc-part-1-price-deep-dive" class="nav-link" data-scroll-target="#part-1-price-deep-dive">Part 1: Price — Deep Dive</a></li>
-  <li><a href="#part-2-age-focused-analysis" id="toc-part-2-age-focused-analysis" class="nav-link" data-scroll-target="#part-2-age-focused-analysis">Part 2: Age — Focused Analysis</a></li>
-  <li><a href="#part-3-income-focused-analysis" id="toc-part-3-income-focused-analysis" class="nav-link" data-scroll-target="#part-3-income-focused-analysis">Part 3: Income — Focused Analysis</a></li>
-  <li><a href="#part-4-conceptual-integration" id="toc-part-4-conceptual-integration" class="nav-link" data-scroll-target="#part-4-conceptual-integration">Part 4: Conceptual Integration</a></li>
+  <li><a href="#part-1-price" id="toc-part-1-price" class="nav-link" data-scroll-target="#part-1-price">Part 1: Price</a></li>
+  <li><a href="#part-2-age" id="toc-part-2-age" class="nav-link" data-scroll-target="#part-2-age">Part 2: Age</a></li>
+  <li><a href="#part-3-income" id="toc-part-3-income" class="nav-link" data-scroll-target="#part-3-income">Part 3: Income</a></li>
+  <li><a href="#part-4-interpretation" id="toc-part-4-interpretation" class="nav-link" data-scroll-target="#part-4-interpretation">Part 4: Interpretation</a></li>
   <li><a href="#part-5-managerial-summary" id="toc-part-5-managerial-summary" class="nav-link" data-scroll-target="#part-5-managerial-summary">Part 5: Managerial Summary</a></li>
   <li><a href="#part-6-submission" id="toc-part-6-submission" class="nav-link" data-scroll-target="#part-6-submission">Part 6: Submission</a></li>
   <li><a href="#general-tips" id="toc-general-tips" class="nav-link" data-scroll-target="#general-tips">General Tips</a></li>
@@ -250,10 +250,6 @@ window.Quarto = {
 </div>
 <p>Your dataset will contain observations with these variables:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 43%">
-<col style="width: 56%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -271,20 +267,53 @@ window.Quarto = {
 </tr>
 <tr class="odd">
 <td>Price</td>
-<td>Home sale price (<span class="math inline">\() |
-| Bedrooms | Number of bedrooms |
-| Bathrooms | Number of bathrooms |
-| Buyer_Age | Age of buyer (years) |
-| Gender | Buyer gender |
-| Marital_Status | Buyer marital status |
-| Household_Size | Number in household |
-| Num_Dependents | Number of dependents |
-| Num_School_Age_Children | Number of school-age children |
-| Employment_Status | Buyer employment status |
-| Credit_Score | Buyer credit score |
-| Buyer_Income | Buyer annual income (\)</span>)</td>
+<td>Home sale price in dollars</td>
 </tr>
 <tr class="even">
+<td>Bedrooms</td>
+<td>Number of bedrooms</td>
+</tr>
+<tr class="odd">
+<td>Bathrooms</td>
+<td>Number of bathrooms</td>
+</tr>
+<tr class="even">
+<td>Buyer_Age</td>
+<td>Age of buyer in years</td>
+</tr>
+<tr class="odd">
+<td>Gender</td>
+<td>Buyer gender</td>
+</tr>
+<tr class="even">
+<td>Marital_Status</td>
+<td>Buyer marital status</td>
+</tr>
+<tr class="odd">
+<td>Household_Size</td>
+<td>Number in household</td>
+</tr>
+<tr class="even">
+<td>Num_Dependents</td>
+<td>Number of dependents</td>
+</tr>
+<tr class="odd">
+<td>Num_School_Age_Children</td>
+<td>Number of school-age children</td>
+</tr>
+<tr class="even">
+<td>Employment_Status</td>
+<td>Buyer employment status</td>
+</tr>
+<tr class="odd">
+<td>Credit_Score</td>
+<td>Buyer credit score</td>
+</tr>
+<tr class="even">
+<td>Buyer_Income</td>
+<td>Buyer annual income in dollars</td>
+</tr>
+<tr class="odd">
 <td>Stovetop</td>
 <td>Type of stovetop in home</td>
 </tr>
@@ -327,8 +356,8 @@ window.Quarto = {
 </div>
 <hr>
 </section>
-<section id="part-1-price-deep-dive" class="level2">
-<h2 class="anchored" data-anchor-id="part-1-price-deep-dive">Part 1: Price — Deep Dive</h2>
+<section id="part-1-price" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-price">Part 1: Price</h2>
 <p>This section asks you to perform a <strong>complete analysis</strong> of the Price variable. You’ll compare the performance of the model that uses the company’s normal assumption ($220,000) against your data-driven (augmented) model estimates.</p>
 <section id="what-youll-calculate" class="level3">
 <h3 class="anchored" data-anchor-id="what-youll-calculate">What You’ll Calculate</h3>
@@ -401,8 +430,8 @@ Note
 <hr>
 </section>
 </section>
-<section id="part-2-age-focused-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="part-2-age-focused-analysis">Part 2: Age — Focused Analysis</h2>
+<section id="part-2-age" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-age">Part 2: Age</h2>
 <p>For Buyer_Age, you’ll perform a <strong>subset</strong> of the calculations you did for Price. The company assumes buyers are typically 33 years old.</p>
 <section id="what-youll-calculate-1" class="level3">
 <h3 class="anchored" data-anchor-id="what-youll-calculate-1">What You’ll Calculate</h3>
@@ -426,8 +455,8 @@ Note
 <hr>
 </section>
 </section>
-<section id="part-3-income-focused-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="part-3-income-focused-analysis">Part 3: Income — Focused Analysis</h2>
+<section id="part-3-income" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-income">Part 3: Income</h2>
 <p>For Buyer_Income, you’ll perform a similar subset of analyses. The company assumes typical buyer income is $83,000.</p>
 <section id="what-youll-calculate-2" class="level3">
 <h3 class="anchored" data-anchor-id="what-youll-calculate-2">What You’ll Calculate</h3>
@@ -449,11 +478,11 @@ Note
 <hr>
 </section>
 </section>
-<section id="part-4-conceptual-integration" class="level2">
-<h2 class="anchored" data-anchor-id="part-4-conceptual-integration">Part 4: Conceptual Integration</h2>
+<section id="part-4-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-interpretation">Part 4: Interpretation</h2>
 <p>This section asks you to compare model performance across your analyses.</p>
-<section id="topics-covered" class="level3">
-<h3 class="anchored" data-anchor-id="topics-covered">Topics Covered</h3>
+<section id="i-will-ask-you-to" class="level3">
+<h3 class="anchored" data-anchor-id="i-will-ask-you-to">I will ask you to</h3>
 <ul>
 <li>Comparing PRE and effect sizes across variables</li>
 <li>Interpreting power in plain language for a manager</li>
@@ -464,8 +493,8 @@ Note
 <li>Distinguishing statistical vs.&nbsp;practical significance</li>
 </ul>
 </section>
-<section id="prepare-to-explain-in-plain-language" class="level3">
-<h3 class="anchored" data-anchor-id="prepare-to-explain-in-plain-language">Prepare to Explain (in Plain Language)</h3>
+<section id="then-prepare-to-explain-in-plain-language-to-your-boss" class="level3">
+<h3 class="anchored" data-anchor-id="then-prepare-to-explain-in-plain-language-to-your-boss">Then prepare to Explain (in plain language to your boss)</h3>
 <ul>
 <li>“What does power actually mean?”</li>
 <li>“What could we do to increase power?”</li>
@@ -477,10 +506,10 @@ Note
 </section>
 <section id="part-5-managerial-summary" class="level2">
 <h2 class="anchored" data-anchor-id="part-5-managerial-summary">Part 5: Managerial Summary</h2>
-<p>You’ll write brief summaries for non-technical stakeholders:</p>
+<p>You’ll write brief summaries for non-statsy boss and the CEO:</p>
 <ul>
-<li>Bullet points summarizing Price findings for your manager</li>
-<li>Paragraph summarizing all findings for your manager</li>
+<li>Bullet points summarizing Price findings</li>
+<li>Paragraph summarizing all findings</li>
 <li>Bottom-line recommendation for the CEO</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -529,11 +558,11 @@ Note
 <section id="general-tips" class="level2">
 <h2 class="anchored" data-anchor-id="general-tips">General Tips</h2>
 <ol type="1">
-<li><p><strong>START EARLY.</strong> This exam will likely take students on average between 4-8 hours of focused work. Don’t wait until Sunday to start.</p></li>
+<li><p><strong>START EARLY.</strong> This exam will likely take most students on average between 4-8 hours of focused work. Don’t wait until Sunday to start.</p></li>
 <li><p><strong>WORK THROUGH PREVIOUS EXERCISES.</strong> Everything on this exam builds on Weeks 1-6 exercises. Reference them.</p></li>
-<li><p><strong>CHECK YOUR WORK.</strong> Use the sample answer key (seed 123456) to verify your code works correctly before running on your own data.</p></li>
+<li><p><strong>CHECK YOUR WORK.</strong> If you want, use the sample answer key (seed 123456) to verify your code works correctly before beginning the exam on Brightspace.</p></li>
 <li><p><strong>THINK BEFORE YOU CALCULATE.</strong> Make sure that you understand what each statistic means, not just how to compute it.</p></li>
-<li><p><strong>TRANSLATE FOR YOUR AUDIENCE.</strong> When I ask you to explain, do so without jargon. Your manager doesn’t know what PRE means.</p></li>
+<li><p><strong>TRANSLATE FOR YOUR AUDIENCE.</strong> When I ask you to explain, do so without jargon. Remember, your manager doesn’t know what PRE means.</p></li>
 <li><p><strong>ASK QUESTIONS WISELY.</strong> Remember the “tell me 3 things you tried” policy. Try to solve problems yourself first, document what you tried, then I will be happy to help where I can.</p></li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled">
