@@ -1,0 +1,253 @@
+---
+title: "Spring 2026 Exam 1"
+subtitle: "Intro, outline, and dataset generator"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: false
+---
+
+## The Scenario
+
+You've just started a new role as a data analyst at **Coastal Maine Properties**, a regional real estate development company. Your boss, the Chief Marketing Officer, has asked you to analyze data from 100 recent home sales to inform pricing strategy for a new development.
+ 
+The company has historically used simple "rules of thumb" based on assumptions about the typical home sale for their simple (or compact) models:
+
+| Variable | Company Assumption |
+|----------|-------------------|
+| Home price | $220,000 |
+| Buyer age | 33 years old |
+| Buyer income | $83,000 |
+
+Your job is to evaluate how well these assumptions hold up against actual sales data — and to quantify how much better you could predict outcomes using data-driven estimates.
+
+Your manager is sharp but not a statistician. Throughout this exam, you'll need to translate your findings into language he can use for decision-making. He'll ask questions like:
+
+- "How wrong are our current assumptions?"
+- "How much better do we really do with your data-driven approach?"
+- "How confident should we be in these estimates?"
+- "What would it take to be more certain?"
+
+---
+
+## The Dataset
+
+You will generate a unique dataset using the Dataset Generator App (embedded below or [linked here](https://erinpcarter.shinyapps.io/Exam1DataGenApp/)).
+
+::: {.callout-important}
+## Use Your Student ID as the Seed
+You **must** use your Student ID as the seed. This is required for grading.
+:::
+
+Your dataset will contain observations with these variables:
+
+| Variable | Description |
+|----------|-------------|
+| Region | Geographic region (North/Central/South) |
+| Town | Town name |
+| Price | Home sale price ($) |
+| Bedrooms | Number of bedrooms |
+| Bathrooms | Number of bathrooms |
+| Buyer_Age | Age of buyer (years) |
+| Gender | Buyer gender |
+| Marital_Status | Buyer marital status |
+| Household_Size | Number in household |
+| Num_Dependents | Number of dependents |
+| Num_School_Age_Children | Number of school-age children |
+| Employment_Status | Buyer employment status |
+| Credit_Score | Buyer credit score |
+| Buyer_Income | Buyer annual income ($) |
+| Stovetop | Type of stovetop in home |
+
+For this exam, you will focus on **three outcome variables**:
+
+1. **Price**
+2. **Buyer_Age**
+3. **Buyer_Income**
+
+---
+
+## Part 0: Setup & Verification
+
+Before diving into more detailed analysis, you will:
+
+- Load your dataset into R
+- Verify you have the correct data
+- Examine basic descriptive statistics
+
+You'll be asked to report:
+
+- Your Student ID (seed)
+- Number of observations
+- Basic descriptive statistics to confirm correct data loading
+
+::: {.callout-tip}
+## Triple Check Your Data
+Make sure that the datafile you have loaded includes your student ID appended at the end of the file name!
+:::
+
+---
+
+## Part 1: Price — Deep Dive
+
+This section asks you to perform a **complete analysis** of the Price variable. You'll compare the performance of the model that uses the company's normal assumption ($220,000) against your data-driven (augmented) model estimates.
+
+### What You'll Calculate
+
+- Model A predictions (using mean and median)
+- Error metrics: SSE and SAE for Model C and Model A (using mean & median)
+- PRE under both SSE and SAE
+- Which measure of center performs better under each error function
+- Inference statistics: SSR, MSR, MSE, RMSE, F statistic, p-value
+- Effect size: Cohen's f²
+- Power at α = 0.05
+- 95% Confidence Interval for PRE
+
+### What You'll Interpret
+
+- Why mean vs. median perform differently
+- Whether to reject the company's assumption
+- What the effect size tells us about practical significance
+- What power and the CI tell us about certainty and precision
+
+### Key Formulas to Remember
+
+| Statistic | Formula |
+|-----------|---------|
+| SSE | $\sum(y - \hat{y})^2$ |
+| SAE | $\sum|y - \hat{y}|$ |
+| PRE | $(Error_C - Error_A) / Error_C$ |
+| Cohen's f² | $PRE / (1 - PRE)$ |
+| F statistic | $(PRE / df_1) / ((1 - PRE) / df_2)$ |
+
+Where $df_1 = 1$ and $df_2 = n - 1$ for our simple model comparison.
+
+::: {.callout-note}
+You should have functions for power and CI from Week 6 exercises.
+:::
+
+---
+
+## Part 2: Age — Focused Analysis
+
+For Buyer_Age, you'll perform a **subset** of the calculations you did for Price. The company assumes buyers are typically 33 years old.
+
+### What You'll Calculate
+
+- Model A predictions (mean and median)
+- SSE for Model C (33) and Model A (mean)
+- PRE (SSE-based, comparing C to A mean)
+- Which model performs better under SSE and SAE
+- F statistic and p-value
+- Cohen's f² and power
+- 95% CI for PRE
+
+### What You'll Interpret
+
+- Whether the company's assumption is reasonable
+- How Age results compare to Price results
+- What your power analysis means for this analysis
+
+---
+
+## Part 3: Income — Focused Analysis
+
+For Buyer_Income, you'll perform a similar subset of analyses. The company assumes typical buyer income is $83,000.
+
+### What You'll Calculate
+
+- Model A predictions (mean and median)
+- SSE for Model C ($83,000) and Model A (mean)
+- PRE (SSE-based)
+- Which model performs better under SSE
+- F statistic and p-value
+- Cohen's f² and power
+
+### What You'll Interpret
+
+- Whether the company's assumption is reasonable
+- What your power analysis means for decision-making
+
+---
+
+## Part 4: Conceptual Integration
+
+This section asks you to compare model performance across your analyses.
+
+### Topics Covered
+
+- Comparing PRE and effect sizes across variables
+- Interpreting power in plain language for a manager
+- Understanding what affects power (sample size, effect size, alpha)
+- Estimating sample size needed for adequate power
+- Interpreting confidence intervals for decision-making
+- Understanding SESOI (Smallest Effect Size of Interest)
+- Distinguishing statistical vs. practical significance
+
+### Prepare to Explain (in Plain Language)
+
+- "What does power actually mean?"
+- "What could we do to increase power?"
+- "What does a wide confidence interval mean for our decisions?"
+- "Why should we care about anything other than whether or not we have a significant p-value?"
+
+---
+
+## Part 5: Managerial Summary
+
+You'll write brief summaries for non-technical stakeholders:
+
+- Bullet points summarizing Price findings for your manager
+- Paragraph summarizing all findings for your manager
+- Bottom-line recommendation for the CEO
+
+::: {.callout-tip}
+## Tips for Managerial Communication
+
+- Avoid jargon (no "PRE," "SSE," or "p-value" without explanation)
+- Focus on business implications
+- Be clear about certainty and limitations
+- Make actionable recommendations
+:::
+
+---
+
+## Part 6: Submission
+
+You **must** submit:
+
+1. Your complete R code
+2. Your console output showing code and results
+3. AI disclosure per syllabus policy
+
+::: {.callout-warning}
+## Code Requirement
+Your code must be capable of reproducing the answers you submit. Failure to include working code = **zero on the exam**.
+:::
+
+---
+ 
+## General Tips
+
+1. **START EARLY.** This exam will likely take students on average between 4-8 hours of focused work. Don't wait until Sunday to start.
+
+2. **WORK THROUGH PREVIOUS EXERCISES.** Everything on this exam builds on Weeks 1-6 exercises. Reference them.
+
+3. **CHECK YOUR WORK.** Use the sample answer key (seed 123456) to verify your code works correctly before running on your own data.
+
+4. **THINK BEFORE YOU CALCULATE.** Make sure that you understand what each statistic means, not just how to compute it.
+
+5. **TRANSLATE FOR YOUR AUDIENCE.** When I ask you to explain, do so without jargon. Your manager doesn't know what PRE means.
+
+6. **ASK QUESTIONS WISELY.** Remember the "tell me 3 things you tried" policy. Try to solve problems yourself first, document what you tried, then I will be happy to help where I can.
+
+::: callout-tip
+## Alternative Access
+
+If the data generation app below doesn't display correctly in your browser, you can [open it directly in a new tab](https://erinpcarter.shinyapps.io/Exam1DataGenApp/){target="_blank"}.
+:::
+
+<iframe src="https://erinpcarter.shinyapps.io/Exam1DataGenApp/" width="100%" height="900px" style="border:none;" title="Exam 1 Data Generator">
+
+</iframe>

@@ -2,7 +2,7 @@
 title: "Curriculum Vitae"
 subtitle: "Erin Percival Carter"
 toc: true
-toc-title: "Sections"
+toc-title: "Sections" 
 ---
 
 ```{r}
