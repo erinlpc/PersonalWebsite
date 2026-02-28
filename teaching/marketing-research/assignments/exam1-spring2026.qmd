@@ -46,10 +46,10 @@ Your dataset will contain observations with these variables:
 |----------|-------------|
 | Region | Geographic region (North/Central/South) |
 | Town | Town name |
-| Price | Home sale price ($) |
+| Price | Home sale price in dollars |
 | Bedrooms | Number of bedrooms |
 | Bathrooms | Number of bathrooms |
-| Buyer_Age | Age of buyer (years) |
+| Buyer_Age | Age of buyer in years |
 | Gender | Buyer gender |
 | Marital_Status | Buyer marital status |
 | Household_Size | Number in household |
@@ -57,7 +57,7 @@ Your dataset will contain observations with these variables:
 | Num_School_Age_Children | Number of school-age children |
 | Employment_Status | Buyer employment status |
 | Credit_Score | Buyer credit score |
-| Buyer_Income | Buyer annual income ($) |
+| Buyer_Income | Buyer annual income in dollars |
 | Stovetop | Type of stovetop in home |
 
 For this exam, you will focus on **three outcome variables**:
@@ -89,7 +89,7 @@ Make sure that the datafile you have loaded includes your student ID appended at
 
 ---
 
-## Part 1: Price — Deep Dive
+## Part 1: Price 
 
 This section asks you to perform a **complete analysis** of the Price variable. You'll compare the performance of the model that uses the company's normal assumption ($220,000) against your data-driven (augmented) model estimates.
 
@@ -129,7 +129,7 @@ You should have functions for power and CI from Week 6 exercises.
 
 ---
 
-## Part 2: Age — Focused Analysis
+## Part 2: Age 
 
 For Buyer_Age, you'll perform a **subset** of the calculations you did for Price. The company assumes buyers are typically 33 years old.
 
@@ -151,7 +151,7 @@ For Buyer_Age, you'll perform a **subset** of the calculations you did for Price
 
 ---
 
-## Part 3: Income — Focused Analysis
+## Part 3: Income 
 
 For Buyer_Income, you'll perform a similar subset of analyses. The company assumes typical buyer income is $83,000.
 
@@ -171,11 +171,11 @@ For Buyer_Income, you'll perform a similar subset of analyses. The company assum
 
 ---
 
-## Part 4: Conceptual Integration
+## Part 4: Interpretation
 
 This section asks you to compare model performance across your analyses.
 
-### Topics Covered
+### I will ask you to
 
 - Comparing PRE and effect sizes across variables
 - Interpreting power in plain language for a manager
@@ -185,7 +185,7 @@ This section asks you to compare model performance across your analyses.
 - Understanding SESOI (Smallest Effect Size of Interest)
 - Distinguishing statistical vs. practical significance
 
-### Prepare to Explain (in Plain Language)
+### Then prepare to Explain (in plain language to your boss)
 
 - "What does power actually mean?"
 - "What could we do to increase power?"
@@ -196,10 +196,10 @@ This section asks you to compare model performance across your analyses.
 
 ## Part 5: Managerial Summary
 
-You'll write brief summaries for non-technical stakeholders:
+You'll write brief summaries for non-statsy boss and the CEO:
 
-- Bullet points summarizing Price findings for your manager
-- Paragraph summarizing all findings for your manager
+- Bullet points summarizing Price findings 
+- Paragraph summarizing all findings 
 - Bottom-line recommendation for the CEO
 
 ::: {.callout-tip}
@@ -230,15 +230,15 @@ Your code must be capable of reproducing the answers you submit. Failure to incl
  
 ## General Tips
 
-1. **START EARLY.** This exam will likely take students on average between 4-8 hours of focused work. Don't wait until Sunday to start.
+1. **START EARLY.** This exam will likely take most students on average between 4-8 hours of focused work. Don't wait until Sunday to start.
 
 2. **WORK THROUGH PREVIOUS EXERCISES.** Everything on this exam builds on Weeks 1-6 exercises. Reference them.
 
-3. **CHECK YOUR WORK.** Use the sample answer key (seed 123456) to verify your code works correctly before running on your own data.
+3. **CHECK YOUR WORK.** If you want, use the sample answer key (seed 123456) to verify your code works correctly before beginning the exam on Brightspace.
 
 4. **THINK BEFORE YOU CALCULATE.** Make sure that you understand what each statistic means, not just how to compute it.
 
-5. **TRANSLATE FOR YOUR AUDIENCE.** When I ask you to explain, do so without jargon. Your manager doesn't know what PRE means.
+5. **TRANSLATE FOR YOUR AUDIENCE.** When I ask you to explain, do so without jargon. Remember, your manager doesn't know what PRE means.
 
 6. **ASK QUESTIONS WISELY.** Remember the "tell me 3 things you tried" policy. Try to solve problems yourself first, document what you tried, then I will be happy to help where I can.
 
