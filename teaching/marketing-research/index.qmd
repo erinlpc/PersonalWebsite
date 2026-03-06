@@ -57,6 +57,8 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 7. [Week 6: Power, Sensitivity, SESOI, Effect Size, CIs, and OPTIONAL Intro to Bootstrapping](assignments/week6-exercise.qmd) — This week we examine different ways of measuring how sure we are of an effect - that we'll find it, that it is "big enough" to matter, and how to talk about these concerns with statistics or otherwise
 
+8. [Week 8: ](assignments/week8-exercise.qmd) — This week we move on to simple regression model comparions and have our first little peek at re-centering variables for interpretability.
+
 ::: {.callout-note appearance="minimal"}
 **More coming** · Additional assignments will be added throughout the semester.
 :::
