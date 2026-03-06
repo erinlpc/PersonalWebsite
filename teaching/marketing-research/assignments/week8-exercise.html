@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Week 8: Simple Regression – Erin Percival Carter</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../images/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-edad393940abb5f3c6973fe701e515d2.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-b1f441566460042bad3432da549a7982.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../images/favicon_180X180.png" alt="" class="navbar-logo light-content">
+    <img src="../../../images/favicon_180X180.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Erin Percival Carter</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../teaching/index.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../bard.html"> 
+<span class="menu-text">BARD</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#part-0-load-peek" id="toc-part-0-load-peek" class="nav-link" data-scroll-target="#part-0-load-peek">Part 0: Load &amp; Peek</a></li>
+  <li><a href="#part-1-price-bedrooms" id="toc-part-1-price-bedrooms" class="nav-link" data-scroll-target="#part-1-price-bedrooms">Part 1: Price ~ Bedrooms</a>
+  <ul class="collapse">
+  <li><a href="#step-1-set-up-variables" id="toc-step-1-set-up-variables" class="nav-link" data-scroll-target="#step-1-set-up-variables">Step 1: Set up variables</a></li>
+  <li><a href="#step-2-fit-the-competing-models" id="toc-step-2-fit-the-competing-models" class="nav-link" data-scroll-target="#step-2-fit-the-competing-models">Step 2: Fit the competing models</a></li>
+  <li><a href="#step-3-calculate-sse-and-pre" id="toc-step-3-calculate-sse-and-pre" class="nav-link" data-scroll-target="#step-3-calculate-sse-and-pre">Step 3: Calculate SSE and PRE</a></li>
+  <li><a href="#step-4-the-easier-way" id="toc-step-4-the-easier-way" class="nav-link" data-scroll-target="#step-4-the-easier-way">Step 4: The easier way</a></li>
+  <li><a href="#step-5-interpretation" id="toc-step-5-interpretation" class="nav-link" data-scroll-target="#step-5-interpretation">Step 5: Interpretation</a></li>
+  <li><a href="#step-6-but-wait-is-0-bedrooms-sensible" id="toc-step-6-but-wait-is-0-bedrooms-sensible" class="nav-link" data-scroll-target="#step-6-but-wait-is-0-bedrooms-sensible">Step 6: But wait — is 0 bedrooms sensible?</a></li>
+  </ul></li>
+  <li><a href="#part-2-centering-x" id="toc-part-2-centering-x" class="nav-link" data-scroll-target="#part-2-centering-x">Part 2: Centering X</a>
+  <ul class="collapse">
+  <li><a href="#the-absurd-example" id="toc-the-absurd-example" class="nav-link" data-scroll-target="#the-absurd-example">The Absurd Example</a></li>
+  </ul></li>
+  <li><a href="#part-3-your-turn" id="toc-part-3-your-turn" class="nav-link" data-scroll-target="#part-3-your-turn">Part 3: Your Turn</a>
+  <ul class="collapse">
+  <li><a href="#a-price-bathrooms" id="toc-a-price-bathrooms" class="nav-link" data-scroll-target="#a-price-bathrooms">3A: Price ~ Bathrooms</a></li>
+  <li><a href="#b-price-buyer_income" id="toc-b-price-buyer_income" class="nav-link" data-scroll-target="#b-price-buyer_income">3B: Price ~ Buyer_Income</a></li>
+  </ul></li>
+  <li><a href="#part-4-confidence-intervals" id="toc-part-4-confidence-intervals" class="nav-link" data-scroll-target="#part-4-confidence-intervals">Part 4: Confidence Intervals</a>
+  <ul class="collapse">
+  <li><a href="#a-cis-for-the-bedrooms-model" id="toc-a-cis-for-the-bedrooms-model" class="nav-link" data-scroll-target="#a-cis-for-the-bedrooms-model">4A: CIs for the Bedrooms Model</a></li>
+  <li><a href="#b-your-turn" id="toc-b-your-turn" class="nav-link" data-scroll-target="#b-your-turn">4B: Your Turn</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Week 8: Simple Regression</h1>
+<p class="subtitle lead">Maine Housing Data</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p><strong>Theme of the week:</strong> We’re moving from Section A’s one-parameter model comparisons (Model C = researcher-supplied constant vs.&nbsp;Model A = mean) to more complex models. This week we start with simple regression:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Parameters</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model C</td>
+<td>1</td>
+<td>Mean-only (this was Model A in Section A)</td>
+</tr>
+<tr class="even">
+<td>Model A</td>
+<td>2</td>
+<td>Intercept + Slope: <span class="math inline">\(\hat{y} = b_0 + b_1 X\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>What stays the same from last section?</strong> Almost everything conceptually (that’s why we - or at least I - love model comparison as an approach to teaching/learning this stuff):</p>
+<ul>
+<li>DATA still = MODEL + ERROR</li>
+<li>We’re still minimizing SSE to estimate parameters when we run models</li>
+<li>Still relying on comparisons of Model A to Model C to generate PRE, F, and p</li>
+</ul>
+<p><strong>Today’s goals:</strong></p>
+<ol type="1">
+<li>Load a slightly altered (and a shared - yours won’t be unique to you this time) version of the housing dataset from Exam 1</li>
+<li>Examine a series of simple regressions by:
+<ul>
+<li>Specifying Model C and Model A</li>
+<li>Computing SSE then calculating PRE “by hand”</li>
+<li>Comparing output to an <code>lm()</code> F test</li>
+<li>Interpreting <span class="math inline">\(b_1\)</span> (slope) and <span class="math inline">\(b_0\)</span> (intercept)</li>
+</ul></li>
+<li>Practice centering X and re-interpreting intercepts</li>
+<li>Repeat with two more simple regressions</li>
+<li>Explore confidence intervals with these more complex models</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Degrees of Freedom Reminder
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This week: <span class="math inline">\(p_C = 1\)</span> (mean-only), <span class="math inline">\(p_A = 2\)</span> (intercept + slope)</p>
+<ul>
+<li><span class="math inline">\(df_1 = p_A - p_C = 1\)</span></li>
+<li><span class="math inline">\(df_2 = n - p_A = n - 2\)</span> (n this week = 200)</li>
+</ul>
+<p>And our handy mappings:</p>
+<ul>
+<li><span class="math inline">\(PRE = \frac{df_1 \cdot F}{df_1 \cdot F + df_2}\)</span></li>
+<li><span class="math inline">\(F = \frac{PRE / df_1}{(1-PRE) / df_2}\)</span></li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+<section id="part-0-load-peek" class="level2">
+<h2 class="anchored" data-anchor-id="part-0-load-peek">Part 0: Load &amp; Peek</h2>
+<p>Load the data for this week:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>housing <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/housing_data_section_2_exercises.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Quick looks:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(housing)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(housing)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(housing)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For this chapter, we’ll mostly use continuous X and Y variables like Bedrooms, Bathrooms, Buyer_Income, Credit_Score, etc. (We’ll learn to deal with categoricals like Town/Region/Gender in later weeks.)</p>
+<hr>
+</section>
+<section id="part-1-price-bedrooms" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-price-bedrooms">Part 1: Price ~ Bedrooms</h2>
+<p><strong>Goal:</strong> Build &amp; compare:</p>
+<ul>
+<li>Model C (mean-only, 1 parameter): <span class="math inline">\(\hat{y}_C = \bar{y}\)</span></li>
+<li>Model A (simple regression, 2 parameters): <span class="math inline">\(\hat{y}_A = b_0 + b_1 \cdot \text{Bedrooms}\)</span></li>
+</ul>
+<p>Then compute PRE by hand and confirm the F and p-value match <code>lm()</code>’s output.</p>
+<section id="step-1-set-up-variables" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-set-up-variables">Step 1: Set up variables</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> housing<span class="sc">$</span>Price</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> housing<span class="sc">$</span>Bedrooms</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="step-2-fit-the-competing-models" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-fit-the-competing-models">Step 2: Fit the competing models</h3>
+<p>As we move on to more complicated models, we’ll begin to rely on R to do the heavy lifting. We won’t necessarily calculate error columns and trial different values any more. We will trust R to develop estimates for parameters that minimize SSE for us.</p>
+<p>One of the built-in functions we’ll rely on to do this is <code>lm()</code>, which allows us to specify linear models and returns estimates and measures of model fit.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model C: mean-only (the "1" tells R to calculate only the intercept)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mC <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model A: slope + intercept</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>mA <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>A Note on Naming Variables
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The fact that I chose the names <code>x</code> and <code>y</code> means absolutely nothing to R. I could reference them directly in the <code>lm()</code> call:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mC<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(housing<span class="sc">$</span>Price <span class="sc">~</span> <span class="dv">1</span>) <span class="co">#is equivalent to the mC above</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mA<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(housing<span class="sc">$</span>Price <span class="sc">~</span> housing<span class="sc">$</span>Bedrooms) <span class="co">#is equivalent to the mA above</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Or use completely nonsense names:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lol <span class="ot">&lt;-</span> housing<span class="sc">$</span>Price</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>jokes <span class="ot">&lt;-</span> housing<span class="sc">$</span>Bedrooms</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>hahas <span class="ot">&lt;-</span> <span class="fu">lm</span>(lol <span class="sc">~</span> jokes) <span class="co">#would also be equivalent to mA and mA.1 above</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>R doesn’t care what we name things - it just looks where we tell it to look and does what we tell it to do.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-calculate-sse-and-pre" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-calculate-sse-and-pre">Step 3: Calculate SSE and PRE</h3>
+<p>We have our estimates, but we want to know the corresponding errors, significance, etc.</p>
+<p>To calculate SSE, we subtract the model estimate from the actual observations, square those residuals, and sum:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get fitted values (predictions) from each model</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>yhat_C <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mC)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>yhat_A <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mA)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute SSE for each model</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>SSE_C <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> yhat_C)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>SSE_A <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> yhat_A)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>SSE_C</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>SSE_A</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now compute PRE:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>PRE_bedrooms <span class="ot">&lt;-</span> (SSE_C <span class="sc">-</span> SSE_A) <span class="sc">/</span> SSE_C</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>PRE_bedrooms</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We get approximately 0.617 — a 61.7% reduction in error when using Model A compared to Model C.</p>
+</section>
+<section id="step-4-the-easier-way" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-the-easier-way">Step 4: The easier way</h3>
+<p>Good news: there’s a more useful way to get output from <code>lm()</code> that gives us estimates, t-values, F-statistics, degrees of freedom, and p-values.</p>
+<p>Bad news: it won’t give us SSE directly… but we can ask for it!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># More detailed output</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mC)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mA)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get SSE using deviance()</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(mC)  <span class="co"># Same as SSE_C</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(mA)  <span class="co"># Same as SSE_A</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># So we can also calculate PRE as:</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>PRE_using_deviance <span class="ot">&lt;-</span> (<span class="fu">deviance</span>(mC) <span class="sc">-</span> <span class="fu">deviance</span>(mA)) <span class="sc">/</span> <span class="fu">deviance</span>(mC)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>PRE_using_deviance</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="step-5-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-interpretation">Step 5: Interpretation</h3>
+<p>Let’s look at that Model A output:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mA)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Intercept (</strong><span class="math inline">\(b_0\)</span>): This tells us what we would expect Y to be when X = 0. In other words, it is the expected price of a house with 0 bedrooms. Here we get $347,728, and it’s significant (we can reject the null that expected price when bedrooms = 0 is $0).</p>
+<p><strong>Slope (</strong><span class="math inline">\(b_1\)</span>): This tells us how much Y changes for every one-unit increase in X. We get $35,206, meaning our model predicts an increase of $35,206 in purchase price for every additional bedroom. The slope is significant, so we can reject the null that including bedrooms as a predictor doesn’t improve our prediction relative to Model C.</p>
+<p><strong>How much better?</strong> Look at the Multiple R-squared in the summary output. In simple regression, this equals PRE! (This won’t always be true for more complex model comparisons, but it is true here.)</p>
+</section>
+<section id="step-6-but-wait-is-0-bedrooms-sensible" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-but-wait-is-0-bedrooms-sensible">Step 6: But wait — is 0 bedrooms sensible?</h3>
+<p>Let’s check our data:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(housing<span class="sc">$</span>Bedrooms)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Not only are there no 0-bedroom observations, there’s not even a single 1-bedroom observation. All observations have between 2 and 6 bedrooms.</p>
+<p>So our intercept is technically interpretable, but it’s outside the range of our actual data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Optional: Visualize the models
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(housing<span class="sc">$</span>Bedrooms, housing<span class="sc">$</span>Price,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Bedrooms"</span>, <span class="at">ylab =</span> <span class="st">"Price"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Price ~ Bedrooms with Model C (mean) and Model A (fit)"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">mean</span>(y), <span class="at">lty =</span> <span class="dv">2</span>)     <span class="co"># Model C (dashed)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(mA, <span class="at">lwd =</span> <span class="dv">2</span>)              <span class="co"># Model A (solid)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-2-centering-x" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-centering-x">Part 2: Centering X</h2>
+<p>Let’s center Bedrooms at its mean so the intercept represents <span class="math inline">\(\hat{Y}\)</span> (our model estimate of price) at the average number of bedrooms:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x_centered <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>mA_bed_c <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x_centered)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mA_bed_c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Key observations:</strong></p>
+<ul>
+<li><strong>Slope is unchanged</strong> — centering does not affect the slope</li>
+<li><strong>Intercept now predicts Price at mean(Bedrooms)</strong> which is 3.92 — a more sensible value</li>
+</ul>
+<p>At the average number of bedrooms (3.92), this model predicts a price of $485,561. Note, this is also equivalent to the mean of Y in our dataset:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(housing<span class="sc">$</span>Price)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>But 3.92 bedrooms is still weird - I can’t advise a client based on that value. Let’s try centering at actual integer values:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mA_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x2)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="dv">3</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>mA_3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x3)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="dv">4</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>mA_4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x4)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="dv">5</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>mA_5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x5)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>x6 <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="dv">6</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>mA_6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x6)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the intercepts:</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mA_2)</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mA_3)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mA_4)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mA_5)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mA_6)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Notice how the intercept (and its statistics) changes as we recenter X to predict Y at different levels - but the slope stays constant.</p>
+<section id="the-absurd-example" class="level3">
+<h3 class="anchored" data-anchor-id="the-absurd-example">The Absurd Example</h3>
+<p>What if we center on a ridiculous value? Let’s find where the intercept is no longer significant:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x_negative_10 <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">10</span>  <span class="co"># Centering on -10 bedrooms</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>m_negative_10 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x_negative_10)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_negative_10)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>I present to you: a house for which we cannot reject the null hypothesis that the price equals $0, and for which our best estimate is that someone would pay YOU $4,338 to take it off their hands: a house with negative 10 bedrooms.</p>
+<p>Note that despite this insane specification, <strong>the slope remains unchanged</strong>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>The Practical Takeaway
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Centering lets you make the intercept interpretable for your actual research question. Choose a value of X that makes sense for your client or context - the mean, a policy-relevant threshold, or a common value in your data. The choice doesn’t affect your slope estimate, only how you interpret the intercept.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-3-your-turn" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-your-turn">Part 3: Your Turn</h2>
+<p>Now it’s your turn to examine some other models.</p>
+<section id="a-price-bathrooms" class="level3">
+<h3 class="anchored" data-anchor-id="a-price-bathrooms">3A: Price ~ Bathrooms</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mA_bath <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Bathrooms, <span class="at">data =</span> housing)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mA_bath)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Your Tasks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Compute SSE_C and SSE_A, then calculate PRE by hand</li>
+<li>Verify that your PRE matches the Multiple R-squared in the summary output</li>
+<li>Interpret the slope in plain language (what’s the practical meaning?)</li>
+<li>Center Bathrooms at its mean, refit, and interpret the new intercept</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution: 3A
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>SSE and PRE:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model C (mean-only)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>mC_bath <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> housing)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get SSEs</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>SSE_C_bath <span class="ot">&lt;-</span> <span class="fu">deviance</span>(mC_bath)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>SSE_A_bath <span class="ot">&lt;-</span> <span class="fu">deviance</span>(mA_bath)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate PRE</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>PRE_bath <span class="ot">&lt;-</span> (SSE_C_bath <span class="sc">-</span> SSE_A_bath) <span class="sc">/</span> SSE_C_bath</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>PRE_bath</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to R-squared in summary(mA_bath) — they should match</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Slope interpretation:</strong> For every additional bathroom, the model predicts an increase of $[slope value] in house price.</p>
+<p><strong>Centered model:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bath_centered <span class="ot">&lt;-</span> housing<span class="sc">$</span>Bathrooms <span class="sc">-</span> <span class="fu">mean</span>(housing<span class="sc">$</span>Bathrooms)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mA_bath_c <span class="ot">&lt;-</span> <span class="fu">lm</span>(housing<span class="sc">$</span>Price <span class="sc">~</span> bath_centered)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mA_bath_c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The intercept now represents the predicted price at the average number of bathrooms.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="b-price-buyer_income" class="level3">
+<h3 class="anchored" data-anchor-id="b-price-buyer_income">3B: Price ~ Buyer_Income</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mA_inc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income, <span class="at">data =</span> housing)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mA_inc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Your Tasks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Compute SSE_C and SSE_A, then calculate PRE by hand</li>
+<li>Verify that your PRE matches the Multiple R-squared</li>
+<li>Interpret the slope in plain language (what’s the practical meaning?)</li>
+<li>Center Buyer_Income at its mean, refit, and interpret the new intercept</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solution: 3B
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>SSE and PRE:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model C (mean-only)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>mC_inc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> housing)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get SSEs</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>SSE_C_inc <span class="ot">&lt;-</span> <span class="fu">deviance</span>(mC_inc)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>SSE_A_inc <span class="ot">&lt;-</span> <span class="fu">deviance</span>(mA_inc)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate PRE</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>PRE_inc <span class="ot">&lt;-</span> (SSE_C_inc <span class="sc">-</span> SSE_A_inc) <span class="sc">/</span> SSE_C_inc</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>PRE_inc</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to R-squared in summary(mA_inc)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Slope interpretation:</strong> For every additional dollar in buyer income, the model predicts an increase of $[slope value] in house price. (Note: this might be more interpretable as “for every $1,000 increase in income…”)</p>
+<p><strong>Centered model:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>inc_centered <span class="ot">&lt;-</span> housing<span class="sc">$</span>Buyer_Income <span class="sc">-</span> <span class="fu">mean</span>(housing<span class="sc">$</span>Buyer_Income)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mA_inc_c <span class="ot">&lt;-</span> <span class="fu">lm</span>(housing<span class="sc">$</span>Price <span class="sc">~</span> inc_centered)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mA_inc_c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The intercept now represents the predicted price for a buyer with average income.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-4-confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-confidence-intervals">Part 4: Confidence Intervals</h2>
+<p><strong>CI intuition:</strong></p>
+<ul>
+<li>Every estimated coefficient has a standard error</li>
+<li>A 95% CI gives a plausible range for the parameter given the sample</li>
+<li>Adding a <em>useful</em> predictor lowers error (MSE) and tightens intervals compared to the mean-only model</li>
+</ul>
+<section id="a-cis-for-the-bedrooms-model" class="level3">
+<h3 class="anchored" data-anchor-id="a-cis-for-the-bedrooms-model">4A: CIs for the Bedrooms Model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mA, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This gives us confidence intervals for both the slope and intercept. We would reject any null parameter value that lies outside the upper and lower CI.</p>
+<p>An important thing to keep in mind here, though, is that how tight our CIs are for the intercept in these models varies along levels of X.</p>
+<p>For example, above with the standard coding of x model (X = 0 means 0 bedrooms), there is a gap of about 32,262 between our upper and lower CI for that intercept. But remember, that standard coding is for a value of X that lies outside of the range of the data - it’s 0 and there are no observations in our dataset that featured 0 bedrooms.</p>
+<p>If we examine the confidence intervals for our data with a different coding - in this case the mean-centered version - we will see a tighter confidence interval:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mA_bed_c, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The CI for the intercept is tighter when we center at the mean because we’re making predictions closer to the bulk of our data.</p>
+</section>
+<section id="b-your-turn" class="level3">
+<h3 class="anchored" data-anchor-id="b-your-turn">4B: Your Turn</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Your Tasks
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Record the confidence intervals (values and width) for:</p>
+<ol type="1">
+<li>The mean-centered Bedrooms model (already done above)</li>
+<li>The “negative 10 bedrooms” model (<code>m_negative_10</code>)</li>
+<li>The Bathrooms model (<code>mA_bath</code>)</li>
+<li>The Buyer Income model (<code>mA_inc</code>)</li>
+</ol>
+<p>What pattern do you notice about CI width as you move further from the center of your data?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Selected Solution: 4B
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Negative 10 bedrooms model</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_negative_10, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Pattern:</strong> CIs for the intercept are tightest when centered near the mean of X, and get wider as you move further away from where your data actually lives. This is why centering at a sensible value matters — it affects the precision of your intercept estimate.</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Erin Percival Carter <br> <span class="colophon">Built with Quarto, stubbornness, and coffee.</span></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://umaine.edu/business/">
+<p>Maine Business School</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script src="sheep.js"></script>
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
