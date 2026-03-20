@@ -59,7 +59,7 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 8. [Week 8: Simple Regression; Centering and Interpreting Predictors; and CIs For Linear Model Estimates ](assignments/week8-exercise.qmd) — This week we move on to simple regression model comparisons and have our first little peek at re-centering variables for interpretability.
 
-9. [Week 9: Multiple Regression; Chapter 7 Companion ](assignmeweek9-chapter7-companion.qmd) — This exercise is for you to work through while watching the lecture videos and reading the chapter on multiple regression.
+9. [Week 9: Multiple Regression; Chapter 7 Companion ](assignments/week9-chapter7-companion.qmd) — This exercise is for you to work through while watching the lecture videos and reading the chapter on multiple regression.
 
 10. [Week 9: Multiple Regression Exercise ](assignments/week9-exercise.qmd) — This week we move from simple regression with one predictor to multiple regression...with...multiple predictors.Topics include: redundancy among predictors, interpreting partial regression coefficients, composite predictors, and standardized coefficients, as well as model comparions featuring overall, block (multi-df), and single predictor comparisons.
 
