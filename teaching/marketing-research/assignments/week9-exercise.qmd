@@ -1,0 +1,565 @@
+---
+title: "Week 8 Exercise"
+subtitle: "Multiple Regression (Maine Housing Data Cont'd)"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+---
+
+```{r}
+#| include: false
+```
+
+**Dataset:** `Datasets/housing_data_section_2_exercises.csv`
+
+**Theme of the week:** We extend last week's simple regression (one slope) to multiple regression (several slopes... this means we're constructing multi-dimensional planes in multi-dimensional space).
+
+We'll consider:
+
+- Redundancy among predictors
+- Interpreting partial regression coefficients
+- Model comparisons: overall, block (multi-df), and single predictor
+- One example with a composite predictor
+- Quickly touch on CIs and standardized coefficients
+
+---
+
+## Part 0: Load & Refamiliarize with Data
+
+```{r}
+#| eval: false
+housing <- read.csv("Datasets/housing_data_section_2_exercises.csv")
+
+# Quick looks
+head(housing)
+str(housing)
+summary(housing)
+```
+
+For this exercise, we will ONLY use numeric predictors: Bedrooms, Bathrooms, Buyer_Age, Household_Size, Num_Dependents, Num_School_Age_Children, Credit_Score, Buyer_Income.
+
+Outcome/Dependent variable will always be Price.
+
+```{r}
+#| eval: false
+# Establishing our y and n which will apply throughout:
+y <- housing$Price
+n <- length(y)
+```
+
+---
+
+## Part 1: Overall Model Comparison
+
+*Reminder: Overall F is the special case where PRE = R²*
+
+Let's start by doing something pretty silly (I wouldn't recommend as a general practice—just to drive home the point that these multi-df tests can be silly) and run the most complicated model possible with the allowed predictors for this week:
+
+```{r}
+#| eval: false
+# Spec model C (mean-only; 1 parameter = intercept only)
+mC <- lm(y ~ 1)
+
+# Spec model A (FULL): include all eligible numeric predictors.
+mFull <- lm(Price ~ Bedrooms + Bathrooms + Buyer_Age +
+              Household_Size + Num_Dependents +
+              Num_School_Age_Children + Credit_Score +
+              Buyer_Income,
+            data = housing)
+
+# Let's calculate PRE for this model comparison A vs. C 
+# First using SSEs (by hand)
+SSE_C    <- sum(residuals(mC)^2)
+SSE_full <- sum(residuals(mFull)^2)
+
+# PRE
+PRE_full_vs_mean <- (SSE_C - SSE_full) / SSE_C
+
+PRE_full_vs_mean
+```
+
+So when we throw EVERYTHING we have at this model and compare it to the simple, mean only prediction model, we explain ~71% of the error in that mean only model.
+
+```{r}
+#| eval: false
+# Compare to R^2 (SPECIAL CASE: PRE only equals R^2 for this 
+# overall model comparison)
+# You can also check the overall F and p in summary:
+summary(mFull)  # overall F-test and multiple R^2 is at the bottom
+```
+
+This was, candidly, not a very sophisticated analysis. I would not hire (and might fire) the person who brought me this analysis. Because honestly, how am I to begin to interpret what's going on here? Those estimates are TINY and it's difficult for me to parse what any given thing really MEANS when we hold all of the other things constant. It feels like (because it is) someone with no clear theory or research questions just running a model with every spice in the kitchen so to speak and then giving me an analysis that tastes like a lot but it doesn't taste particularly good, you know what I mean...?
+
+So let's take a step back and think about what our predictors MEAN and how we could approach formulating our research questions with a modicum more sophistication.
+
+But first, just to prove to me that you can do it, run a model that uses only bedrooms, bathrooms, buyer age, and buyer income as predictors and be prepared to report and interpret that output in the exercise for this week.
+
+---
+
+## Part 2: Redundancy #1 — Bedrooms vs. Bathrooms
+
+*Unique vs. shared information*
+
+You had a peek at this result above, but let's approach our research questions with a bit more sophistication with regard to potential redundancy between predictors. One question/expectation you might have is that the redundancy between the number of bedrooms and the number of bathrooms in a house when predicting price might be high; in other words, if we know the number of bedrooms and use that to predict purchase price, the additional explanatory power of knowing the number of bathrooms might be relatively small.
+
+There are a variety of different ways we could, reasonably, construct this research question.
+
+One way would be to ask "If we compare a model C in which we predict price with only number of bedrooms with a model A in which we predict price with BOTH number of bedrooms AND number of bathrooms, what is the PRE associated with model A vs. C?"
+
+Let's ask that question of our data.
+
+```{r}
+#| eval: false
+# Compact (C): Price ~ Bedrooms
+m_bed <- lm(Price ~ Bedrooms, data = housing)
+
+# Augmented (A): Price ~ Bedrooms + Bathrooms
+m_bed_bath <- lm(Price ~ Bedrooms + Bathrooms, data = housing)
+
+# SSE for both
+SSE_bed       <- sum(residuals(m_bed)^2)
+SSE_bed_bath  <- sum(residuals(m_bed_bath)^2)
+
+# PRE(A vs C) = (SSE(C) - SSE(A)) / SSE(C)
+PRE_bed_to_bedbath <- (SSE_bed - SSE_bed_bath) / SSE_bed
+
+PRE_bed_to_bedbath
+```
+
+So, we explain ~14.5% of the error in that model C when we move to model A. Is that significant?
+
+```{r}
+#| eval: false
+summary(m_bed_bath)
+```
+
+It is! We can see in the output above that controlling for/holding constant the number of bedrooms, an additional bathroom is a significant predictor of price.
+
+Let's calculate the F stat for this model comparison since that's not included in the output (or is it...?)
+
+```{r}
+#| eval: false
+df_small_bed   <- df.residual(m_bed)
+df_big_bedbath <- df.residual(m_bed_bath)
+num_df_bedbath <- df_small_bed - df_big_bedbath
+den_df_bedbath <- df_big_bedbath
+
+F_manual <- ((SSE_bed - SSE_bed_bath) / num_df_bedbath) / (SSE_bed_bath / den_df_bedbath)
+
+F_manual
+```
+
+So, our F for number of bathrooms in this model comparison is ~33.4. We don't see that in our output, so we had to construct it ourselves. The F that is reported is the F test for the overall model (both bathrooms and bedrooms versus a mean-only model).
+
+```{r}
+#| eval: false
+# We can also calculate the p value corresponding to this F test as follows:
+p_val_bedbath <- pf(F_manual, df1 = num_df_bedbath, df2 = den_df_bedbath, lower.tail = FALSE)
+p_val_bedbath
+
+# As well as confidence intervals for the whole model:
+confint(m_bed_bath)
+```
+
+Except wait a minute. It does report t... and an F-test here is just a t squared... I'm allowing R to round values to 3 decimal places in my output so this might be a tiny bit off due to rounding, but I'm going to square the t-value and see what I get... huh, would you look at that? It's the F we calculated by hand above!
+
+```{r}
+#| eval: false
+5.779^2
+```
+
+OK, so, we know that we can reject the null hypothesis that the slope of bathrooms holding number of bedrooms constant/controlling for number of bedrooms is = 0.
+
+### OPTIONAL: Visualizing the Models
+
+Let's take a quick break to visualize what's happening here.
+
+In our model C, we're examining the slope of number of bedrooms... I didn't actually print the output of that model above so let's look at it quickly here while we orient:
+
+```{r}
+#| eval: false
+summary(m_bed)
+```
+
+With this model, when the number of bedrooms = 0, we would predict an average price of $347,728 and we adjust that price up by $35,206 for every additional bedroom. That's our model C, and it looks like this:
+
+```{r}
+#| eval: false
+housing <- housing |>
+  mutate(
+    yhat_bed = predict(m_bed, newdata = housing)
+  )
+
+ybar <- mean(housing$Price)
+mean_label <- "Mean-only model"
+
+p_bed <- ggplot(housing, aes(x = Bedrooms, y = Price)) +
+  geom_point(size = 2) +
+  # Residuals to the regression line (from observed y to fitted yhat_bed)
+  geom_segment(aes(xend = Bedrooms, yend = yhat_bed),
+               linetype = "dotted", color = "red") +
+  # Mean-only horizontal line for context
+  geom_hline(yintercept = ybar) +
+  # Simple regression fit (Price ~ Bedrooms)
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Price by Bedrooms — Model C (Compact)",
+    subtitle = paste("Dotted red: residuals to regression fit  |  Horizontal:", mean_label),
+    x = "Bedrooms", y = "Price"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_bed
+```
+
+To be clear, the blue line there is our Model C for the comparison we're now considering for multiple regression (adding bathrooms holding bedrooms constant).
+
+### 3D Visualization of Model A
+
+On to visualizing that model A (reminder, this means we're moving to a 2D plane as our model in a 3-dimensional data space):
+
+```{r}
+#| eval: false
+library(scatterplot3d)  # You may need to install if you haven't already
+
+s3d <- scatterplot3d(
+  x = housing$Bedrooms, y = housing$Bathrooms, z = housing$Price,
+  pch = 16, color = "black",
+  xlab = "Bedrooms", ylab = "Bathrooms", zlab = "Price",
+  main = "Multiple Regression: Price ~ Bedrooms + Bathrooms"
+)
+
+# Draw the fitted plane from m_bed_bath
+s3d$plane3d(m_bed_bath, draw_polygon = TRUE,
+            polygon_args = list(border = NA, col = rgb(0.6, 0.6, 0.6, 0.25)))
+
+# Residual segments to plane (optional but nice)
+housing$yhat_bb <- predict(m_bed_bath, newdata = housing)
+p_fit <- s3d$xyz.convert(housing$Bedrooms, housing$Bathrooms, housing$yhat_bb)
+p_obs <- s3d$xyz.convert(housing$Bedrooms, housing$Bathrooms, housing$Price)
+
+segments(x0 = p_fit$x, y0 = p_fit$y, x1 = p_obs$x, y1 = p_obs$y,
+         lty = "dotted", col = "red")
+```
+
+You'll notice our data don't look quite as "scattered" as they did in the height, weight, and age scatter from the textbook/lecture videos. Why do you think that is?
+
+Because we don't have partial observations for these predictor values where we definitely did for height. You can be 56.4 inches tall but we only recognize full numbers of bedrooms and bathrooms in this dataset and the range is much tighter than it was in the other case.
+
+### Interactive 3D Visualization
+
+OK, and just for fun the interactive, 3D visualization of this data:
+
+```{r}
+#| eval: false
+library(plotly)  # Again, you may have to install
+
+co <- coef(m_bed_bath)
+xg <- seq(min(housing$Bedrooms), max(housing$Bedrooms), length.out = 30)
+yg <- seq(min(housing$Bathrooms), max(housing$Bathrooms), length.out = 30)
+zg <- outer(xg, yg, function(bed, bath) co[1] + co["Bedrooms"]*bed + co["Bathrooms"]*bath)
+
+housing$yhat_bb <- predict(m_bed_bath, newdata = housing)
+
+# Residual segments (x,y,z_fit) -> (x,y,z_obs) with NA separators
+segs_x <- as.vector(rbind(housing$Bedrooms, housing$Bedrooms, rep(NA, nrow(housing))))
+segs_y <- as.vector(rbind(housing$Bathrooms, housing$Bathrooms, rep(NA, nrow(housing))))
+segs_z <- as.vector(rbind(housing$yhat_bb, housing$Price, rep(NA, nrow(housing))))
+
+plot_ly() %>%
+  add_trace(
+    type = "scatter3d", mode = "markers",
+    x = housing$Bedrooms, y = housing$Bathrooms, z = housing$Price,
+    marker = list(size = 4),
+    name = "Data points"
+  ) %>%
+  add_surface(
+    x = xg, y = yg, z = zg,
+    showscale = FALSE, opacity = 0.5,
+    name = "Fitted plane"
+  ) %>%
+  add_trace(
+    type = "scatter3d", mode = "lines",
+    x = segs_x, y = segs_y, z = segs_z,
+    line = list(dash = "dot"),
+    name = "Residuals to plane",
+    showlegend = FALSE
+  ) %>%
+  layout(
+    title = "Multiple Regression (Interactive): Price ~ Bedrooms + Bathrooms",
+    scene = list(
+      xaxis = list(title = "Bedrooms"),
+      yaxis = list(title = "Bathrooms"),
+      zaxis = list(title = "Price")
+    ),
+    legend = list(orientation = "h")
+  )
+```
+
+So, if you do this interactive plot you'll be able to click and rotate to visualize the relationship between the data and the model prediction. If you rotate so that you're oriented with the bathroom axis as primary, that most proximate side slope (the slope of the side of the plane "closest" to you) is the visualization of the effect of bathroom holding bedroom constant.
+
+By the same token, if you rotate so that you're oriented with the bedroom axis as primary, that most proximate side slope (the slope of the side of the plane "closest" to you) is the visualization of the effect of bedroom holding bathroom constant.
+
+### Examining Redundancy Between Predictors
+
+But we know intuitively that there is probably some overlap in the information that we're getting from the number of bedrooms and the number of bathrooms—specifically, we would expect both to increase on average as the size of the house increases. A bigger house will have more bedrooms and more bathrooms, a house that has more bedrooms will probably also tend to have more bathrooms (and vice versa), and all of those things (even the unmeasured size of house) will tend to be positively associated with price.
+
+How could we examine the relationship between number of bedrooms and number of bathrooms?
+
+Let's look at a scatterplot + regression line for that relationship:
+
+```{r}
+#| eval: false
+m_bath_on_bed <- lm(Bathrooms ~ Bedrooms, data = housing)
+b0 <- coef(m_bath_on_bed)[1]
+b1 <- coef(m_bath_on_bed)[2]
+
+ct <- cor.test(housing$Bedrooms, housing$Bathrooms)
+r_val <- unname(ct$estimate)
+p_val <- ct$p.value
+
+# Nice labels for our figure so we can see what's going on here
+eq_label <- sprintf("Bathrooms = %.3f + %.3f × Bedrooms", b0, b1)
+p_label  <- ifelse(p_val < .001, "p < .001", sprintf("p = %.3f", p_val))
+r_label  <- sprintf("r = %.3f, %s", r_val, p_label)
+
+# Place labels in the top-left corner based on data range
+x_pos <- min(housing$Bedrooms) + 0.02 * diff(range(housing$Bedrooms))
+y_pos <- max(housing$Bathrooms) - 0.02 * diff(range(housing$Bathrooms))
+
+p_bed_bath_scatter <- ggplot(housing, aes(x = Bedrooms, y = Bathrooms)) +
+  geom_point(size = 2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  annotate("text", x = x_pos, y = y_pos,
+           label = paste(eq_label, r_label, sep = "\n"),
+           hjust = 0, vjust = 1, size = 4) +
+  labs(
+    title = "Bathrooms vs Bedrooms",
+    x = "Bedrooms",
+    y = "Bathrooms"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_bed_bath_scatter
+```
+
+As we can see, these predictors are related and in the way we intuited—a house with more bedrooms tends to have more bathrooms and vice versa.
+
+So these predictors are redundant—we can predict one from the other and both share some predictive power of price. That said, despite being redundant, each helps us to predict significantly better than the model that includes only the other, as we can see in our summary of the model. Remember:
+
+```{r}
+#| eval: false
+summary(m_bed_bath)
+```
+
+In fact, we can directly interpret these partial regression coefficients and say that holding bedrooms constant, we predict that price increases by $28,450 for every additional bathroom. Conversely, holding bathrooms constant, we predict that price increases by $29,358. And finally, just for fun, for a house with no bedrooms and no bathrooms (in other words, assuming that our other predictors = 0), we would predict that house would be valued at $313,263.
+
+### Block Test: Adding Multiple Predictors
+
+OK, so we've worked through two different types of model comparisons so far: an overall model comparison for ALL of the numeric predictors at once versus a simple mean-only prediction model C, as well as a 1 df partial regression coefficient (or the considering the addition of a single predictor) model comparison.
+
+What we haven't considered is our ability to conduct a model comparison that tests a more complicated than mean-only model C versus a model A that is adding more than one predictor at a time. So, let's assume that we want a model C that is our model predicting price with the number of bedrooms and the number of bathrooms and now we want to consider whether a model A that adds both buyer income and household size to the model.
+
+```{r}
+#| eval: false
+# Model C (Compact): Price ~ Bedrooms + Bathrooms
+# m_bed_bath already defined above
+# SSE_bed_bath already defined above
+
+# Model A (Augmented): Add Buyer_Income + Household_Size
+m_bed_bath_inc_size <- lm(Price ~ Bedrooms + Bathrooms + Buyer_Income + Household_Size, 
+                          data = housing)
+
+# SSE for big model
+SSE_bed_bath_inc_size <- sum(residuals(m_bed_bath_inc_size)^2)
+
+# PRE(A vs C) = (SSE(C) - SSE(A)) / SSE(C)
+PRE_bedbath_to_bedbathincsize <- (SSE_bed_bath - SSE_bed_bath_inc_size) / SSE_bed_bath
+PRE_bedbath_to_bedbathincsize
+```
+
+So, we explain ~11.9% of the error in that model C when we move to model A (add those 2 additional predictors). Is that significant?
+
+First, is this a trick question where I make us do a bunch of extra work like it was previously and we can just look at R² again...? No, not this time. The model comparison we are making is not the full model compared to the mean-only model, nor is it a comparison in which we're examining the additional predictive power of a single additional predictor. This time we're trying to examine two bad (predictors) at the same damn time... that's nowhere in the stock output from model summary:
+
+```{r}
+#| eval: false
+summary(m_bed_bath_inc_size)
+```
+
+To answer this question, the hoops from before are now actually necessary.
+
+```{r}
+#| eval: false
+# Degrees of freedom
+df_smallblock <- df.residual(m_bed_bath)
+df_bigblock   <- df.residual(m_bed_bath_inc_size)
+
+num_dfblock <- df_smallblock - df_bigblock   # number of added parameters (should = 2)
+den_dfblock <- df_bigblock                   # residual df of the bigger model
+
+# Manual partial F
+F_manual_incsize <- ((SSE_bed_bath - SSE_bed_bath_inc_size) / num_dfblock) /
+  (SSE_bed_bath_inc_size / den_dfblock)
+
+F_manual_incsize
+```
+
+So, our F stat for this comparison is 13.133, and we can calculate the p value as follows:
+
+```{r}
+#| eval: false
+p_val_incsize <- pf(F_manual_incsize, df1 = num_dfblock, df2 = den_dfblock, lower.tail = FALSE)
+p_val_incsize
+```
+
+So, we can reject the null that these two predictors are = 0.
+
+But the problem here, as in the overall model test and as pointed out by your book, is that we know that we can reject model C in favor of model A but we can't really speak to which additional predictor is significantly improving our model compared to model C or how... unless we have a good theory or other reason to consider these predictors as a block—to make a model comparison with more than 1 df difference in number of parameters between model A and model C—we're better off to avoid that "big dumb F" and stick with single df tests.
+
+---
+
+## Part 3: Redundancy #2 — Income vs. Credit Score
+
+```{r}
+#| eval: false
+# A) Start with Credit_Score, add Buyer_Income
+m_score  <- lm(Price ~ Credit_Score, data = housing)
+m_sc_inc <- lm(Price ~ Credit_Score + Buyer_Income, data = housing)
+
+SSE_score  <- sum(residuals(m_score)^2)
+SSE_sc_inc <- sum(residuals(m_sc_inc)^2)
+
+# What is the PRE for the model that includes Buyer income versus the model C that doesn't?
+PRE_inc_given_score <- (SSE_score - SSE_sc_inc) / SSE_score
+
+summary(m_sc_inc)
+```
+
+**Questions to answer:**
+
+- Is the overall model significant?
+- Are both/either predictors significant?
+- How can we interpret the partial regression coefficients (regardless of significance)?
+
+---
+
+## Part 4: Redundancy #3 — Household Composition
+
+*Household_Size, Num_Dependents, Num_School_Age_Children*
+
+```{r}
+#| eval: false
+# Explore pairwise redundancy (just to look)
+round(cor(housing[, c("Household_Size", "Num_Dependents", "Num_School_Age_Children")]),
+      3)
+
+# Start with Size, add Dependents + School_Age_Children as a block
+m_size     <- lm(Price ~ Household_Size, data = housing)
+m_size_blk <- lm(Price ~ Household_Size + Num_Dependents + Num_School_Age_Children,
+                 data = housing)
+
+SSE_size     <- sum(residuals(m_size)^2)
+SSE_size_blk <- sum(residuals(m_size_blk)^2)
+
+PRE_blk_given_size <- (SSE_size - SSE_size_blk) / SSE_size
+
+summary(m_size_blk)
+```
+
+**Questions:**
+
+- Is the overall model featuring household size, number of dependents, and number of school age children significant?
+- In the model with three predictors, which are significant?
+- In the model with three predictors, interpret the partial slope for number of dependents.
+- Simplify this model—examine the three, single predictor models for each of these predictors (three simple regressions). Does the significance of any given predictor change (compared to its significance in the multiple regression with all three predictors included)? Explain why the pattern you see occurs.
+
+---
+
+## Part 5: Single-Predictor (1 df) Tests Inside a Model
+
+*Partial coefficients; interpret β, SE, t, p*
+
+Examine the following model:
+
+```{r}
+#| eval: false
+m_prac <- lm(Price ~ Bedrooms + Bathrooms + Household_Size, data = housing)
+summary(m_prac)
+```
+
+**Questions:**
+
+- Interpret each β in m_prac in units (holding others constant).
+- Which are significant? Which are not?
+
+---
+
+## Part 6: Construct a Composite Predictor
+
+One of the solutions mentioned to the "big dumb F" problem this week was the idea of combining two related variables to form a composite.
+
+So let's say that what I'm actually wanting to test is whether house size predicts house price holding constant income. Only I don't have a measure of house size—I have two kind of reasonable proxy measures (number of bedrooms and bathrooms). I could argue that while I don't think that either is a perfect proxy for house size, to the extent that they overlap, I think they actually do provide a relatively reasonable proxy.
+
+So, instead of running a 3 predictor model, I could build a composite, averaging number of bedrooms and number of bathrooms and treating that composite as my proxy for house size. To the extent that is reasonable, I'm now testing with 1 df instead of 2.
+
+```{r}
+#| eval: false
+housing$HouseSize <- (housing$Bedrooms + housing$Bathrooms) / 2
+
+# Compare models with and without the composite (block test idea, but 1 df because composite)
+mC_comp      <- lm(Price ~ Buyer_Income, data = housing)
+mA_comp      <- lm(Price ~ Buyer_Income + HouseSize, data = housing)
+mA_3predcomp <- lm(Price ~ Buyer_Income + Bedrooms + Bathrooms, data = housing)
+
+SSE_C_comp <- sum(residuals(mC_comp)^2)
+SSE_A_comp <- sum(residuals(mA_comp)^2)
+
+PRE_comp <- (SSE_C_comp - SSE_A_comp) / SSE_C_comp
+
+summary(mA_comp)
+summary(mA_3predcomp)
+```
+
+**Questions:**
+
+- Is the composite predictor significant?
+- Is the overall model significant?
+- How should we interpret mA_comp versus mA_3predcomp?
+
+---
+
+## Part 7: Confidence Intervals and Standardized Coefficients
+
+Really quick, let's check in with CI and standardized coefficients.
+
+Pick one of your multiple regression models (e.g., m_prac or mFull):
+
+```{r}
+#| eval: false
+summary(mA_3predcomp)
+confint(mA_3predcomp, level = 0.95)
+```
+
+### Standardized Coefficients
+
+Standardize Y and all X's used in the chosen model; re-fit the same structure.
+
+```{r}
+#| eval: false
+Price_z    <- (housing$Price        - mean(housing$Price))        / sd(housing$Price)
+Bedrooms_z <- (housing$Bedrooms     - mean(housing$Bedrooms))     / sd(housing$Bedrooms)
+Bathrooms_z <- (housing$Bathrooms   - mean(housing$Bathrooms))    / sd(housing$Bathrooms)
+Income_z   <- (housing$Buyer_Income - mean(housing$Buyer_Income)) / sd(housing$Buyer_Income)
+
+m_prac_std <- lm(Price_z ~ Income_z + Bedrooms_z + Bathrooms_z)
+summary(m_prac_std)
+```
+
+**Questions:**
+
+- Compare standardized betas: which predictors have the largest absolute effects?
+- How does this ranking compare to your unstandardized interpretation?
+- Reminder: standardization aids comparison; it does not change significance.

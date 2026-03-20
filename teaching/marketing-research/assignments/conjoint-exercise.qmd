@@ -1,0 +1,575 @@
+---
+title: "Conjoint Analysis"
+subtitle: "The Lobster Roll Problem"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+---
+
+```{r}
+#| include: false
+# This chunk loads packages and data silently
+```
+
+## Part 1: The Lobster Roll Problem
+
+You've just been hired as a consultant by **Claw & Order**, a new food truck operation planning to serve lobster rolls along the Maine coast. The owners—a former finance professional who "escaped" to Maine and a recent marketing graduate from the Maine Business School—have a problem.
+
+They've been arguing for weeks about how to make their signature lobster roll. One partner insists on warm butter, a split-top bun, and absolutely no lettuce. The other thinks a light mayo preparation with some crisp lettuce would appeal to summer customers. They've gone back and forth, each convinced their preferences represent what customers actually want. So they've started polling friends, family, and people they randomly meet around the state to ask what the "right" lobster roll is and everyone gives a different answer!
+
+"Just ask customers what they want!" suggests one partner.
+
+But here's the problem: when you ask people what they want, they say "everything." They want the freshest lobster, the best bun, the perfect sauce, AND the lowest price. Customers aren't good at articulating trade-offs. If you ask "Is price important?" everyone says yes. If you ask "Is quality important?" everyone also says yes. These answers don't help you design an actual product.
+
+What Claw & Order needs is a way to understand how customers make trade-offs—how much they're willing to sacrifice on one attribute to get more of another. That's exactly what **conjoint analysis** does.
+
+### What is Conjoint Analysis?
+
+Conjoint analysis is a survey-based method that uncovers how people value different attributes of a product or service. Instead of asking people to rate individual features in isolation, you present them with complete product profiles that vary across multiple attributes and ask them to rate (or rank, or choose among) those profiles.
+
+The key insight is this: by observing how overall preferences change as attributes change, we can *decompose* overall preferences into the contribution of each attribute. We can figure out how much of someone's overall liking of a lobster roll comes from the butter, how much from the bun, how much from the lettuce (or lack thereof), and so on.
+
+This decomposition gives us what we call **part-worth utilities**—the utility (or value, or contribution to preference) associated with each level of each attribute. If we know the part-worths, we can:
+
+1. Identify which attributes matter most to customers
+2. Design the "optimal" product (the combination with highest total utility)
+3. Predict how customers would respond to new product configurations
+4. Understand how different customer segments value attributes differently
+
+### The Attributes
+
+After some market research, Claw & Order has identified five key attributes that vary across lobster rolls in the market:
+
+| Attribute | Levels | Description |
+|-----------|--------|-------------|
+| **Binder** | Butter, Mayo | Warm butter vs. mayo-based |
+| **Sauce Amount** | Light, Heavy | How generously dressed the lobster meat is |
+| **Lettuce** | Yes, No | Whether a bed of lettuce sits under the lobster |
+| **Bun** | Split-top, Regular | New England split-top hot dog bun vs. regular hinged bun |
+| **Price** | $18, $24, $30 | Price point for the roll |
+
+With 2 × 2 × 2 × 2 × 3 = 48 possible combinations, there are 48 distinct lobster rolls they could theoretically offer. Obviously, customers can't rate all 48. We'll deal with that shortly.
+
+### The Survey
+
+Claw & Order fielded a survey to 150 respondents, asking each to rate 12 different lobster roll profiles on a 1-10 scale ("How appealing is this lobster roll to you?"). The profiles were selected using a technique called **fractional factorial design**, which chooses a subset of profiles that allows us to estimate the effect of each attribute without showing every possible combination.
+
+Importantly, they also recorded whether each respondent was:
+
+- A **Maine native** (born and raised in Maine)
+- A **transplant** (currently lives in Maine but born elsewhere)
+- A **tourist** (visiting Maine)
+
+This segmentation variable will prove useful later.
+
+---
+
+## Part 2: From Profiles to Data
+
+Let's look at what the data actually look like. First, load the dataset:
+
+```{r}
+#| eval: false
+lobster <- read.csv("Datasets/lobster_roll_conjoint.csv")
+head(lobster)
+str(lobster)
+```
+
+You should see something like this:
+
+| respondent_id | segment | profile | binder | sauce | lettuce | bun | price | rating |
+|---------------|---------|---------|--------|-------|---------|-----|-------|--------|
+| 1 | native | 1 | Butter | Light | No | Split | 18 | 8 |
+| 1 | native | 2 | Mayo | Heavy | Yes | Regular | 24 | 4 |
+| 1 | native | 3 | Butter | Heavy | No | Split | 30 | 7 |
+| ... | ... | ... | ... | ... | ... | ... | ... | ... |
+
+Each row represents one respondent rating one profile. Since we have 150 respondents each rating 12 profiles, we have 1,800 total observations.
+
+Notice that the attributes are categorical (except price, which we'll treat as continuous for now). To use these in a regression model, we need to convert them to numeric codes. This is where **dummy coding** comes in.
+
+### Dummy Coding Review
+
+You've already seen dummy coding in previous weeks when dealing with categorical predictors. The idea is simple: for a categorical variable with *k* levels, we create *k - 1* binary (0/1) indicator variables. The omitted level becomes the **reference category** (because it is coded as 0 — remember the magic number 0?).
+
+For our lobster roll attributes:
+
+| Attribute | Reference Level | Dummy Variable(s) |
+|-----------|-----------------|-------------------|
+| Binder | Mayo | `binder_butter` (1 if Butter, 0 if Mayo) |
+| Sauce | Light | `sauce_heavy` (1 if Heavy, 0 if Light) |
+| Lettuce | No | `lettuce_yes` (1 if Yes, 0 if No) |
+| Bun | Regular | `bun_split` (1 if Split-top, 0 if Regular) |
+| Price | (continuous) | Just use the numeric value |
+
+Let's create these dummy variables:
+
+```{r}
+#| eval: false
+lobster$binder_butter <- ifelse(lobster$binder == "Butter", 1, 0)
+lobster$sauce_heavy <- ifelse(lobster$sauce == "Heavy", 1, 0)
+lobster$lettuce_yes <- ifelse(lobster$lettuce == "Yes", 1, 0)
+lobster$bun_split <- ifelse(lobster$bun == "Split", 1, 0)
+```
+
+::: {.callout-note}
+## Why These Reference Levels?
+
+The choice of reference level is arbitrary statistically—you'll get equivalent overall model fit regardless of which level you omit. But it affects interpretation. I've chosen reference levels that represent a "baseline" lobster roll (it's also the correct choice because it is my preference — fight me): mayo-based, lightly dressed, no lettuce, regular bun. The coefficients will then tell us how much utility changes when we switch *away* from this baseline.
+:::
+
+---
+
+## Part 3: Conjoint as Model Comparison
+
+Here's where things should start feeling familiar. We're going to estimate part-worth utilities using... regression. Specifically, we'll compare two models:
+
+**Model C (Compact):** Predict the rating using only the overall mean.
+
+$$\hat{Y}_i = \bar{Y}$$
+
+This is our baseline—a model that says "everyone rates every lobster roll the same, regardless of its attributes." Obviously this is wrong, but it establishes the error we're starting with.
+
+**Model A (Augmented):** Predict the rating using the attribute levels.
+
+$$\hat{Y}_i = b_0 + b_1(\text{Butter}) + b_2(\text{Heavy}) + b_3(\text{Lettuce}) + b_4(\text{Split}) + b_5(\text{Price})$$
+
+This model says "preferences depend on what's in the lobster roll." The coefficients ($b_1, b_2$, etc.) are our **part-worth utilities**—they tell us how much each attribute level contributes to overall preference.
+
+### Fitting the Models
+
+Let's fit both:
+
+```{r}
+#| eval: false
+# Model C: Mean only
+model_c <- lm(rating ~ 1, data = lobster)
+
+# Model A: Attributes
+model_a <- lm(rating ~ binder_butter + sauce_heavy + lettuce_yes + bun_split + price, 
+              data = lobster)
+```
+
+Now let's compare them using our familiar tools:
+
+```{r}
+#| eval: false
+# Get SSEs
+SSE_C <- deviance(model_c)
+SSE_A <- deviance(model_a)
+
+# Calculate PRE
+PRE <- (SSE_C - SSE_A) / SSE_C
+PRE
+```
+
+::: {.callout-tip collapse="true"}
+## What Should You Get?
+
+Your PRE should be around 0.13. This tells you that knowing the attributes of a lobster roll reduces our prediction error by about 13% compared to just guessing the mean rating for everyone.
+
+Is that a lot? For survey data with lots of individual variation in preferences, that's actually pretty solid. Remember, different people genuinely like different things—we wouldn't expect attributes alone to explain everything.
+:::
+
+Let's look at the full model output:
+
+```{r}
+#| eval: false
+summary(model_a)
+```
+
+### Interpreting the Output
+
+You should see something like:
+
+```
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    6.3871     0.2001  31.914  < 2e-16 ***
+binder_butter -0.2490     0.0779  -3.196  0.00142 ** 
+sauce_heavy   -0.1016     0.0816  -1.246  0.21294    
+lettuce_yes   -0.4431     0.0877  -5.054  4.8e-07 ***
+bun_split      0.8097     0.0747  10.845  < 2e-16 ***
+price         -0.0599     0.0095  -6.314  3.4e-10 ***
+```
+
+Let's interpret each coefficient:
+
+| Coefficient | Estimate | Interpretation |
+|-------------|----------|----------------|
+| (Intercept) | 6.39 | Predicted rating for the reference lobster roll (mayo, light, no lettuce, regular bun) at $0. The $0 price is meaningless, so we'll fix this with centering later. |
+| binder_butter | −0.25 | Switching from mayo to butter *decreases* the expected rating by 0.25 points, holding all else constant. Mayo is preferred! |
+| sauce_heavy | −0.10 | Heavy sauce *decreases* the expected rating by 0.10 points compared to light sauce. Light sauce is slightly preferred (though note the lack of statistical significance). |
+| lettuce_yes | −0.44 | Adding lettuce *decreases* the expected rating by 0.44 points. No lettuce is preferred. |
+| bun_split | +0.81 | A split-top bun *increases* the expected rating by 0.81 points compared to a regular bun. Split-top is strongly preferred. |
+| price | −0.06 | Each additional dollar *decreases* the expected rating by 0.06 points. Higher prices are less preferred (no surprise). |
+
+These coefficients are the **part-worth utilities**. They tell us the "value" each attribute level contributes to overall preference, measured in rating-scale points.
+
+### A Quick Sanity Check
+
+Do these results make sense? Let's think:
+
+- **Mayo > Butter:** Traditional Maine lobster rolls are often mayo-based. Makes sense.
+- **Light > Heavy sauce:** Lets the lobster shine. Makes sense.
+- **No lettuce > Lettuce:** Purists hate lettuce on a lobster roll. Makes sense.
+- **Split-top > Regular bun:** The traditional New England style. Makes sense.
+- **Lower price > Higher price:** Obviously.
+
+The signs are all in the (or at least my) expected direction — that's reassuring.
+
+---
+
+## Part 4: Making the Intercept Meaningful
+
+You may have noticed that the intercept (6.39) is the predicted rating at a price of $0. That's not meaningful—nobody's offering free lobster rolls.
+
+Let's center price at its mean so the intercept represents the predicted rating for the reference lobster roll *at the average price*:
+
+```{r}
+#| eval: false
+lobster$price_centered <- lobster$price - mean(lobster$price)
+
+model_a_centered <- lm(rating ~ binder_butter + sauce_heavy + lettuce_yes + 
+                                 bun_split + price_centered, 
+                        data = lobster)
+summary(model_a_centered)
+```
+
+Now the intercept represents the predicted rating for a mayo-based, lightly sauced, no-lettuce, regular-bun lobster roll at $24 (the average price). This is much more interpretable.
+
+Note that the coefficient on price doesn't change—centering only affects the intercept, not the slopes. You learned this in Week 8!
+
+---
+
+## Part 5: Attribute Importance
+
+We now have part-worth utilities, but Claw & Order wants to know: **which attribute matters most?**
+
+This isn't immediately obvious from the raw coefficients because attributes have different scales:
+- Binder, sauce, lettuce, and bun are all binary (0/1)
+- Price ranges from $18 to $30 (a range of 12)
+
+To compare "importance" across attributes, we need to put them on a common scale. The standard approach is:
+
+1. For each attribute, calculate the **range** of part-worths (highest minus lowest)
+2. Sum the ranges across all attributes
+3. Express each attribute's range as a **percentage of the total**
+
+### Calculating Importance
+
+For binary attributes, the "range" is simply the absolute value of the coefficient (since switching from 0 to 1 captures the full range).
+
+For price, the range in part-worth is: coefficient × (max − min) = −0.06 × (30 − 18) = −0.72. We take the absolute value: 0.72.
+
+```{r}
+#| eval: false
+# Extract coefficients
+coefs <- coef(model_a)
+
+# Calculate ranges (absolute values for binary attributes)
+range_binder <- abs(coefs["binder_butter"])
+range_sauce <- abs(coefs["sauce_heavy"])
+range_lettuce <- abs(coefs["lettuce_yes"])
+range_bun <- abs(coefs["bun_split"])
+range_price <- abs(coefs["price"]) * (30 - 18)  # coefficient × price range
+
+# Total range
+total_range <- range_binder + range_sauce + range_lettuce + range_bun + range_price
+
+# Importance (percentage)
+importance <- c(
+  Binder = range_binder / total_range * 100,
+  Sauce = range_sauce / total_range * 100,
+  Lettuce = range_lettuce / total_range * 100,
+  Bun = range_bun / total_range * 100,
+  Price = range_price / total_range * 100
+)
+
+importance
+```
+
+::: {.callout-tip collapse="true"}
+## What Should You Get?
+
+Your importance percentages should look something like:
+
+| Attribute | Importance |
+|-----------|------------|
+| Bun | ~35% |
+| Price | ~31% |
+| Lettuce | ~19% |
+| Binder | ~11% |
+| Sauce | ~4% |
+
+This tells Claw & Order: the bun type and price are the most important drivers of preference. Sauce amount matters least (and wasn't even statistically significant).
+:::
+
+### Visualizing Importance
+
+```{r}
+#| eval: false
+barplot(sort(importance, decreasing = TRUE),
+        main = "Attribute Importance",
+        ylab = "Importance (%)",
+        col = "steelblue",
+        las = 2)
+```
+
+---
+
+## Part 6: The Optimal Lobster Roll
+
+Given our part-worths, we can now answer the question: **what's the best lobster roll to satisfy the most people in this market?**
+
+To maximize the predicted rating, we want to choose the level of each attribute that has the highest part-worth:
+
+| Attribute | Optimal Level | Reasoning |
+|-----------|---------------|-----------|
+| Binder | Mayo | Negative coefficient for butter (−0.25) |
+| Sauce | Light | Negative coefficient for heavy (−0.10) |
+| Lettuce | No | Negative coefficient for yes (−0.44) |
+| Bun | Split-top | Positive coefficient (+0.81) |
+| Price | $18 | Negative coefficient per dollar (−0.06) |
+
+The "optimal" lobster roll is: **Mayo, light sauce, no lettuce, split-top bun, $18.**
+
+Let's calculate its predicted rating:
+
+```{r}
+#| eval: false
+# Using the centered model
+# Reference profile at mean price: mayo, light, no lettuce, regular bun = intercept
+# Optimal: add bun_split, subtract price effect for going from $24 to $18
+
+optimal_rating <- coef(model_a_centered)["(Intercept)"] +
+                  coef(model_a_centered)["bun_split"] +
+                  coef(model_a_centered)["price_centered"] * (18 - 24)
+
+optimal_rating
+```
+
+::: {.callout-note}
+## But Wait...
+
+The "optimal" lobster roll at $18 is also the cheapest. What if Claw & Order can't make money at $18? 
+
+This is where conjoint gets strategically interesting. You can ask: "What's the optimal roll at $24?" or "How much does preference drop if we raise the price to $30?"
+
+The answer is in the coefficients. Each $6 increase costs about 0.36 rating points (0.06 × 6). Is that worth the extra margin? Conjoint gives you the numbers to make that an informed decision.
+:::
+
+---
+
+## Part 7: Segment Differences
+
+So far we've estimated part-worths for all respondents pooled together. But Claw & Order suspects that Maine natives, transplants, and tourists might have different preferences.
+
+Let's find out.
+
+### Approach 1: Separate Models by Segment
+
+The simplest approach is to estimate separate models for each segment:
+
+```{r}
+#| eval: false
+# Subset the data
+natives <- subset(lobster, segment == "native")
+transplants <- subset(lobster, segment == "transplant")
+tourists <- subset(lobster, segment == "tourist")
+
+# Fit separate models
+model_native <- lm(rating ~ binder_butter + sauce_heavy + lettuce_yes + 
+                            bun_split + price_centered, data = natives)
+model_transplant <- lm(rating ~ binder_butter + sauce_heavy + lettuce_yes + 
+                                bun_split + price_centered, data = transplants)
+model_tourist <- lm(rating ~ binder_butter + sauce_heavy + lettuce_yes + 
+                             bun_split + price_centered, data = tourists)
+
+# Compare coefficients
+coef(model_native)
+coef(model_transplant)
+coef(model_tourist)
+```
+
+::: {.callout-tip collapse="true"}
+## What Should You See?
+
+The segments should show notably different preferences:
+
+| Attribute | Natives | Transplants | Tourists |
+|-----------|---------|-------------|----------|
+| Butter (vs. mayo) | Strong − (~−0.7) | Moderate − (~−0.2) | Slight + (~+0.2) |
+| Heavy sauce | − (~−0.5) | − (~−0.3) | + (~+0.5) |
+| Lettuce | Strong − (~−1.4) | Moderate − (~−0.8) | + (~+1.0) |
+| Split-top bun | Strong + (~+1.3) | + (~+1.1) | Neutral (~0) |
+| Price sensitivity | High (~−0.08) | High (~−0.07) | Low (~−0.03) |
+
+Natives are traditionalists: mayo, light sauce, no lettuce, split-top bun, price-sensitive.
+
+Tourists are... different: they're okay with butter, prefer heavier sauce, actually *like* lettuce, don't care much about the bun, and are MUCH less price-sensitive (vacation mode).
+
+Transplants are in between, having adopted some Maine preferences but not fully converted.
+:::
+
+### Approach 2: Interaction Model
+
+Rather than fitting separate models, we can use interactions to test whether segment differences are statistically significant:
+
+```{r}
+#| eval: false
+model_interaction <- lm(rating ~ (binder_butter + sauce_heavy + lettuce_yes + 
+                                   bun_split + price_centered) * segment, 
+                        data = lobster)
+summary(model_interaction)
+```
+
+This model includes main effects for each attribute *and* interaction terms between each attribute and segment. The interaction terms tell us whether the effect of an attribute (e.g., butter vs. mayo) differs significantly across segments.
+
+::: {.callout-note}
+## Connecting to Previous Weeks
+
+This is exactly the moderation framework from Week 11! Segment is moderating the effect of product attributes on preference. The interaction terms tell us: "Does the butter effect depend on who's eating the lobster roll?"
+:::
+
+---
+
+## Part 8: Putting It All Together — The Recommendation
+
+Claw & Order needs a recommendation. Based on your analysis, here's what you might tell them:
+
+**Key Findings:**
+
+1. **Most important attributes:** Bun type and price together account for about two-thirds of what drives preference. Get these right.
+
+2. **Overall preferences favor traditional Maine style:** Mayo, light sauce, no lettuce, split-top bun. This configuration maximizes appeal across all respondents.
+
+3. **But segments differ meaningfully:**
+   - Maine natives strongly prefer the traditional style; transplants are pretty happy to accept it, too
+   - Tourists have different preferences — they're more accepting of butter, like heavier sauce, and don't mind lettuce (so long as it is with mayo)
+   
+4. **Strategic implication:** If Claw & Order operates in a tourist-heavy location (Bar Harbor in July), they might consider offering a "visitor-friendly" option alongside the traditional roll. If they're serving mostly locals (Portland in October), stick with tradition.
+
+5. **Price sensitivity:** Tourists are MUCH less price-sensitive than locals. There may be an opportunity for premium pricing in tourist locations.
+
+---
+
+## Part 9: Your Turn
+
+Now it's your turn to practice. Complete the following tasks:
+
+### Task 1: Verify the PRE
+
+Calculate the PRE comparing Model C to Model A and verify it matches what we discussed earlier. Also calculate Cohen's f² and interpret the effect size.
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+```{r}
+#| eval: false
+SSE_C <- deviance(model_c)
+SSE_A <- deviance(model_a)
+PRE <- (SSE_C - SSE_A) / SSE_C
+PRE
+
+# Cohen's f²
+f2 <- PRE / (1 - PRE)
+f2
+```
+
+The PRE should be around 0.13. The f² around 0.15, which is a "medium" effect by conventional benchmarks (small = 0.02, medium = 0.15, large = 0.35). In survey research, this indicates that product attributes explain a meaningful portion of preference variation.
+:::
+
+### Task 2: Alternative Reference Category
+
+Re-run the model using *Butter* as the reference category for binder (instead of Mayo). Verify that:
+- The model fit (R², PRE) is identical
+- Only the interpretation of the coefficient changes
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+```{r}
+#| eval: false
+lobster$binder_mayo <- ifelse(lobster$binder == "Mayo", 1, 0)
+
+model_a_alt <- lm(rating ~ binder_mayo + sauce_heavy + lettuce_yes + 
+                           bun_split + price_centered, data = lobster)
+summary(model_a_alt)
+```
+
+The coefficient on `binder_mayo` should be the negative of the original `binder_butter` coefficient (e.g., +0.25 instead of −0.25). The R² and all other model statistics should be identical.
+:::
+
+### Task 3: Calculate Segment-Specific Importance
+
+Calculate attribute importance separately for natives and tourists. Which attribute shows the biggest difference in importance between these segments?
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+```{r}
+#| eval: false
+# Function to calculate importance
+calc_importance <- function(model, price_range = 12) {
+  coefs <- coef(model)
+  ranges <- c(
+    Binder = abs(coefs["binder_butter"]),
+    Sauce = abs(coefs["sauce_heavy"]),
+    Lettuce = abs(coefs["lettuce_yes"]),
+    Bun = abs(coefs["bun_split"]),
+    Price = abs(coefs["price_centered"]) * price_range
+  )
+  100 * ranges / sum(ranges)
+}
+
+importance_native <- calc_importance(model_native)
+importance_tourist <- calc_importance(model_tourist)
+
+# Compare
+rbind(Native = importance_native, Tourist = importance_tourist)
+```
+
+You should find that **Bun** shows one of the biggest differences—it's very important to natives (~25-30%) but almost irrelevant to tourists (~2-5%). **Lettuce** also differs notably: important (and negative) for natives, moderately important (and positive) for tourists.
+:::
+
+### Task 4: The "Tourist Special"
+
+Based on the tourist segment model, design the optimal lobster roll for tourists. How does it differ from the overall optimal?
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+For tourists, the optimal configuration would be:
+- **Binder:** Butter (tourists have slight preference for butter)
+- **Sauce:** Heavy (positive coefficient for tourists)
+- **Lettuce:** Yes (positive coefficient for tourists!)
+- **Bun:** Doesn't matter much (near-zero coefficient)
+- **Price:** Higher prices hurt less, but still prefer lower
+
+The "Tourist Special" is essentially the opposite of the traditional Maine lobster roll. This is a real finding that would surprise many Maine purists—but it's what the data show.
+
+Whether Claw & Order should actually offer this depends on brand positioning. If they want to be seen as "authentically Maine," putting lettuce on a lobster roll might damage their credibility with locals, even if tourists like it.
+:::
+
+---
+
+## Summary
+
+In this exercise, you learned:
+
+1. **What conjoint analysis is:** A method for decomposing overall preferences into part-worth utilities for individual attributes.
+
+2. **Conjoint is regression:** We're comparing Model C (mean-only) to Model A (mean + attribute effects), just like we've been doing all semester.
+
+3. **Part-worth utilities are regression coefficients:** They tell us how much each attribute level contributes to overall preference.
+
+4. **Attribute importance** is calculated from the range of part-worths within each attribute, expressed as a percentage of total range.
+
+5. **Segments can be incorporated** using separate models or interaction terms—connecting to our earlier work on moderation.
+
+6. **The "optimal" product** is the one that maximizes predicted utility, but strategic considerations (price, brand positioning, target market) also matter.
+
+Conjoint analysis is one of the most widely-used quantitative techniques in marketing research. Companies use it to design products, set prices, forecast market share, and understand competitive positioning. Now you know how it works under the hood—and you can see it's built on the same model comparison foundation we've been using all semester.

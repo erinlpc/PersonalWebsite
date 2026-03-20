@@ -1,0 +1,398 @@
+---
+title: "Multiple Regression"
+subtitle: "Chapter 7 Companion Exercise"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+---
+
+```{r}
+#| include: false
+```
+
+This exercise is for you to work through while watching the lecture videos and reading the chapter on multiple regression.
+
+## Setup
+
+```{r}
+#| eval: false
+# Packages
+library(tidyverse)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(patchwork)
+```
+
+## The Data
+
+We'll work with data on 19 students (Taken directly from figure 7.2 in the book):
+
+```{r}
+#| eval: false
+wtdat <- tribble(
+  ~Name,     ~Sex, ~Age, ~Height, ~Weight,
+  "Alfred",  "M",  14,   69.0,    112.5,
+  "Alice",   "F",  13,   56.5,    84.0,
+  "Barbara", "F",  13,   65.3,    98.0,
+  "Camella", "F",  14,   62.8,    102.5,
+  "Henry",   "M",  14,   63.5,    102.5,
+  "Jamal",   "M",  12,   57.3,    83.0,
+  "Jane",    "F",  12,   59.8,    84.5,
+  "Janet",   "F",  15,   62.5,    112.5,
+  "Jayden",  "M",  13,   62.5,    84.0,
+  "John",    "M",  12,   59.0,    99.5,
+  "Joyce",   "F",  11,   51.3,    50.5,
+  "Judy",    "F",  14,   64.3,    90.0,
+  "Louise",  "F",  12,   56.3,    77.0,
+  "Mary",    "F",  15,   66.5,    112.0,
+  "Philip",  "M",  16,   72.0,    150.0,
+  "Robert",  "M",  12,   64.8,    128.0,
+  "Sequan",  "M",  15,   67.0,    133.0,
+  "Thomas",  "M",  11,   57.5,    85.0,
+  "William", "M",  15,   66.5,    112.0
+)
+```
+
+---
+
+## Redundancy Between Predictors
+
+Let's specify four models predicting weight: mean only, height only, age only, and height + age:
+
+```{r}
+#| eval: false
+m_mean       <- lm(Weight ~ 1, data = wtdat)
+m_height     <- lm(Weight ~ Height, data = wtdat)
+m_age        <- lm(Weight ~ Age,    data = wtdat)
+m_heightage  <- lm(Weight ~ Height + Age, data = wtdat)
+
+
+SSE_mean <- sum(residuals(m_mean)^2)
+SSE_h    <- sum(residuals(m_height)^2)
+SSE_a    <- sum(residuals(m_age)^2)
+SSE_ha   <- sum(residuals(m_heightage)^2)
+
+PRE_h  <- 1 - SSE_h  / SSE_mean
+PRE_a  <- 1 - SSE_a  / SSE_mean
+PRE_ha <- 1 - SSE_ha / SSE_mean
+
+pre_tbl <- tibble(
+  ModelPredictors = factor(c("Height", "Age", "Height + Age"),
+                           levels = c("Height", "Age", "Height + Age")),
+  PRE = c(PRE_h, PRE_a, PRE_ha)
+)
+
+# This will generate a table with the PRE for each model relative to a
+# simple, mean-only Model C
+print(pre_tbl)
+```
+
+We can also ask for a summary of any of the specified models above, but I want to particularly call attention to the summary for the multiple regression model—the one in which we predict weight using BOTH height and age—so that you can see that it reproduces the estimates from the textbook. Please confirm for yourself.
+
+```{r}
+#| eval: false
+summary(m_heightage)
+```
+
+---
+
+## OPTIONAL Visualizing the Models
+
+First some prep:
+
+```{r}
+#| eval: false
+library(scatterplot3d)
+
+wtdat <- wtdat |>
+  mutate(
+    yhat_age    = predict(m_age,       newdata = wtdat),
+    yhat_height = predict(m_height,    newdata = wtdat),
+    yhat_ha     = predict(m_heightage, newdata = wtdat)
+  )
+
+ybar <- mean(wtdat$Weight)
+mean_label <- "Mean-only model"
+```
+
+### Weight vs. Age
+
+Now we visualize the model for weight predicted by age:
+
+```{r}
+#| eval: false
+p_age <- ggplot(wtdat, aes(x = Age, y = Weight)) +
+  geom_point(size = 2) +
+  # Residuals to the regression line (red dotted) — from observed y to fitted yhat_age
+  geom_segment(aes(xend = Age, yend = yhat_age),
+               linetype = "dotted", color = "red") +
+  # Mean-only horizontal line for context
+  geom_hline(yintercept = ybar) +
+  # Simple regression fit (Weight ~ Age)
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Weight vs Age",
+    subtitle = paste("Dotted red: residuals to regression fit | Horizontal:", mean_label),
+    x = "Age", y = "Weight"
+  ) +
+  theme_minimal(base_size = 12)
+
+ggsave("V1_weight_vs_age_resid_to_reg.png", p_age, width = 8, height = 5, dpi = 300)
+p_age
+```
+
+### Weight vs. Height
+
+And now weight by height:
+
+```{r}
+#| eval: false
+p_height <- ggplot(wtdat, aes(x = Height, y = Weight)) +
+  geom_point(size = 2) +
+  # Residuals to the regression line (red dotted) — from observed y to fitted yhat_height
+  geom_segment(aes(xend = Height, yend = yhat_height),
+               linetype = "dotted", color = "red") +
+  # Mean-only horizontal line for context
+  geom_hline(yintercept = ybar) +
+  # Simple regression fit (Weight ~ Height)
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Weight vs Height",
+    subtitle = paste("Dotted red: residuals to regression fit | Horizontal:", mean_label),
+    x = "Height", y = "Weight"
+  ) +
+  theme_minimal(base_size = 12)
+
+ggsave("V1_weight_vs_height_resid_to_reg.png", p_height, width = 8, height = 5, dpi = 300)
+p_height
+```
+
+### Multiple Regression: The 3D Plane
+
+Now we look at the multiple regression, predicting weight by height & age... but remember, we're now moving from the land of simple regression to the land of multiple regression. Which means we no longer visualize as lines with slopes but as degrees of slopes for a plane in a multi-dimensional space... it's a little intense but not as "welcome to the multiverse" as it might sound... look:
+
+```{r}
+#| eval: false
+# Static 3D scatter
+m_age_height <- lm(Weight ~ Age + Height, data = wtdat)
+
+# First we make a 3D scatter plot (our data):
+library(scatterplot3d)  # Note you will likely need to install this package
+
+s3d <- scatterplot3d(
+  x = wtdat$Age, y = wtdat$Height, z = wtdat$Weight,
+  pch = 16, color = "black",
+  xlab = "Age", ylab = "Height", zlab = "Weight",
+  main = "Multiple Regression: Weight ~ Age + Height"
+)
+
+# Then we draw the plane that corresponds to our multiple regression model's predictions:
+s3d$plane3d(m_age_height, draw_polygon = TRUE,
+            polygon_args = list(border = NA, col = rgb(0.6, 0.6, 0.6, 0.25)))
+
+# ...and we can once again visualize the residuals to this plane
+wtdat$yhat_ah <- predict(m_age_height, newdata = wtdat)
+p_fit <- s3d$xyz.convert(wtdat$Age, wtdat$Height, wtdat$yhat_ah)
+p_obs <- s3d$xyz.convert(wtdat$Age, wtdat$Height, wtdat$Weight)
+
+segments(x0 = p_fit$x, y0 = p_fit$y, x1 = p_obs$x, y1 = p_obs$y,
+         lty = "dotted", col = "red")
+```
+
+### Interactive 3D Version
+
+Or we can also visualize as an interactive 3D version of the same:
+
+```{r}
+#| eval: false
+library(plotly)  # Once again, you will likely need to install
+
+# Coefficients for the plane z = b0 + b1*Age + b2*Height
+co <- coef(m_heightage)
+
+# Grid for the plane
+xg <- seq(min(wtdat$Age),    max(wtdat$Age),    length.out = 30)
+yg <- seq(min(wtdat$Height), max(wtdat$Height), length.out = 30)
+zg <- outer(xg, yg, function(a, h) co[1] + co["Age"]*a + co["Height"]*h)
+
+# Fitted values for each observed point (to draw residuals)
+wtdat$yhat_ha <- predict(m_heightage, newdata = wtdat)
+
+# Build residual segments: (x, y, z_fit) -> (x, y, z_obs), with NA breaks
+segs_x <- as.vector(rbind(wtdat$Age,    wtdat$Age,    rep(NA, nrow(wtdat))))
+segs_y <- as.vector(rbind(wtdat$Height, wtdat$Height, rep(NA, nrow(wtdat))))
+segs_z <- as.vector(rbind(wtdat$yhat_ha, wtdat$Weight, rep(NA, nrow(wtdat))))
+
+plot_ly() %>%
+  # Points
+  add_trace(
+    type = "scatter3d", mode = "markers",
+    x = wtdat$Age, y = wtdat$Height, z = wtdat$Weight,
+    marker = list(size = 4),
+    name = "Data points"
+  ) %>%
+  # Fitted plane (no 'mode' on surfaces)
+  add_surface(
+    x = xg, y = yg, z = zg,
+    showscale = FALSE, opacity = 0.5,
+    name = "Fitted plane"
+  ) %>%
+  layout(
+    title = "Multiple Regression: Weight ~ Age + Height",
+    scene = list(
+      xaxis = list(title = "Age"),
+      yaxis = list(title = "Height"),
+      zaxis = list(title = "Weight")
+    ),
+    legend = list(orientation = "h")
+  )
+```
+
+### Height vs. Age
+
+One more visualization because I show it in the lecture video—examining the relationship between our two predictors, age and height:
+
+```{r}
+#| eval: false
+m_height_on_age <- lm(Height ~ Age, data = wtdat)
+
+wtdat <- wtdat |>
+  mutate(
+    ybar_height        = mean(Height),
+    yhat_height_on_age = as.numeric(predict(m_height_on_age, newdata = wtdat))
+  )
+
+# Plot: Height vs Age with residuals to regression line
+p_height_by_age <- ggplot(wtdat, aes(x = Age, y = Height)) +
+  geom_point(size = 2) +
+  geom_segment(aes(xend = Age, yend = yhat_height_on_age),
+               linetype = "dotted", color = "red") +
+  # Mean-only horizontal line for Height
+  geom_hline(aes(yintercept = ybar_height)) +
+  # Regression line (Height ~ Age)
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Height vs Age",
+    subtitle = paste("Dotted red: residuals to regression fit | Horizontal:", mean_label),
+    x = "Age", y = "Height"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_height_by_age
+```
+
+---
+
+## Block Tests (Nested Models)
+
+A little more to play around with regarding different types of model comparisons:
+
+### Example A: Does Adding {Age, Sex} to Height Help?
+
+```{r}
+#| eval: false
+m_small_A <- lm(Weight ~ Height, data = wtdat)
+m_big_A   <- lm(Weight ~ Height + Age + Sex, data = wtdat)
+
+anova_A   <- anova(m_small_A, m_big_A)  # partial/block F test
+R2_smallA <- summary(m_small_A)$r.squared
+R2_bigA   <- summary(m_big_A)$r.squared
+dR2_A     <- R2_bigA - R2_smallA
+
+cat("\n--- Block Test A: Add {Age, Sex} to Height ---\n")
+print(anova_A)
+cat("ΔR^2 (big - small):", round(dR2_A, 4), "\n")
+cat("Interpretation: If the F-test is significant, {Age, Sex} add\n",
+    "incremental predictive information beyond Height.\n")
+```
+
+### Example B: Does Adding {Sex} to {Height + Age} Help?
+
+```{r}
+#| eval: false
+m_small_B <- lm(Weight ~ Height + Age, data = wtdat)
+m_big_B   <- lm(Weight ~ Height + Age + Sex, data = wtdat)
+
+anova_B   <- anova(m_small_B, m_big_B)
+R2_smallB <- summary(m_small_B)$r.squared
+R2_bigB   <- summary(m_big_B)$r.squared
+dR2_B     <- R2_bigB - R2_smallB
+```
+
+### Manual Partial-F for Example A
+
+```{r}
+#| eval: false
+SSE_small <- sum(residuals(m_small_A)^2)
+SSE_big   <- sum(residuals(m_big_A)^2)
+df_small  <- df.residual(m_small_A)
+df_big    <- df.residual(m_big_A)
+
+num_df <- df_small - df_big
+den_df <- df_big
+F_manual <- ((SSE_small - SSE_big) / num_df) / (SSE_big / den_df)
+
+cat("\nManual partial-F (should match anova):", round(F_manual, 4),
+    " with df =", num_df, "and", den_df, "\n")
+anova_A
+F_manual
+```
+
+---
+
+## Single-Predictor (1 df) Tests
+
+```{r}
+#| eval: false
+m_full <- lm(Weight ~ Height + Age + Sex, data = wtdat)
+summ_full <- summary(m_full)
+print(coef(summ_full))  # compact view
+
+cat("\nHere's how to interpret:\n",
+    "Height: expected change in Weight (units) per 1-inch increase, holding Age & Sex constant.\n",
+    "Age   : expected change in Weight per 1-year increase, holding Height & Sex constant.\n",
+    "Sex   : expected mean difference (M vs F) in Weight holding Height & Age constant.\n", sep = "")
+```
+
+---
+
+## Confidence Intervals and Standardized Coefficients
+
+I didn't mention this in lecture but it's in the reading. Interpretation of CIs is consistent with previous discussion around CIs—we're just interpreting with "all else constant."
+
+### 95% Confidence Intervals
+
+```{r}
+#| eval: false
+cat("\n--- 95% Confidence Intervals (unstandardized β) ---\n")
+print(confint(m_full))
+```
+
+### Standardized Coefficients
+
+Approach: standardize all variables, then fit the same model.
+
+```{r}
+#| eval: false
+wtdat_std <- wtdat |>
+  mutate(
+    Weight_z = as.numeric(scale(Weight)),
+    Height_z = as.numeric(scale(Height)),
+    Age_z    = as.numeric(scale(Age))
+  )
+
+m_full_std <- lm(Weight_z ~ Height_z + Age_z, data = wtdat_std)
+cat("\n--- Standardized coefficients (betas) ---\n")
+print(coef(summary(m_full_std)))
+
+# Compare to unstandardized:
+m_unstandardized_full <- lm(Weight ~ Height + Age, data = wtdat)
+cat("\n--- Unstandardized coefficients ---\n")
+print(coef(summary(m_unstandardized_full)))
+
+cat("\nNote: Standardized betas aid COMPARISON across predictors;\n",
+    "they do not replace theory and do not change significance.\n", sep = "")
+```
