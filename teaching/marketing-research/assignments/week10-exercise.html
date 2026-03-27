@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Week 10 Exercise – Erin Percival Carter</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../images/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-de90a069193c92a734b12e014e417def.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-3bbefdfe6db2d16c223ca8f2d741b8cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../images/favicon_180X180.png" alt="" class="navbar-logo light-content">
+    <img src="../../../images/favicon_180X180.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Erin Percival Carter</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../teaching/index.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../bard.html"> 
+<span class="menu-text">BARD</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#part-0-load-refamiliarize-with-data" id="toc-part-0-load-refamiliarize-with-data" class="nav-link active" data-scroll-target="#part-0-load-refamiliarize-with-data">Part 0: Load &amp; Refamiliarize with Data</a></li>
+  <li><a href="#part-1-additive-vs.-interaction-house-size-ish" id="toc-part-1-additive-vs.-interaction-house-size-ish" class="nav-link" data-scroll-target="#part-1-additive-vs.-interaction-house-size-ish">Part 1: Additive vs.&nbsp;Interaction (House “Size-ish”)</a>
+  <ul class="collapse">
+  <li><a href="#pre-for-adding-the-interaction-term" id="toc-pre-for-adding-the-interaction-term" class="nav-link" data-scroll-target="#pre-for-adding-the-interaction-term">PRE for Adding the Interaction Term</a></li>
+  <li><a href="#optional-visualization" id="toc-optional-visualization" class="nav-link" data-scroll-target="#optional-visualization">Optional Visualization</a></li>
+  <li><a href="#finding-a-more-interesting-interaction" id="toc-finding-a-more-interesting-interaction" class="nav-link" data-scroll-target="#finding-a-more-interesting-interaction">Finding a More Interesting Interaction</a></li>
+  </ul></li>
+  <li><a href="#part-2-probing-a-marginal-interaction" id="toc-part-2-probing-a-marginal-interaction" class="nav-link" data-scroll-target="#part-2-probing-a-marginal-interaction">Part 2: Probing a Marginal Interaction</a>
+  <ul class="collapse">
+  <li><a href="#a-fit-additive-and-interaction-models" id="toc-a-fit-additive-and-interaction-models" class="nav-link" data-scroll-target="#a-fit-additive-and-interaction-models">2A) Fit Additive and Interaction Models</a></li>
+  <li><a href="#b-pre-for-adding-the-interaction-term" id="toc-b-pre-for-adding-the-interaction-term" class="nav-link" data-scroll-target="#b-pre-for-adding-the-interaction-term">2B) PRE for Adding the Interaction Term</a></li>
+  <li><a href="#c-simple-slopes-by-recoding-z" id="toc-c-simple-slopes-by-recoding-z" class="nav-link" data-scroll-target="#c-simple-slopes-by-recoding-z">2C) Simple Slopes by Recoding Z</a></li>
+  <li><a href="#d-simple-simple-effect-intercept-meaning-under-centering" id="toc-d-simple-simple-effect-intercept-meaning-under-centering" class="nav-link" data-scroll-target="#d-simple-simple-effect-intercept-meaning-under-centering">2D) “Simple Simple Effect” (Intercept Meaning Under Centering)</a></li>
+  <li><a href="#e-optional-visualization" id="toc-e-optional-visualization" class="nav-link" data-scroll-target="#e-optional-visualization">2E) Optional Visualization</a></li>
+  </ul></li>
+  <li><a href="#part-3-quick-demo-when-the-interaction-isnt-there" id="toc-part-3-quick-demo-when-the-interaction-isnt-there" class="nav-link" data-scroll-target="#part-3-quick-demo-when-the-interaction-isnt-there">Part 3: Quick Demo When the Interaction Isn’t There</a>
+  <ul class="collapse">
+  <li><a href="#a-reminder-from-part-1" id="toc-a-reminder-from-part-1" class="nav-link" data-scroll-target="#a-reminder-from-part-1">3A) Reminder (from Part 1)</a></li>
+  <li><a href="#b-simple-slopes-at---1-sd-bathrooms" id="toc-b-simple-slopes-at---1-sd-bathrooms" class="nav-link" data-scroll-target="#b-simple-slopes-at---1-sd-bathrooms">3B) Simple Slopes at +/- 1 SD Bathrooms</a></li>
+  </ul></li>
+  <li><a href="#part-4-your-turn-a-significant-interaction" id="toc-part-4-your-turn-a-significant-interaction" class="nav-link" data-scroll-target="#part-4-your-turn-a-significant-interaction">Part 4: Your Turn — A Significant Interaction</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Week 10 Exercise</h1>
+<p class="subtitle lead">Interactions (Maine Housing Data)</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><strong>Dataset:</strong> <code>Datasets/housing_data_section_2_exercises.csv</code></p>
+<p><strong>Theme of the week:</strong> We extend multiple regression to allow the effect of one predictor (X) to depend on the level of another predictor (Z). In additive models, the X→Y slope is the same at all levels of Z; in interaction models, we allow the X→Y slope to change with Z.</p>
+<p><strong>Hypotheses we will preview and practice testing today:</strong></p>
+<ul>
+<li>Overall model significance (is Model A - an interaction model - better than additive/multiple regression Model C?)</li>
+<li>Significance of the interaction term (are the lines non-parallel enough for an interaction to outperform and additive model?)</li>
+<li>Simple slopes (what is the effect/slope of X at a specific Z?)</li>
+<li>“Simple simple effect” (what does the intercept mean under centering?)</li>
+</ul>
+<hr>
+<section id="part-0-load-refamiliarize-with-data" class="level2">
+<h2 class="anchored" data-anchor-id="part-0-load-refamiliarize-with-data">Part 0: Load &amp; Refamiliarize with Data</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>housing <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/housing_data_section_2_exercises.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick looks</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(housing)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(housing)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(housing)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(housing<span class="sc">$</span>Price)  <span class="co"># I had a couple of q's in the previous week around what's happening</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># with the length variables - sorry if that wasn't clear</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># I'm literally just using it to get a sample size for the</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># different formulas we need to run - length() returns</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the number of observations in the dataset for that variable.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="part-1-additive-vs.-interaction-house-size-ish" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-additive-vs.-interaction-house-size-ish">Part 1: Additive vs.&nbsp;Interaction (House “Size-ish”)</h2>
+<p><strong>Research question:</strong> Does the relationship between # of Bedrooms and Price depend on # of Bathrooms? (Equivalently: are regression lines for Price by Bedrooms parallel across different numbers of Bathrooms?)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Additive Model (we don't allow an interaction; main effects only)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>m_add_bedbath <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Bedrooms <span class="sc">+</span> Bathrooms, <span class="at">data =</span> housing)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_add_bedbath)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction Model (allow slopes to vary with levels of the other predictor)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>m_int_bedbath <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Bedrooms <span class="sc">*</span> Bathrooms, <span class="at">data =</span> housing)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_bedbath)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that interaction model specifications are one of the few instances</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># in which we can rely on R to be pretty smart - it will include the </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># lower order main effects even if we only specify the interaction term.</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># This will be obvious in the summary output of the model below.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="pre-for-adding-the-interaction-term" class="level3">
+<h3 class="anchored" data-anchor-id="pre-for-adding-the-interaction-term">PRE for Adding the Interaction Term</h3>
+<p>REMINDER: our model comparison is now Model A (interaction) vs.&nbsp;Model C (additive/multiple regression/no interaction). I mean, it could be something else as we’ll discuss in a bit but this is probably the most common place to start when examining interactions.</p>
+<p>So, the logic here is still the same; we’re going to compare the model we’re interested in — one in which we allow the x-y relationship to vary/depend on the value of z (and vice versa, the z-y relationship to vary with x) - to one in which we do not allow those simple relationships/simple slopes to vary.</p>
+<p>We will compare that more complicated (or augmented), interaction Model A to the simpler (more compact), additive Model C and then compare the SSE of each model using the same formula for PRE we’ve been using all semester. This will allow us to determine the proportion of additional error explained in the more complicated model which we can then use to evaluate whether or not the additional explanatory value of Model A is worth the increased complication or if we’re better off sticking with the simpler Model C (if that sounds unfamiliar, spend a little time on the <a href="https://erinlpc.com/teaching/marketing-research/assignments/stout_exercise.html#part-8-proportional-reduction-in-error-pre">discussion of the PRE formula from week 2</a> ).</p>
+<p>Here’s what that looks like:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>SSE_add <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_add_bedbath)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>SSE_int <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_int_bedbath)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># PRE for interaction relative to additive:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>PRE_int_over_add <span class="ot">&lt;-</span> (SSE_add <span class="sc">-</span> SSE_int) <span class="sc">/</span> SSE_add</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>PRE_int_over_add</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>So that’s our PRE—we reduce the error present in the simple model by an additional .06% by adding the interaction term… that’s… not a lot. Still, let’s see this through and calculate the F and p for this model comparison.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Partial-F for interaction (1 df numerator because we add one parameter: the product term)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_small <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_add_bedbath)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_big   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_int_bedbath)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_num   <span class="ot">&lt;-</span> df_small <span class="sc">-</span> df_big     <span class="co"># should be 1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df_den   <span class="ot">&lt;-</span> df_big</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>F_interaction <span class="ot">&lt;-</span> ((SSE_add <span class="sc">-</span> SSE_int) <span class="sc">/</span> df_num) <span class="sc">/</span> (SSE_int <span class="sc">/</span> df_den)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>p_interaction <span class="ot">&lt;-</span> <span class="fu">pf</span>(F_interaction, <span class="at">df1 =</span> df_num, <span class="at">df2 =</span> df_den, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>F_interaction</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>p_interaction</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>So, our F for this model comparison examining the PRE of including versus not including the interaction term is equal to 0.13 and the p value is equal to 0.72. Not significant, as expected. We fail to reject the null and stick with our compact, additive model.</p>
+<p>But real quick… for this specific model comparison examining whether or not the addition of the interaction term resulted in a meaningful PRE, was it necessary to calculate this on our own or was it present in the initial model summary, and if so, where? Let’s look:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_bedbath)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>F_interaction</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>p_interaction</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Can you spot the test of this model comparison in the output? The p-value is pretty easy to spot because it’s identical, maybe just a rounding difference. And, appropriately, it’s in the Bedrooms:Bathrooms row in the summary table (that’s the interaction). The F-statistic is a bit trickier because it’s not there in F form, it’s there as a t, though. Remember how F is just a t squared? Let’s square that t and see what we get:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span><span class="fl">0.363</span>)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Well, that’s pretty close but not exact. WTF is that about. Rounding. It’s about the rounding that’s taking place when summary puts the model estimates in the nice table for us. Which is nice and we appreciate it but can mean that when we try to directly reproduce things they are ever so slightly off (sidenote—keep this in mind for submitting homeworks… if your answer is REALLY, REALLY close to one of the options, it’s probably a rounding difference…this is why I never give you SUPER close alternatives in multiple choice and why I grade any open response items “by hand” so you don’t lose points on minor rounding issues).</p>
+<p>So, can we recreate this by telling summary to knock that rounding off? Sure can.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="fu">summary</span>(m_int_bedbath)<span class="sc">$</span>coefficients, <span class="at">digits =</span> <span class="dv">10</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>(<span class="sc">-</span>.<span class="dv">3625114352</span>)<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Perfect. So, if we want to do the Model A (interaction) versus Model C (additive) comparison, we can just interpret the summary model output for the interaction model. It’s all there.</p>
+<p><strong>Interpretation guide:</strong></p>
+<ul>
+<li>The p-value for the interaction tests the non-parallel-lines hypothesis—in other words, does the slope change enough along different values of the other predictor variable for it to be worth including the interaction term or are we better off sticking with the simpler model that assumes parallel lines?</li>
+<li>If significant, the Bedrooms:Price slope depends on Bathrooms and vice-versa.</li>
+<li>If non-significant, the slopes don’t vary enough for it to be worth needlessly complicating things.</li>
+</ul>
+</section>
+<section id="optional-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="optional-visualization">Optional Visualization</h3>
+<p>We’re going to define <code>bath_lo</code> and <code>bath_hi</code> here so we can produce this visualization. We’ll return to these variables and discuss them more thoroughly in Part 3.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define low and high bathroom values (mean ± 1 SD) for visualization</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>bath_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(housing<span class="sc">$</span>Bathrooms, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>bath_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(housing<span class="sc">$</span>Bathrooms, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>bath_lo   <span class="ot">&lt;-</span> bath_mean <span class="sc">-</span> bath_sd</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>bath_hi   <span class="ot">&lt;-</span> bath_mean <span class="sc">+</span> bath_sd</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Very quick visual: two Bathrooms slices (low/high) for Bedrooms → Price</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(housing<span class="sc">$</span>Bedrooms), <span class="fu">max</span>(housing<span class="sc">$</span>Bedrooms), <span class="at">length.out =</span> <span class="dv">80</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>lo <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Bedrooms =</span> x, <span class="at">Bathrooms =</span> bath_lo)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>hi <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Bedrooms =</span> x, <span class="at">Bathrooms =</span> bath_hi)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(housing<span class="sc">$</span>Bedrooms, housing<span class="sc">$</span>Price, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> .<span class="dv">6</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Bedrooms"</span>, <span class="at">ylab =</span> <span class="st">"Price"</span>, <span class="at">main =</span> <span class="st">"Additive vs Interaction (slices)"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(m_add_bedbath, <span class="at">newdata =</span> lo), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(m_add_bedbath, <span class="at">newdata =</span> hi), <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(m_int_bedbath, <span class="at">newdata =</span> lo))</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">predict</span>(m_int_bedbath, <span class="at">newdata =</span> hi))</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bty =</span> <span class="st">"n"</span>, <span class="fu">c</span>(<span class="st">"Add low"</span>, <span class="st">"Add high"</span>, <span class="st">"Int low"</span>, <span class="st">"Int high"</span>),</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="finding-a-more-interesting-interaction" class="level3">
+<h3 class="anchored" data-anchor-id="finding-a-more-interesting-interaction">Finding a More Interesting Interaction</h3>
+<p>All that said, the next thing we’re going to do is start further interpreting or breaking down an interaction. You can run the models below on a non-significant interaction… but frankly there isn’t much of a point in doing so unless you have a REALLY good reason to. So let’s examine one more interaction model really quickly before we move on that will provide an interaction that looks at least slightly more interesting…</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(Price <span class="sc">~</span> Num_Dependents <span class="sc">*</span> Buyer_Income, <span class="at">data =</span> housing))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>So, we’ve got a model with an interaction included and the interaction isn’t quite significant but it’s close. Now, here’s where we need to be a bit more sophisticated than someone who’s not particularly well-trained, at least in how we write up our results. Some people learn analyses not only without any underlying intuition for what research questions they’re asking or calculations they’re specifying but they learn a decision-tree style approach to probing interactions. If x, then y. If p &lt; .05, then probe simple effects. If not, you simply can’t do anything, nothing to see here, move on.</p>
+<p>But remember, we get to decide what kind of effects matter and what kind of false positive and false negative rate we’re willing to accept. And if I think that there’s reason to believe that perhaps this particular study is a bit underpowered — because it’s noisy, or the sample isn’t as big as I might like, or I’m just willing to reject a null with p &lt; .1 instead of p &lt; .05, I can do that. I’m not saying you should. In fact, I’d caution against doing so, particularly if you think there’s a chance that you’re being motivated to find an effect you were looking for/are already convinced of…but I am saying that you get to make the judgment calls here and R is just a silly tool that runs the numbers for you. So, if I’m comfortable with a different alpha/p-value being sufficiently of interest to probe, that’s my call.</p>
+<p>What next? Well, just like with a simple regression we wouldn’t stop at saying “x significantly predicts y…,” we’d need to make clear the nature (positive or negative) and extent or magnitude of that relationship. In this case since we’ve decided this marginal interaction (marginal is a term that people sometimes use to refer to effects that approach the conventional p &lt; .05 threshold but don’t quite make it) we need to make sure we understand how the x-y relationship changes with z.</p>
+<hr>
+</section>
+</section>
+<section id="part-2-probing-a-marginal-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-probing-a-marginal-interaction">Part 2: Probing a Marginal Interaction</h2>
+<p><strong>Research question:</strong> Does the effect of Buyer_Income on Price depend on Num_Dependents?</p>
+<section id="a-fit-additive-and-interaction-models" class="level3">
+<h3 class="anchored" data-anchor-id="a-fit-additive-and-interaction-models">2A) Fit Additive and Interaction Models</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m_add_dep_inc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Num_Dependents <span class="sc">+</span> Buyer_Income, <span class="at">data =</span> housing)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>m_int_dep_inc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Num_Dependents <span class="sc">*</span> Buyer_Income, <span class="at">data =</span> housing)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_add_dep_inc)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_dep_inc)   <span class="co"># Look at the Num_Dependents:Buyer_Income line (marginal/near p &lt; .10)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="b-pre-for-adding-the-interaction-term" class="level3">
+<h3 class="anchored" data-anchor-id="b-pre-for-adding-the-interaction-term">2B) PRE for Adding the Interaction Term</h3>
+<p>Model A = interaction; Model C = additive</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>SSE_add_DI <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_add_dep_inc)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SSE_int_DI <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_int_dep_inc)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>PRE_int_over_add_DI <span class="ot">&lt;-</span> (SSE_add_DI <span class="sc">-</span> SSE_int_DI) <span class="sc">/</span> SSE_add_DI</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>PRE_int_over_add_DI</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Partial-F test (numerator df = 1 because we add a single product term)</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>df_small_DI <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_add_dep_inc)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>df_big_DI   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_int_dep_inc)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>df_num_DI   <span class="ot">&lt;-</span> df_small_DI <span class="sc">-</span> df_big_DI</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>df_den_DI   <span class="ot">&lt;-</span> df_big_DI</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>F_int_DI <span class="ot">&lt;-</span> ((SSE_add_DI <span class="sc">-</span> SSE_int_DI) <span class="sc">/</span> df_num_DI) <span class="sc">/</span> (SSE_int_DI <span class="sc">/</span> df_den_DI)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>p_int_DI <span class="ot">&lt;-</span> <span class="fu">pf</span>(F_int_DI, <span class="at">df1 =</span> df_num_DI, <span class="at">df2 =</span> df_den_DI, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>F_int_DI</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>p_int_DI</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>OK, now we’re going to go ahead and probe simple slopes to learn the pattern.</p>
+</section>
+<section id="c-simple-slopes-by-recoding-z" class="level3">
+<h3 class="anchored" data-anchor-id="c-simple-slopes-by-recoding-z">2C) Simple Slopes by Recoding Z</h3>
+<p><strong>Strategy:</strong> Define <code>Num_Dependents_centered = Num_Dependents - z0</code>. Then fit: <code>Price ~ Buyer_Income * Num_Dependents_centered</code>. In that model, the coefficient on Buyer_Income IS the simple slope at z0.</p>
+<p>One thing we can do is to pick common descriptive values — mean and +/- 1 SD:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick three z0 values: low, mean, high</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>z_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(housing<span class="sc">$</span>Num_Dependents, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>z_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(housing<span class="sc">$</span>Num_Dependents, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>z_lo <span class="ot">&lt;-</span> z_mean <span class="sc">-</span> z_sd</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>z_hi <span class="ot">&lt;-</span> z_mean <span class="sc">+</span> z_sd</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>z_mean; z_lo; z_hi</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="simple-slope-at-num_dependents-mean" class="level4">
+<h4 class="anchored" data-anchor-id="simple-slope-at-num_dependents-mean">Simple Slope at Num_Dependents = Mean</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>ND_c_mean <span class="ot">&lt;-</span> housing<span class="sc">$</span>Num_Dependents <span class="sc">-</span> z_mean</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>m_ss_mean <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income <span class="sc">*</span> ND_c_mean, <span class="at">data =</span> housing)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_mean)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_mean)  <span class="co"># to report a CI for the simple slope at z0...but...</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># we did decide we were more interested in a CI with a=.9, so we can also run:</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_mean, <span class="at">level =</span> .<span class="dv">9</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># which is a bit more consistent with that decision</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull out the simple slope line for your write-up:</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The coefficient on Buyer_Income in m_ss_mean is the simple slope at ND = mean.</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_ss_mean))[<span class="st">"Buyer_Income"</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>So, we could say that for households with an average number of dependents (1.93), as buyer annual household income increased by $1, we saw an additional ~$0.024 increase in purchase price of a home.</p>
+<p>What about at those low and high values in our sample?</p>
+</section>
+<section id="simple-slope-at-num_dependents-low-mean---1-sd" class="level4">
+<h4 class="anchored" data-anchor-id="simple-slope-at-num_dependents-low-mean---1-sd">Simple Slope at Num_Dependents = Low (Mean - 1 SD)</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>ND_c_lo <span class="ot">&lt;-</span> housing<span class="sc">$</span>Num_Dependents <span class="sc">-</span> z_lo</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>m_ss_lo <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income <span class="sc">*</span> ND_c_lo, <span class="at">data =</span> housing)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_lo)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_lo, <span class="at">level =</span> .<span class="dv">9</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_ss_lo))[<span class="st">"Buyer_Income"</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Interesting… so, for our household with a low number of dependents for our particular sample, we see a different relationship between annual household income of our buyers and purchase price. Our model estimate of the simple slope for Buyer Income predicting price for those with a low number of dependents (0.5) is that as that annual household income increases by $1, we actually predict a purchase price that is ~$0.23 lower.</p>
+<p>OK, now how about for people on the high end of number of dependents for this particular sample? What’s the relationship between household income and house price for them?</p>
+</section>
+<section id="simple-slope-at-num_dependents-high-mean-1-sd" class="level4">
+<h4 class="anchored" data-anchor-id="simple-slope-at-num_dependents-high-mean-1-sd">Simple Slope at Num_Dependents = High (Mean + 1 SD)</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>ND_c_hi <span class="ot">&lt;-</span> housing<span class="sc">$</span>Num_Dependents <span class="sc">-</span> z_hi</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>m_ss_hi <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income <span class="sc">*</span> ND_c_hi, <span class="at">data =</span> housing)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_hi)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_hi, <span class="at">level =</span> <span class="fl">0.9</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_ss_hi))[<span class="st">"Buyer_Income"</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For those with a relatively high number of dependents in our sample (3.36), we see a different simple slope prediction in our model. Specifically, as annual household income increases by $1 we predict that house purchase prices go up by ~$0.27—so the opposite pattern we saw in the low number of dependents centered version of the model.</p>
+</section>
+<section id="simple-slopes-at-specific-values" class="level4">
+<h4 class="anchored" data-anchor-id="simple-slopes-at-specific-values">Simple Slopes at Specific Values</h4>
+<p>So, those are reasonable and somewhat common values we could test (mean and +/- 1 SD) but the thing about each is that sometimes they don’t make sense for variables for which only whole numbers actually exist (like number of dependents). So, we can also specify values of interest that exist and examine the simple slopes at those actually possible values. In this particular case, the range in our sample is 0 to 4, so let’s just actually check 0, 1, 2, 3, and 4 dependents.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ND = 0</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>ND_c_0 <span class="ot">&lt;-</span> housing<span class="sc">$</span>Num_Dependents <span class="sc">-</span> <span class="dv">0</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>m_ss_ND0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income <span class="sc">*</span> ND_c_0, <span class="at">data =</span> housing)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_ND0)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_ND0, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_ss_ND0))[<span class="st">"Buyer_Income"</span>, ]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="do">## ND = 1</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>ND_c_1 <span class="ot">&lt;-</span> housing<span class="sc">$</span>Num_Dependents <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>m_ss_ND1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income <span class="sc">*</span> ND_c_1, <span class="at">data =</span> housing)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_ND1)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_ND1, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_ss_ND1))[<span class="st">"Buyer_Income"</span>, ]</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="do">## ND = 2</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>ND_c_2 <span class="ot">&lt;-</span> housing<span class="sc">$</span>Num_Dependents <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>m_ss_ND2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income <span class="sc">*</span> ND_c_2, <span class="at">data =</span> housing)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_ND2)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_ND2, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_ss_ND2))[<span class="st">"Buyer_Income"</span>, ]</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="do">## ND = 3</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>ND_c_3 <span class="ot">&lt;-</span> housing<span class="sc">$</span>Num_Dependents <span class="sc">-</span> <span class="dv">3</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>m_ss_ND3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income <span class="sc">*</span> ND_c_3, <span class="at">data =</span> housing)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_ND3)</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_ND3, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_ss_ND3))[<span class="st">"Buyer_Income"</span>, ]</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="do">## ND = 4</span></span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>ND_c_4 <span class="ot">&lt;-</span> housing<span class="sc">$</span>Num_Dependents <span class="sc">-</span> <span class="dv">4</span></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>m_ss_ND4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Income <span class="sc">*</span> ND_c_4, <span class="at">data =</span> housing)</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_ND4)</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_ss_ND4, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_ss_ND4))[<span class="st">"Buyer_Income"</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="simple-slopes-the-other-way" class="level4">
+<h4 class="anchored" data-anchor-id="simple-slopes-the-other-way">Simple Slopes the Other Way</h4>
+<p>Now you might be wondering “but what about the simple slopes for Price ~ Number of Dependents at different levels of buyer income? Why didn’t we examine things that way?” And to that I say… I don’t know, I just made a call. But that’s the thing about interpreting and probing an interaction, you need to make some judgment calls and often there’s no clear right or wrong answer, just you deciding how to approach understanding and communicating about what you learn from data.</p>
+<p>That said, typically you wouldn’t report simple effects both ways—you’d pick one and stick to it. And sometimes there is an obvious way in which to take those simple effects—like examining the effect of age on race performance at different levels of training makes more intuitive sense (at least to me and the authors of your textbook) than examining the effect of different levels of training on race performance at different ages but you could certainly choose to analyze the data and tell either story. So, even though you wouldn’t really do this in practice, let’s examine our simple effects in the other way right now just for completeness and practice.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>income_med_single    <span class="ot">&lt;-</span> <span class="dv">34394</span>   <span class="co"># this is the median income for a single person household in ME</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>income_med_household <span class="ot">&lt;-</span> <span class="dv">71773</span>   <span class="co"># this is the median household income in ME</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>Income_med_single <span class="ot">&lt;-</span> housing<span class="sc">$</span>Buyer_Income <span class="sc">-</span> income_med_single</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>m_inc_med_single <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Num_Dependents <span class="sc">*</span> Income_med_single, <span class="at">data =</span> housing)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_inc_med_single)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_inc_med_single, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_inc_med_single))[<span class="st">"Num_Dependents"</span>, ]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>Income_med_household <span class="ot">&lt;-</span> housing<span class="sc">$</span>Buyer_Income <span class="sc">-</span> income_med_household</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>m_inc_med_household <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Num_Dependents <span class="sc">*</span> Income_med_household, <span class="at">data =</span> housing)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_inc_med_household)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_inc_med_household, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_inc_med_household))[<span class="st">"Num_Dependents"</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>So, at each of these two levels of income, the purchase price of a house decreases significantly for each additional dependent in the house, by about $15,370 for households making the median income for a single earner household and about $8,827 for every additional dependent in household making about the median household income (not limited to single earner households).</p>
+<p>It would be cool if we could get not only estimates of how simple slopes change at specified values of one part of an interaction but also estimates of the DV for those specified values—namely, the home price.</p>
+<p>Do I have good news for you. We can. Specifically, we can interpret the intercept as a so-called simple-simple effect at the level at which our predictor variables are coded as 0. On to that next.</p>
+</section>
+</section>
+<section id="d-simple-simple-effect-intercept-meaning-under-centering" class="level3">
+<h3 class="anchored" data-anchor-id="d-simple-simple-effect-intercept-meaning-under-centering">2D) “Simple Simple Effect” (Intercept Meaning Under Centering)</h3>
+<p>In the “mean-centered” model we specified above, the intercept is predicted Price for: Buyer_Income = 0 AND Num_Dependents = mean(Num_Dependents).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ss_mean)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>So with our model, for a family with 1.93 dependents and no annual income, we would predict a purchase price of a house of $483,200… but, like… what’s the point of such a nonsense prediction?</p>
+<p>That “Income = 0” is NOT literally meaningful, so let’s center Income too to make the intercept interpret as Price at average Income and average Dependents.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>inc_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(housing<span class="sc">$</span>Buyer_Income)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>Inc_c <span class="ot">&lt;-</span> housing<span class="sc">$</span>Buyer_Income <span class="sc">-</span> inc_mean</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>m_int_centered <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Inc_c <span class="sc">*</span> ND_c_mean, <span class="at">data =</span> housing)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_centered)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m_int_centered)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>With the model specified in this way, the output can be interpreted as:</p>
+<ul>
+<li><strong>Intercept</strong> = predicted Price at average Income and average Dependents.</li>
+<li><strong>Coef on Inc_c</strong> = simple slope of Income at average Dependents.</li>
+<li><strong>Coef on ND_c</strong> = simple slope of Dependents at average Income.</li>
+<li><strong>Product term</strong> = same interaction test as before (coding does not change significance).</li>
+</ul>
+</section>
+<section id="e-optional-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="e-optional-visualization">2E) Optional Visualization</h3>
+<p>Two fitted lines at low vs.&nbsp;high Dependents:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a little grid of Buyer_Income values</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>x_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(housing<span class="sc">$</span>Buyer_Income), <span class="fu">max</span>(housing<span class="sc">$</span>Buyer_Income), <span class="at">length.out =</span> <span class="dv">60</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build two data frames: one at ND = z_lo, one at ND = z_hi</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>nd_lo_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Buyer_Income =</span> x_seq,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Num_Dependents =</span> <span class="fu">rep</span>(z_lo, <span class="fu">length</span>(x_seq)))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>nd_hi_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Buyer_Income =</span> x_seq,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Num_Dependents =</span> <span class="fu">rep</span>(z_hi, <span class="fu">length</span>(x_seq)))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict using the interaction model</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>yhat_lo <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_int_dep_inc, <span class="at">newdata =</span> nd_lo_df)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>yhat_hi <span class="ot">&lt;-</span> <span class="fu">predict</span>(m_int_dep_inc, <span class="at">newdata =</span> nd_hi_df)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick base R plot</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(housing<span class="sc">$</span>Buyer_Income, housing<span class="sc">$</span>Price,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.7</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Buyer Income"</span>, <span class="at">ylab =</span> <span class="st">"Price"</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Simple Lines: Income at low vs high Num_Dependents"</span>)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_seq, yhat_lo, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)  <span class="co"># low dependents</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x_seq, yhat_hi, <span class="at">lwd =</span> <span class="dv">2</span>)           <span class="co"># high dependents</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bty =</span> <span class="st">"n"</span>,</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">"Low Dependents (~"</span>, <span class="fu">round</span>(z_lo, <span class="dv">2</span>), <span class="st">")"</span>),</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">paste0</span>(<span class="st">"High Dependents (~"</span>, <span class="fu">round</span>(z_hi, <span class="dv">2</span>), <span class="st">")"</span>)),</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-3-quick-demo-when-the-interaction-isnt-there" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-quick-demo-when-the-interaction-isnt-there">Part 3: Quick Demo When the Interaction Isn’t There</h2>
+<p><em>Price ~ Bedrooms</em> Bathrooms*</p>
+<p><strong>Foreshadowing:</strong> It’s going to be a lot of work for little new info—hence we would typically stick with the additive/non-interactive model.</p>
+<p><strong>Research question:</strong> Does the effect of Bedrooms depend on Bathrooms?</p>
+<section id="a-reminder-from-part-1" class="level3">
+<h3 class="anchored" data-anchor-id="a-reminder-from-part-1">3A) Reminder (from Part 1)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_add_bedbath)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_bedbath)  <span class="co"># interaction not significant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="b-simple-slopes-at---1-sd-bathrooms" class="level3">
+<h3 class="anchored" data-anchor-id="b-simple-slopes-at---1-sd-bathrooms">3B) Simple Slopes at +/- 1 SD Bathrooms</h3>
+<p>To show they’re basically the same:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We defined these in Part 1, but here they are again for reference:</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>bath_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(housing<span class="sc">$</span>Bathrooms, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>bath_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(housing<span class="sc">$</span>Bathrooms, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>bath_lo <span class="ot">&lt;-</span> bath_mean <span class="sc">-</span> bath_sd</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>bath_hi <span class="ot">&lt;-</span> bath_mean <span class="sc">+</span> bath_sd</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Center Bathrooms at each target and refit</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>Bath_c_mean <span class="ot">&lt;-</span> housing<span class="sc">$</span>Bathrooms <span class="sc">-</span> bath_mean</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>m_BB_mean <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Bedrooms <span class="sc">*</span> Bath_c_mean, <span class="at">data =</span> housing)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>Bath_c_lo <span class="ot">&lt;-</span> housing<span class="sc">$</span>Bathrooms <span class="sc">-</span> bath_lo</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>m_BB_lo <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Bedrooms <span class="sc">*</span> Bath_c_lo, <span class="at">data =</span> housing)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>Bath_c_hi <span class="ot">&lt;-</span> housing<span class="sc">$</span>Bathrooms <span class="sc">-</span> bath_hi</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>m_BB_hi <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Bedrooms <span class="sc">*</span> Bath_c_hi, <span class="at">data =</span> housing)</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare the simple slopes of Bedrooms across these three models</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_BB_mean))[<span class="st">"Bedrooms"</span>, ]</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_BB_lo))[<span class="st">"Bedrooms"</span>, ]</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_BB_hi))[<span class="st">"Bedrooms"</span>, ]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You should find the Bedrooms slope is very similar at low/mean/high Bathrooms. That matches the non-significant interaction: the lines are (approximately) parallel.</p>
+<hr>
+</section>
+</section>
+<section id="part-4-your-turn-a-significant-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-your-turn-a-significant-interaction">Part 4: Your Turn — A Significant Interaction</h2>
+<p><em>Price ~ Buyer_Age</em> Credit_Score*</p>
+<p><strong>Task overview (do these steps and write up results):</strong></p>
+<p><strong>4A)</strong> Fit the additive vs.&nbsp;interaction models:</p>
+<ul>
+<li>Report PRE, F, and p for the one-df interaction comparison.</li>
+<li>Point to the interaction row in <code>summary()</code> and connect it to your manual F.</li>
+</ul>
+<p><strong>4B)</strong> Simple slopes for the effect of Buyer_Age at:</p>
+<ul>
+<li>Credit_Score = mean</li>
+<li>Credit_Score = mean - 1 SD</li>
+<li>Credit_Score = mean + 1 SD</li>
+<li>Credit_Score = 600</li>
+<li>Credit_Score = 700</li>
+<li>Credit_Score = 800</li>
+</ul>
+<p>Implement by centering Credit_Score at each target value and fitting: <code>Price ~ Buyer_Age * Credit_Score_centered</code>. In each model, report the simple slope of Buyer_Age. Interpret the pattern in plain language (who shows a stronger age-price link?).</p>
+<p><strong>4C)</strong> “Simple simple effect” (intercept meaning):</p>
+<ul>
+<li>Center BOTH Buyer_Age and Credit_Score at their means, then fit <code>Price ~ Age_c * Score_c</code></li>
+<li>Interpret the intercept (Price at average Age and average Score).</li>
+<li>Interpret the main-effect lines as simple slopes at the means.</li>
+</ul>
+<p>I’m going to go ahead and recommend that you take a stab at writing this code on your own “from scratch” (by which I mean probably copying and pasting from sample code above and adjusting so that it is running the test specified, not that you have to write with zero references).</p>
+<p>I’m going to supply you with some helper code that gets you most of the way towards answering about half of the questions above below, but I would recommend you attempt on your own as practice for what you’ll need to do on the final exam.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Skeleton Code (try first on your own)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit additive and interaction</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>m_add_age_sc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Age <span class="sc">+</span> Credit_Score, <span class="at">data =</span> housing)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>m_int_age_sc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Age <span class="sc">*</span> Credit_Score, <span class="at">data =</span> housing)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_add_age_sc)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_age_sc)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># PRE / F / p for adding the interaction</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>SSE_add_AS <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_add_age_sc)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>SSE_int_AS <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_int_age_sc)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>PRE_int_over_add_AS <span class="ot">&lt;-</span> (SSE_add_AS <span class="sc">-</span> SSE_int_AS) <span class="sc">/</span> SSE_add_AS</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>PRE_int_over_add_AS</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>df_small_AS <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_add_age_sc)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>df_big_AS   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_int_age_sc)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>F_int_AS <span class="ot">&lt;-</span> ((SSE_add_AS <span class="sc">-</span> SSE_int_AS) <span class="sc">/</span> (df_small_AS <span class="sc">-</span> df_big_AS)) <span class="sc">/</span> (SSE_int_AS <span class="sc">/</span> df_big_AS)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>p_int_AS <span class="ot">&lt;-</span> <span class="fu">pf</span>(F_int_AS, <span class="at">df1 =</span> (df_small_AS <span class="sc">-</span> df_big_AS), <span class="at">df2 =</span> df_big_AS, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>F_int_AS</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>p_int_AS</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup for simple slopes (center Score at mean, mean±SD)</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>sc_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(housing<span class="sc">$</span>Credit_Score, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>sc_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(housing<span class="sc">$</span>Credit_Score, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>sc_lo <span class="ot">&lt;-</span> sc_mean <span class="sc">-</span> sc_sd</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>sc_hi <span class="ot">&lt;-</span> sc_mean <span class="sc">+</span> sc_sd</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a><span class="co"># At mean Score</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>SC_c_mean <span class="ot">&lt;-</span> housing<span class="sc">$</span>Credit_Score <span class="sc">-</span> sc_mean</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>m_SS_mean <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Age <span class="sc">*</span> SC_c_mean, <span class="at">data =</span> housing)</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_SS_mean); <span class="fu">confint</span>(m_SS_mean)</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_SS_mean))[<span class="st">"Buyer_Age"</span>, ]</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a><span class="co"># At low Score</span></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>SC_c_lo <span class="ot">&lt;-</span> housing<span class="sc">$</span>Credit_Score <span class="sc">-</span> sc_lo</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>m_SS_lo <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Age <span class="sc">*</span> SC_c_lo, <span class="at">data =</span> housing)</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_SS_lo); <span class="fu">confint</span>(m_SS_lo)</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_SS_lo))[<span class="st">"Buyer_Age"</span>, ]</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a><span class="co"># At high Score</span></span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>SC_c_hi <span class="ot">&lt;-</span> housing<span class="sc">$</span>Credit_Score <span class="sc">-</span> sc_hi</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>m_SS_hi <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Buyer_Age <span class="sc">*</span> SC_c_hi, <span class="at">data =</span> housing)</span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_SS_hi); <span class="fu">confint</span>(m_SS_hi)</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(m_SS_hi))[<span class="st">"Buyer_Age"</span>, ]</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Center both for "simple simple effect" interpretation of the intercept</span></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>Age_c   <span class="ot">&lt;-</span> housing<span class="sc">$</span>Buyer_Age <span class="sc">-</span> <span class="fu">mean</span>(housing<span class="sc">$</span>Buyer_Age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>housing<span class="sc">$</span>Score_c <span class="ot">&lt;-</span> housing<span class="sc">$</span>Credit_Score <span class="sc">-</span> sc_mean</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>m_int_centered_AS <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Age_c <span class="sc">*</span> Score_c, <span class="at">data =</span> housing)</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_centered_AS); <span class="fu">confint</span>(m_int_centered_AS)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Erin Percival Carter <br> <span class="colophon">Built with Quarto, stubbornness, and coffee.</span></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://umaine.edu/business/">
+<p>Maine Business School</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script src="sheep.js"></script>
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
