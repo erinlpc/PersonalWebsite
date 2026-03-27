@@ -1,0 +1,487 @@
+---
+title: "Week 8: Simple Regression"
+subtitle: "Maine Housing Data"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+---
+
+## Overview
+
+**Theme of the week:** We're moving from Section A's one-parameter model comparisons (Model C = researcher-supplied constant vs. Model A = mean) to more complex models. This week we start with simple regression:
+
+| Model   | Parameters | Description                                |
+|---------|------------|--------------------------------------------|
+| Model C | 1          | Mean-only (this was Model A in Section A)  |
+| Model A | 2          | Intercept + Slope: $\hat{y} = b_0 + b_1 X$ |
+
+**What stays the same from last section?** Almost everything conceptually:
+
+-   DATA still = MODEL + ERROR
+-   We're still minimizing SSE to estimate parameters when we run models
+-   Still relying on comparisons of Model A to Model C to generate PRE, F, and p
+
+**Today's goals:**
+
+1.  Load a slightly altered version of the housing dataset from Exam 1
+2.  Examine a series of simple regressions by:
+    -   Specifying Model C and Model A
+    -   Computing SSE then calculating PRE "by hand"
+    -   Comparing output to an `lm()` F test
+    -   Interpreting $b_1$ (slope) and $b_0$ (intercept)
+3.  Practice centering X and re-interpreting intercepts
+4.  Repeat with two more simple regressions
+5.  Explore confidence intervals with these more complex models
+
+::: callout-note
+## Degrees of Freedom Reminder
+
+This week: $p_C = 1$ (mean-only), $p_A = 2$ (intercept + slope)
+
+-   $df_1 = p_A - p_C = 1$
+-   $df_2 = n - p_A = n - 2$ (n this week = 200)
+
+And our handy mappings:
+
+-   $PRE = \frac{df_1 \cdot F}{df_1 \cdot F + df_2}$
+-   $F = \frac{PRE / df_1}{(1-PRE) / df_2}$
+:::
+
+------------------------------------------------------------------------
+
+## Part 0: Load & Peek
+
+Load the data for this week:
+
+```{r}
+#| eval: false
+housing <- read.csv("Datasets/housing_data_section_2_exercises.csv")
+```
+
+Quick looks:
+
+```{r}
+#| eval: false
+head(housing)
+str(housing)
+summary(housing)
+```
+
+For this chapter, we'll mostly use continuous X and Y variables like Bedrooms, Bathrooms, Buyer_Income, Credit_Score, etc. (We'll learn to deal with categoricals like Town/Region/Gender in later weeks.)
+
+------------------------------------------------------------------------
+
+## Part 1: Price \~ Bedrooms (Guided)
+
+**Goal:** Build & compare:
+
+-   Model C (mean-only, 1 parameter): $\hat{y}_C = \bar{y}$
+-   Model A (simple regression, 2 parameters): $\hat{y}_A = b_0 + b_1 \cdot \text{Bedrooms}$
+
+Then compute PRE by hand and confirm the F and p-value match `lm()`'s output.
+
+### Step 1: Set up variables
+
+```{r}
+#| eval: false
+y <- housing$Price
+x <- housing$Bedrooms
+n <- length(y)
+```
+
+### Step 2: Fit the competing models
+
+As we move on to more complicated models, we'll begin to rely on R to do the heavy lifting. We won't necessarily calculate error columns and trial different values — R will develop estimates for parameters that minimize SSE for us.
+
+One of the built-in functions we'll rely on is `lm()`, which allows us to specify linear models and returns estimates and measures of model fit.
+
+```{r}
+#| eval: false
+# Model C: mean-only (the "1" tells R to calculate only the intercept)
+mC <- lm(y ~ 1)
+
+# Model A: slope + intercept
+mA <- lm(y ~ x)
+```
+
+::: {.callout-tip collapse="true"}
+## A Note on Naming Variables
+
+The fact that I chose the names `x` and `y` means absolutely nothing to R. I could reference them directly in the `lm()` call:
+
+```{r}
+#| eval: false
+mC.1 <- lm(housing$Price ~ 1)
+mA.1 <- lm(housing$Price ~ housing$Bedrooms)
+```
+
+Or use completely nonsense names:
+
+```{r}
+#| eval: false
+lol <- housing$Price
+jokes <- housing$Bedrooms
+hahas <- lm(lol ~ jokes)
+```
+
+R doesn't care what we name things — it just looks where we tell it to look and does what we tell it to do.
+:::
+
+### Step 3: Calculate SSE and PRE
+
+We have our estimates, but we want to know the corresponding errors, significance, etc.
+
+To calculate SSE, we subtract the model estimate from the actual, square those residuals, and sum:
+
+```{r}
+#| eval: false
+# Get fitted values (predictions) from each model
+yhat_C <- fitted(mC)
+yhat_A <- fitted(mA)
+
+# Compute SSE for each model
+SSE_C <- sum((y - yhat_C)^2)
+SSE_A <- sum((y - yhat_A)^2)
+
+SSE_C
+SSE_A
+```
+
+Now compute PRE:
+
+```{r}
+#| eval: false
+PRE_bedrooms <- (SSE_C - SSE_A) / SSE_C
+PRE_bedrooms
+```
+
+We get approximately 0.617 — a 61.7% reduction in error when using Model A compared to Model C.
+
+### Step 4: The easier way
+
+Good news: there's a more useful way to get output from `lm()` that gives us estimates, t-values, F-statistics, degrees of freedom, and p-values.
+
+Bad news: it won't give us SSE directly... but we can ask for it!
+
+```{r}
+#| eval: false
+# More detailed output
+summary(mC)
+summary(mA)
+
+# Get SSE using deviance()
+deviance(mC)  # Same as SSE_C
+deviance(mA)  # Same as SSE_A
+
+# So we can also calculate PRE as:
+PRE_using_deviance <- (deviance(mC) - deviance(mA)) / deviance(mC)
+PRE_using_deviance
+```
+
+### Step 5: Interpretation
+
+Let's look at that Model A output:
+
+```{r}
+#| eval: false
+summary(mA)
+```
+
+**Intercept (**$b_0$): This tells us what we would expect Y to be when X = 0 — the expected price of a house with 0 bedrooms. We get \$347,728, and it's significant (we can reject the null that expected price when bedrooms = 0 is \$0).
+
+**Slope (**$b_1$): This tells us how much Y changes for every one-unit increase in X. We get \$35,206, meaning our model predicts an increase of \$35,206 in purchase price for every additional bedroom. The slope is significant, so we can reject the null that including bedrooms as a predictor doesn't improve our prediction relative to Model C.
+
+**How much better?** Look at the Multiple R-squared in the summary output. In simple regression, this equals PRE! (This won't always be true for more complex model comparisons, but it is here.)
+
+### Step 6: But wait — is 0 bedrooms sensible?
+
+Let's check our data:
+
+```{r}
+#| eval: false
+library(psych)
+describe(housing$Bedrooms)
+```
+
+Not only are there no 0-bedroom observations, there's not even a single 1-bedroom observation. All observations have between 2 and 6 bedrooms.
+
+So our intercept is technically interpretable, but it's outside the range of our actual data.
+
+::: {.callout-note collapse="true"}
+## Optional: Visualize the models
+
+```{r}
+#| eval: false
+plot(housing$Bedrooms, housing$Price,
+     xlab = "Bedrooms", ylab = "Price",
+     main = "Price ~ Bedrooms with Model C (mean) and Model A (fit)")
+abline(h = mean(y), lty = 2)     # Model C (dashed)
+abline(mA, lwd = 2)              # Model A (solid)
+```
+:::
+
+------------------------------------------------------------------------
+
+## Part 2: Centering X
+
+Let's center Bedrooms at its mean so the intercept represents $\hat{Y}$ at the average number of bedrooms:
+
+```{r}
+#| eval: false
+x_centered <- x - mean(x)
+mA_bed_c <- lm(y ~ x_centered)
+
+summary(mA_bed_c)
+```
+
+**Key observations:**
+
+-   **Slope is unchanged** — centering does not affect the slope
+-   **Intercept now predicts Price at mean(Bedrooms)** which is 3.92 — a more sensible value
+
+At the average number of bedrooms (3.92), this model predicts a price of \$485,561. This is also equivalent to the mean of Y in our dataset:
+
+```{r}
+#| eval: false
+describe(housing$Price)
+```
+
+But 3.92 bedrooms is still weird — I can't advise a client based on that value. Let's try centering at actual integer values:
+
+```{r}
+#| eval: false
+x2 <- x - 2
+mA_2 <- lm(y ~ x2)
+
+x3 <- x - 3
+mA_3 <- lm(y ~ x3)
+
+x4 <- x - 4
+mA_4 <- lm(y ~ x4)
+
+x5 <- x - 5
+mA_5 <- lm(y ~ x5)
+
+x6 <- x - 6
+mA_6 <- lm(y ~ x6)
+
+# Compare the intercepts:
+coef(mA_2)
+coef(mA_3)
+coef(mA_4)
+coef(mA_5)
+coef(mA_6)
+```
+
+Notice how the intercept (and its statistics) changes as we recenter X to predict Y at different levels — but the slope stays constant.
+
+### The Absurd Example
+
+What if we center on a ridiculous value? Let's find where the intercept is no longer significant:
+
+```{r}
+#| eval: false
+x_negative_10 <- x + 10  # Centering on -10 bedrooms
+m_negative_10 <- lm(y ~ x_negative_10)
+summary(m_negative_10)
+```
+
+I present to you: a house for which we cannot reject the null hypothesis that the price equals \$0, and for which our best estimate is that someone would pay YOU \$4,338 to take it off their hands — a house with negative 10 bedrooms.
+
+Note that despite this insane specification, **the slope remains unchanged**.
+
+::: callout-important
+## The Practical Takeaway
+
+Centering lets you make the intercept interpretable for your actual research question. Choose a value of X that makes sense for your client or context — the mean, a policy-relevant threshold, or a common value in your data. The choice doesn't affect your slope estimate, only how you interpret the intercept.
+:::
+
+------------------------------------------------------------------------
+
+## Part 3: Your Turn
+
+Now it's your turn to examine some other models.
+
+### 3A: Price \~ Bathrooms
+
+```{r}
+#| eval: false
+mA_bath <- lm(Price ~ Bathrooms, data = housing)
+summary(mA_bath)
+```
+
+::: callout-note
+## Your Tasks
+
+1.  Compute SSE_C and SSE_A, then calculate PRE by hand
+2.  Verify that your PRE matches the Multiple R-squared in the summary output
+3.  Interpret the slope in plain language (what's the practical meaning?)
+4.  Center Bathrooms at its mean, refit, and interpret the new intercept
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution: 3A
+
+**SSE and PRE:**
+
+```{r}
+#| eval: false
+# Model C (mean-only)
+mC_bath <- lm(Price ~ 1, data = housing)
+
+# Get SSEs
+SSE_C_bath <- deviance(mC_bath)
+SSE_A_bath <- deviance(mA_bath)
+
+# Calculate PRE
+PRE_bath <- (SSE_C_bath - SSE_A_bath) / SSE_C_bath
+PRE_bath
+
+# Compare to R-squared in summary(mA_bath) — they should match
+```
+
+**Slope interpretation:** For every additional bathroom, the model predicts an increase of \$\[slope value\] in house price.
+
+**Centered model:**
+
+```{r}
+#| eval: false
+bath_centered <- housing$Bathrooms - mean(housing$Bathrooms)
+mA_bath_c <- lm(housing$Price ~ bath_centered)
+summary(mA_bath_c)
+```
+
+The intercept now represents the predicted price at the average number of bathrooms.
+:::
+
+### 3B: Price \~ Buyer_Income
+
+```{r}
+#| eval: false
+mA_inc <- lm(Price ~ Buyer_Income, data = housing)
+summary(mA_inc)
+```
+
+::: callout-note
+## Your Tasks
+
+1.  Compute SSE_C and SSE_A, then calculate PRE by hand
+2.  Verify that your PRE matches the Multiple R-squared
+3.  Interpret the slope in plain language (what's the practical meaning?)
+4.  Center Buyer_Income at its mean, refit, and interpret the new intercept
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution: 3B
+
+**SSE and PRE:**
+
+```{r}
+#| eval: false
+# Model C (mean-only)
+mC_inc <- lm(Price ~ 1, data = housing)
+
+# Get SSEs
+SSE_C_inc <- deviance(mC_inc)
+SSE_A_inc <- deviance(mA_inc)
+
+# Calculate PRE
+PRE_inc <- (SSE_C_inc - SSE_A_inc) / SSE_C_inc
+PRE_inc
+
+# Compare to R-squared in summary(mA_inc)
+```
+
+**Slope interpretation:** For every additional dollar in buyer income, the model predicts an increase of \$\[slope value\] in house price. (Note: this might be more interpretable as "for every \$1,000 increase in income...")
+
+**Centered model:**
+
+```{r}
+#| eval: false
+inc_centered <- housing$Buyer_Income - mean(housing$Buyer_Income)
+mA_inc_c <- lm(housing$Price ~ inc_centered)
+summary(mA_inc_c)
+```
+
+The intercept now represents the predicted price for a buyer with average income.
+:::
+
+------------------------------------------------------------------------
+
+## Part 4: Confidence Intervals
+
+**CI intuition:**
+
+-   Every estimated coefficient has a standard error
+-   A 95% CI gives a plausible range for the parameter given the sample
+-   Adding a *useful* predictor lowers error (MSE) and tightens intervals compared to the mean-only model
+
+### 4A: CIs for the Bedrooms Model
+
+```{r}
+#| eval: false
+alpha <- 0.05
+confint(mA, level = 1 - alpha)
+```
+
+This gives us confidence intervals for both the slope and intercept. We would reject any null parameter value that lies outside these bounds.
+
+**Important:** How tight our CIs are for the intercept varies with how we center X.
+
+The standard coding (X = 0 means 0 bedrooms) gives a certain CI width. But 0 bedrooms is outside our data range. Compare to the mean-centered version:
+
+```{r}
+#| eval: false
+confint(mA_bed_c, level = 1 - alpha)
+```
+
+The CI for the intercept is tighter when we center at the mean because we're making predictions closer to the bulk of our data.
+
+### 4B: Your Turn
+
+::: callout-note
+## Your Tasks
+
+Record the confidence intervals (values and width) for:
+
+1.  The mean-centered Bedrooms model (already done above)
+2.  The "negative 10 bedrooms" model (`m_negative_10`)
+3.  The Bathrooms model (`mA_bath`)
+4.  The Buyer Income model (`mA_inc`)
+
+What pattern do you notice about CI width as you move further from the center of your data?
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution: 4B
+
+```{r}
+#| eval: false
+# Negative 10 bedrooms model
+confint(m_negative_10, level = 0.95)
+
+# Bathrooms model  
+confint(mA_bath, level = 0.95)
+
+# Buyer Income model
+confint(mA_inc, level = 0.95)
+```
+
+**Pattern:** CIs for the intercept are tightest when centered near the mean of X, and get wider as you move further away from where your data actually lives. This is why centering at a sensible value matters — it affects the precision of your intercept estimate.
+:::
+
+------------------------------------------------------------------------
+
+## Wrap-Up
+
+**Key takeaways from this week:**
+
+1.  **Simple regression** compares a mean-only model (Model C) to a slope + intercept model (Model A)
+2.  **PRE** still works the same way: $(SSE_C - SSE_A) / SSE_C$
+3.  In simple regression, **PRE = R²** from the summary output
+4.  **Centering X** changes the interpretation of the intercept but not the slope
+5.  **Confidence intervals** for the intercept are tightest when X is centered near the data's center
+
+Next week, we'll extend to multiple regression — adding more predictors to Model A.
