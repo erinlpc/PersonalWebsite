@@ -37,11 +37,13 @@ head(housing)
 str(housing)
 summary(housing)
 
-n <- length(housing$Price)  # I had a couple of q's in the previous week around what's happening
-                            # with the length variables - sorry if that wasn't clear
-                            # I'm literally just using it to get a sample size for the
-                            # different formulas we need to run - length() returns
-                            # the number of observations in the dataset for that variable.
+n <- length(housing$Price)  
+
+# I had a couple of q's in the previous week around what's happening
+# with the length variables - sorry if that wasn't clear
+# I'm literally just using it to get a sample size for the
+# different formulas we need to run - length() returns
+# the number of observations in the dataset for that variable.
 ```
 
 ------------------------------------------------------------------------
@@ -94,7 +96,7 @@ So that's our PRE—we reduce the error present in the simple model by an additi
 # Partial-F for interaction (1 df numerator because we add one parameter: the product term)
 df_small <- df.residual(m_add_bedbath)
 df_big   <- df.residual(m_int_bedbath)
-df_num   <- df_small - df_big     # should be 1
+df_num   <- df_small - df_big     # should be 1 for this exercise
 df_den   <- df_big
 
 F_interaction <- ((SSE_add - SSE_int) / df_num) / (SSE_int / df_den)
@@ -197,7 +199,8 @@ m_add_dep_inc <- lm(Price ~ Num_Dependents + Buyer_Income, data = housing)
 m_int_dep_inc <- lm(Price ~ Num_Dependents * Buyer_Income, data = housing)
 
 summary(m_add_dep_inc)
-summary(m_int_dep_inc)   # Look at the Num_Dependents:Buyer_Income line (marginal/near p < .10)
+summary(m_int_dep_inc)   
+# Look at the Num_Dependents:Buyer_Income line (marginal/near p < .10)
 ```
 
 ### 2B) PRE for Adding the Interaction Term
@@ -431,8 +434,6 @@ legend("topleft", bty = "n",
 ------------------------------------------------------------------------
 
 ## Part 3: Quick Demo When the Interaction Isn't There
-
-*Price \~ Bedrooms* Bathrooms\*
 
 **Foreshadowing:** It's going to be a lot of work for little new info—hence we would typically stick with the additive/non-interactive model.
 
