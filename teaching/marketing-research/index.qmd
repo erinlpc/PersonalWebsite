@@ -63,6 +63,8 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 10. [Week 9: Multiple Regression Exercise ](assignments/week9-exercise.qmd) — This week we move from simple regression with one predictor to multiple regression...with...multiple predictors.Topics include: redundancy among predictors, interpreting partial regression coefficients, composite predictors, and standardized coefficients, as well as model comparions featuring overall, block (multi-df), and single predictor comparisons.
 
+11. [Week 10: Interactions ](assignments/week10-exercise.qmd) — We extend multiple regression to allow the effect of one predictor (X) to depend on the level of another predictor (Z). In additive models, the X→Y slope is the same at all levels of Z; in interaction models, we allow the X→Y slope to change with Z.
+
 ::: {.callout-note appearance="minimal"}
 **More coming** · Additional assignments will be added throughout the semester.
 :::
