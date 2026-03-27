@@ -235,11 +235,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(housing)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(housing)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(housing<span class="sc">$</span>Price)  <span class="co"># I had a couple of q's in the previous week around what's happening</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># with the length variables - sorry if that wasn't clear</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># I'm literally just using it to get a sample size for the</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># different formulas we need to run - length() returns</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the number of observations in the dataset for that variable.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(housing<span class="sc">$</span>Price)  </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># I had a couple of q's in the previous week around what's happening</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># with the length variables - sorry if that wasn't clear</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># I'm literally just using it to get a sample size for the</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># different formulas we need to run - length() returns</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># the number of observations in the dataset for that variable.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
@@ -279,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Partial-F for interaction (1 df numerator because we add one parameter: the product term)</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_small <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_add_bedbath)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_big   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_int_bedbath)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_num   <span class="ot">&lt;-</span> df_small <span class="sc">-</span> df_big     <span class="co"># should be 1</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_num   <span class="ot">&lt;-</span> df_small <span class="sc">-</span> df_big     <span class="co"># should be 1 for this exercise</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df_den   <span class="ot">&lt;-</span> df_big</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>F_interaction <span class="ot">&lt;-</span> ((SSE_add <span class="sc">-</span> SSE_int) <span class="sc">/</span> df_num) <span class="sc">/</span> (SSE_int <span class="sc">/</span> df_den)</span>
@@ -361,7 +363,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>m_int_dep_inc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Price <span class="sc">~</span> Num_Dependents <span class="sc">*</span> Buyer_Income, <span class="at">data =</span> housing)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_add_dep_inc)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_dep_inc)   <span class="co"># Look at the Num_Dependents:Buyer_Income line (marginal/near p &lt; .10)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_int_dep_inc)   </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the Num_Dependents:Buyer_Income line (marginal/near p &lt; .10)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="b-pre-for-adding-the-interaction-term" class="level3">
@@ -566,7 +569,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="part-3-quick-demo-when-the-interaction-isnt-there" class="level2">
 <h2 class="anchored" data-anchor-id="part-3-quick-demo-when-the-interaction-isnt-there">Part 3: Quick Demo When the Interaction Isn’t There</h2>
-<p><em>Price ~ Bedrooms</em> Bathrooms*</p>
 <p><strong>Foreshadowing:</strong> It’s going to be a lot of work for little new info—hence we would typically stick with the additive/non-interactive model.</p>
 <p><strong>Research question:</strong> Does the effect of Bedrooms depend on Bathrooms?</p>
 <section id="a-reminder-from-part-1" class="level3">
