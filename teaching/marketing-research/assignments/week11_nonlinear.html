@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Week 11 Exercise – Erin Percival Carter</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../images/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-de90a069193c92a734b12e014e417def.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-3bbefdfe6db2d16c223ca8f2d741b8cd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../images/favicon_180X180.png" alt="" class="navbar-logo light-content">
+    <img src="../../../images/favicon_180X180.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Erin Percival Carter</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../teaching/index.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../bard.html"> 
+<span class="menu-text">BARD</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#part-0-load-and-refamiliarize-with-the-data" id="toc-part-0-load-and-refamiliarize-with-the-data" class="nav-link" data-scroll-target="#part-0-load-and-refamiliarize-with-the-data">Part 0 — Load and Refamiliarize with the Data</a>
+  <ul class="collapse">
+  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">Data Dictionary</a></li>
+  </ul></li>
+  <li><a href="#part-0.5-create-centered-variables" id="toc-part-0.5-create-centered-variables" class="nav-link" data-scroll-target="#part-0.5-create-centered-variables">Part 0.5 — Create Centered Variables</a></li>
+  <li><a href="#part-1-linear-vs.-quadratic-clv-tenure" id="toc-part-1-linear-vs.-quadratic-clv-tenure" class="nav-link" data-scroll-target="#part-1-linear-vs.-quadratic-clv-tenure">Part 1 — Linear vs.&nbsp;Quadratic: CLV ~ Tenure</a>
+  <ul class="collapse">
+  <li><a href="#a-linear-model-compact" id="toc-a-linear-model-compact" class="nav-link" data-scroll-target="#a-linear-model-compact">1A — Linear model (compact)</a></li>
+  <li><a href="#b-quadratic-model-augmented" id="toc-b-quadratic-model-augmented" class="nav-link" data-scroll-target="#b-quadratic-model-augmented">1B — Quadratic model (augmented)</a></li>
+  <li><a href="#c-pre-for-adding-curvature" id="toc-c-pre-for-adding-curvature" class="nav-link" data-scroll-target="#c-pre-for-adding-curvature">1C — PRE for adding curvature</a></li>
+  <li><a href="#d-partial-f-test-for-the-quadratic-term" id="toc-d-partial-f-test-for-the-quadratic-term" class="nav-link" data-scroll-target="#d-partial-f-test-for-the-quadratic-term">1D — Partial-F test for the quadratic term</a></li>
+  <li><a href="#e-connect-to-summary-output" id="toc-e-connect-to-summary-output" class="nav-link" data-scroll-target="#e-connect-to-summary-output">1E — Connect to <code>summary()</code> output</a></li>
+  </ul></li>
+  <li><a href="#part-2-centering-tenure-what-changed-and-what-didnt" id="toc-part-2-centering-tenure-what-changed-and-what-didnt" class="nav-link" data-scroll-target="#part-2-centering-tenure-what-changed-and-what-didnt">Part 2 — Centering Tenure: What Changed and What Didn’t?</a></li>
+  <li><a href="#part-3-another-quadratic-clv-spend" id="toc-part-3-another-quadratic-clv-spend" class="nav-link" data-scroll-target="#part-3-another-quadratic-clv-spend">Part 3 — Another Quadratic: CLV ~ Spend</a>
+  <ul class="collapse">
+  <li><a href="#fit-and-compare" id="toc-fit-and-compare" class="nav-link" data-scroll-target="#fit-and-compare">Fit and compare</a></li>
+  <li><a href="#compute-pre-and-partial-f" id="toc-compute-pre-and-partial-f" class="nav-link" data-scroll-target="#compute-pre-and-partial-f">Compute PRE and partial-F</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  </ul></li>
+  <li><a href="#part-4-nonlinear-by-linear-does-the-tenure-curve-depend-on-engagement" id="toc-part-4-nonlinear-by-linear-does-the-tenure-curve-depend-on-engagement" class="nav-link" data-scroll-target="#part-4-nonlinear-by-linear-does-the-tenure-curve-depend-on-engagement">Part 4 — Nonlinear-by-Linear: Does the Tenure Curve Depend on Engagement?</a>
+  <ul class="collapse">
+  <li><a href="#a-note-on-using-vs.-in-model-formulas" id="toc-a-note-on-using-vs.-in-model-formulas" class="nav-link" data-scroll-target="#a-note-on-using-vs.-in-model-formulas">A note on using <code>:</code> vs.&nbsp;<code>*</code> in model formulas</a></li>
+  <li><a href="#hierarchy-reminder" id="toc-hierarchy-reminder" class="nav-link" data-scroll-target="#hierarchy-reminder">Hierarchy reminder</a></li>
+  <li><a href="#a-model-1-curvature-only-no-interaction" id="toc-a-model-1-curvature-only-no-interaction" class="nav-link" data-scroll-target="#a-model-1-curvature-only-no-interaction">4A — Model 1: Curvature only (no interaction)</a></li>
+  <li><a href="#b-model-2-add-linear-interaction-xz" id="toc-b-model-2-add-linear-interaction-xz" class="nav-link" data-scroll-target="#b-model-2-add-linear-interaction-xz">4B — Model 2: Add linear interaction (X:Z)</a></li>
+  <li><a href="#c-model-3-add-nonlinear-by-linear-term-x²z" id="toc-c-model-3-add-nonlinear-by-linear-term-x²z" class="nav-link" data-scroll-target="#c-model-3-add-nonlinear-by-linear-term-x²z">4C — Model 3: Add nonlinear-by-linear term (X²:Z)</a></li>
+  <li><a href="#compare-model-1-vs.-model-2-adding-xz" id="toc-compare-model-1-vs.-model-2-adding-xz" class="nav-link" data-scroll-target="#compare-model-1-vs.-model-2-adding-xz">Compare Model 1 vs.&nbsp;Model 2 (adding X:Z)</a></li>
+  <li><a href="#compare-model-2-vs.-model-3-adding-x²z" id="toc-compare-model-2-vs.-model-3-adding-x²z" class="nav-link" data-scroll-target="#compare-model-2-vs.-model-3-adding-x²z">Compare Model 2 vs.&nbsp;Model 3 (adding X²:Z)</a></li>
+  <li><a href="#what-the-coefficients-mean" id="toc-what-the-coefficients-mean" class="nav-link" data-scroll-target="#what-the-coefficients-mean">What the coefficients mean</a></li>
+  </ul></li>
+  <li><a href="#part-5-quick-visual-of-the-nonlinear-by-linear-pattern" id="toc-part-5-quick-visual-of-the-nonlinear-by-linear-pattern" class="nav-link" data-scroll-target="#part-5-quick-visual-of-the-nonlinear-by-linear-pattern">Part 5 — Quick Visual of the Nonlinear-by-Linear Pattern</a></li>
+  <li><a href="#part-6-three-way-interaction-clv-spend-visit-open" id="toc-part-6-three-way-interaction-clv-spend-visit-open" class="nav-link" data-scroll-target="#part-6-three-way-interaction-clv-spend-visit-open">Part 6 — Three-Way Interaction: CLV ~ Spend × Visit × Open</a>
+  <ul class="collapse">
+  <li><a href="#a-additive-model" id="toc-a-additive-model" class="nav-link" data-scroll-target="#a-additive-model">6A — Additive model</a></li>
+  <li><a href="#b-full-2-way-interaction-model" id="toc-b-full-2-way-interaction-model" class="nav-link" data-scroll-target="#b-full-2-way-interaction-model">6B — Full 2-way interaction model</a></li>
+  <li><a href="#c-full-3-way-model" id="toc-c-full-3-way-model" class="nav-link" data-scroll-target="#c-full-3-way-model">6C — Full 3-way model</a></li>
+  <li><a href="#compare-2-way-vs.-3-way" id="toc-compare-2-way-vs.-3-way" class="nav-link" data-scroll-target="#compare-2-way-vs.-3-way">Compare 2-way vs.&nbsp;3-way</a></li>
+  </ul></li>
+  <li><a href="#part-7-probe-the-3-way-interaction-with-slices" id="toc-part-7-probe-the-3-way-interaction-with-slices" class="nav-link" data-scroll-target="#part-7-probe-the-3-way-interaction-with-slices">Part 7 — Probe the 3-Way Interaction with Slices</a></li>
+  <li><a href="#part-8-be-smarter-than-r-day_of_year_joined" id="toc-part-8-be-smarter-than-r-day_of_year_joined" class="nav-link" data-scroll-target="#part-8-be-smarter-than-r-day_of_year_joined">Part 8 — Be Smarter Than R: <code>day_of_year_joined</code></a>
+  <ul class="collapse">
+  <li><a href="#a-naive-linear-model" id="toc-a-naive-linear-model" class="nav-link" data-scroll-target="#a-naive-linear-model">8A — Naive linear model</a></li>
+  <li><a href="#b-naive-quadratic-model" id="toc-b-naive-quadratic-model" class="nav-link" data-scroll-target="#b-naive-quadratic-model">8B — Naive quadratic model</a></li>
+  </ul></li>
+  <li><a href="#part-9-optional-preview-categorical-predictors" id="toc-part-9-optional-preview-categorical-predictors" class="nav-link" data-scroll-target="#part-9-optional-preview-categorical-predictors">Part 9 — Optional Preview: Categorical Predictors</a></li>
+  <li><a href="#part-10-practice-additional-nonlinear-models" id="toc-part-10-practice-additional-nonlinear-models" class="nav-link" data-scroll-target="#part-10-practice-additional-nonlinear-models">Part 10 — Practice: Additional Nonlinear Models</a>
+  <ul class="collapse">
+  <li><a href="#option-a-nonlinear-by-linear-with-spend-and-email-open-rate" id="toc-option-a-nonlinear-by-linear-with-spend-and-email-open-rate" class="nav-link" data-scroll-target="#option-a-nonlinear-by-linear-with-spend-and-email-open-rate">Option A: Nonlinear-by-linear with spend and email open rate</a></li>
+  <li><a href="#option-b-another-3-way-interaction" id="toc-option-b-another-3-way-interaction" class="nav-link" data-scroll-target="#option-b-another-3-way-interaction">Option B: Another 3-way interaction</a></li>
+  <li><a href="#option-c-build-your-own-nonlinear-story" id="toc-option-c-build-your-own-nonlinear-story" class="nav-link" data-scroll-target="#option-c-build-your-own-nonlinear-story">Option C: Build your own nonlinear story</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Week 11 Exercise</h1>
+<p class="subtitle lead">Nonlinear Effects, Nonlinear-by-Linear Terms, and 3-Way Interactions</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<hr>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Up to this point, most of our models have assumed that a predictor changes <span class="math inline">\(Y\)</span> in a straight-line way:</p>
+<blockquote class="blockquote">
+<p>One-unit increase in <span class="math inline">\(X\)</span> → same expected change in <span class="math inline">\(Y\)</span>, regardless of where on the scale you start.</p>
+</blockquote>
+<p>But real customer behavior is often more complicated than that.</p>
+<p>Sometimes more of something helps — but only up to a point. Sometimes very low and very high values of a predictor are both associated with lower outcomes. Sometimes the bend itself depends on a second variable.</p>
+<p>This week we explore these kinds of models in the context of <strong>CLV: customer lifetime value.</strong> Here, CLV is a 12-month dollar-value outcome reflecting how much revenue a given customer generates.</p>
+<p>Our goal is not just to fit a model that reduces error — it is to fit a model we can actually explain to another human being. Your boss, client, or coworker is much more likely to ask:</p>
+<ul>
+<li>“Are we getting diminishing returns here?”</li>
+<li>“Does this pattern depend on how engaged customers are?”</li>
+<li>“Should we treat all customers the same, or not?”</li>
+</ul>
+<p>That means your job is to understand the pattern well enough to answer reasonable follow-up questions.</p>
+<p>We are extending multiple regression in two related directions:</p>
+<ol type="1">
+<li><p><strong>Allow a predictor’s relationship with <span class="math inline">\(Y\)</span> to bend</strong> (interact with itself) rather than stay a straight line: <span class="math display">\[Y = b_0 + b_1 X + b_2 X^2 + \varepsilon\]</span></p></li>
+<li><p><strong>Allow that bent relationship to depend on another predictor:</strong> <span class="math display">\[Y = b_0 + b_1 X + b_2 X^2 + b_3 Z + b_4 (X \cdot Z) + b_5 (X^2 \cdot Z) + \varepsilon\]</span></p></li>
+</ol>
+<p>This means:</p>
+<ul>
+<li>The slope of <span class="math inline">\(X\)</span> can change across values of <span class="math inline">\(X\)</span> (curvature)</li>
+<li>And the shape of that curvature can itself vary with <span class="math inline">\(Z\)</span></li>
+</ul>
+<p>We also preview <strong>3-way interactions</strong> among continuous predictors: <span class="math display">\[Y = b_0 + b_1 X + b_2 Z + b_3 W + \ldots + b_7 (X \cdot Z \cdot W) + \varepsilon\]</span></p>
+<p>Questions we will be asking today:</p>
+<ul>
+<li>Is adding curvature to our model worth it? (quadratic vs.&nbsp;linear)</li>
+<li>What does centering do to our interpretations in a curved model?</li>
+<li>Does a nonlinear (curved) term vary with another predictor?</li>
+<li>How do we think about a 3-way (linear) interaction in this framework?</li>
+</ul>
+<hr>
+</section>
+<section id="part-0-load-and-refamiliarize-with-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="part-0-load-and-refamiliarize-with-the-data">Part 0 — Load and Refamiliarize with the Data</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>clv <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/clv_nonlinear_exercise_full.csv"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(clv)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(clv)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(clv)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(clv<span class="sc">$</span>CLV)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="data-dictionary" class="level3">
+<h3 class="anchored" data-anchor-id="data-dictionary">Data Dictionary</h3>
+<p><strong>Outcome:</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>CLV</code></td>
+<td>12-month customer lifetime value in dollars</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Continuous predictors:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tenure_months</code></td>
+<td>How long the customer has been with the firm</td>
+</tr>
+<tr class="even">
+<td><code>avg_monthly_spend</code></td>
+<td>Average monthly spend in dollars</td>
+</tr>
+<tr class="odd">
+<td><code>visit_freq_month</code></td>
+<td>Average number of visits per month</td>
+</tr>
+<tr class="even">
+<td><code>email_open_rate</code></td>
+<td>Proportion of marketing emails opened (0 to 1)</td>
+</tr>
+<tr class="odd">
+<td><code>engagement_score</code></td>
+<td>Internal engagement index</td>
+</tr>
+<tr class="even">
+<td><code>satisfaction</code></td>
+<td>Customer satisfaction rating (1 to 10)</td>
+</tr>
+<tr class="odd">
+<td><code>age</code></td>
+<td>Customer age in years</td>
+</tr>
+<tr class="even">
+<td><code>income</code></td>
+<td>Annual income in dollars</td>
+</tr>
+<tr class="odd">
+<td><code>day_of_year_joined</code></td>
+<td>Day of the year the customer relationship began</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Categorical predictors:</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 55%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Levels</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>campaign_type</code></td>
+<td>Organic, Referral, BlackFriday, HolidayGift, NewYearsPromo</td>
+</tr>
+<tr class="even">
+<td><code>segment</code></td>
+<td>Value, Growth, At_Risk</td>
+</tr>
+<tr class="odd">
+<td><code>primary_channel</code></td>
+<td>Online, Store, Omnichannel</td>
+</tr>
+</tbody>
+</table>
+<p>For now, do not worry about using every variable immediately. Some are central to this week’s nonlinear work; others give us something to come back to later. This is a fake dataset built to have some interesting patterns, so treat it accordingly.</p>
+<p>Before you start modeling, take a minute to actually look at the variables like a person.</p>
+<p>Ask yourself:</p>
+<ul>
+<li>Which predictors seem like they could reasonably have diminishing returns?</li>
+<li>Which ones do you expect might have “sweet spots” rather than straight linear effects?</li>
+<li>Which ones feel like they might interact/depend on another variable?</li>
+</ul>
+<p>You do not need to know the answer yet. But you should start thinking through what might make sense <em>before</em> R starts throwing coefficients at you.</p>
+<p>In other words: <strong>do not let the software have the first interesting thought.</strong></p>
+<hr>
+</section>
+</section>
+<section id="part-0.5-create-centered-variables" class="level2">
+<h2 class="anchored" data-anchor-id="part-0.5-create-centered-variables">Part 0.5 — Create Centered Variables</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>clv<span class="sc">$</span>tenure_c <span class="ot">&lt;-</span> clv<span class="sc">$</span>tenure_months     <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>tenure_months,     <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>clv<span class="sc">$</span>spend_c  <span class="ot">&lt;-</span> clv<span class="sc">$</span>avg_monthly_spend <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>avg_monthly_spend, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>clv<span class="sc">$</span>visit_c  <span class="ot">&lt;-</span> clv<span class="sc">$</span>visit_freq_month  <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>visit_freq_month,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>clv<span class="sc">$</span>open_c   <span class="ot">&lt;-</span> clv<span class="sc">$</span>email_open_rate   <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>email_open_rate,   <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>clv<span class="sc">$</span>eng_c    <span class="ot">&lt;-</span> clv<span class="sc">$</span>engagement_score  <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>engagement_score,  <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>clv<span class="sc">$</span>sat_c    <span class="ot">&lt;-</span> clv<span class="sc">$</span>satisfaction      <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>satisfaction,      <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Reminder:</strong> Centering changes the “magic zero.” It changes what the intercept means and what lower-order terms mean in the presence of interactions and quadratics — but it does <strong>not</strong> change overall model fit and does <strong>not</strong> change the actual underlying pattern in the data.</p>
+<hr>
+</section>
+<section id="part-1-linear-vs.-quadratic-clv-tenure" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-linear-vs.-quadratic-clv-tenure">Part 1 — Linear vs.&nbsp;Quadratic: CLV ~ Tenure</h2>
+<p><strong>Research question:</strong> Does the relationship between customer tenure and CLV appear curved?</p>
+<p>In a purely linear model, every additional month of tenure changes CLV by the same amount, regardless of whether a customer is brand new or has been around for years.</p>
+<p>In a quadratic model, that effect can change. For example:</p>
+<ul>
+<li>Tenure may help a lot at first and then level off</li>
+<li>Or it may rise, peak, and then taper</li>
+<li>Or, less commonly, it could accelerate</li>
+</ul>
+<p>This is one of those situations where a manager might reasonably ask: <em>“Are longer-tenure customers always more valuable in the same way, or are we hitting diminishing returns?”</em></p>
+<section id="a-linear-model-compact" class="level3">
+<h3 class="anchored" data-anchor-id="a-linear-model-compact">1A — Linear model (compact)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m_lin_tenure <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> tenure_months, <span class="at">data =</span> clv)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_lin_tenure)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="b-quadratic-model-augmented" class="level3">
+<h3 class="anchored" data-anchor-id="b-quadratic-model-augmented">1B — Quadratic model (augmented)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m_quad_tenure <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> tenure_months <span class="sc">+</span> <span class="fu">I</span>(tenure_months<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> clv)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_quad_tenure)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>OK, take a second and try to think about what this means before we move on.</p>
+<p>At minimum, resist the urge to immediately declare victory based on a p-value.</p>
+<p>We can start by examining how much additional error we’re explaining in this model compared to the compact, linear model.</p>
+</section>
+<section id="c-pre-for-adding-curvature" class="level3">
+<h3 class="anchored" data-anchor-id="c-pre-for-adding-curvature">1C — PRE for adding curvature</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>SSE_lin_tenure  <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_lin_tenure)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>SSE_quad_tenure <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_quad_tenure)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>PRE_quad_over_lin_tenure <span class="ot">&lt;-</span> (SSE_lin_tenure <span class="sc">-</span> SSE_quad_tenure) <span class="sc">/</span> SSE_lin_tenure</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>PRE_quad_over_lin_tenure</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Interpretation:</strong> How much additional error in the linear model do we explain by allowing the relationship to bend?</p>
+<p>And more importantly: if your boss asked whether tenure has a basically straight-line relationship with CLV or whether it levels off or changes shape, what would you say?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Record your value of <code>PRE_quad_over_lin_tenure</code>. You will be asked to identify it in the exercise you’ll submit this week.</p>
+</div>
+</div>
+</section>
+<section id="d-partial-f-test-for-the-quadratic-term" class="level3">
+<h3 class="anchored" data-anchor-id="d-partial-f-test-for-the-quadratic-term">1D — Partial-F test for the quadratic term</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_small_tenure <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_lin_tenure)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_big_tenure   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_quad_tenure)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df_num_tenure <span class="ot">&lt;-</span> df_small_tenure <span class="sc">-</span> df_big_tenure   <span class="co"># should be 1</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df_den_tenure <span class="ot">&lt;-</span> df_big_tenure</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>F_quad_tenure <span class="ot">&lt;-</span> ((SSE_lin_tenure <span class="sc">-</span> SSE_quad_tenure) <span class="sc">/</span> df_num_tenure) <span class="sc">/</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  (SSE_quad_tenure <span class="sc">/</span> df_den_tenure)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>p_quad_tenure <span class="ot">&lt;-</span> <span class="fu">pf</span>(F_quad_tenure,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">df1 =</span> df_num_tenure,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">df2 =</span> df_den_tenure,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>F_quad_tenure</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>p_quad_tenure</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Record your value of <code>F_quad_tenure</code>. You will be asked to identify it in the exercise you’ll submit this week.</p>
+</div>
+</div>
+</section>
+<section id="e-connect-to-summary-output" class="level3">
+<h3 class="anchored" data-anchor-id="e-connect-to-summary-output">1E — Connect to <code>summary()</code> output</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_quad_tenure)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Reminder:</strong> The <span class="math inline">\(t\)</span>-test on <code>I(tenure_months^2)</code> is testing the same hypothesis as the 1-df <span class="math inline">\(F\)</span> test above. For a single-parameter test: <span class="math display">\[F = t^2\]</span></p>
+<p>You can verify this by squaring the <span class="math inline">\(t\)</span> value reported in the summary output.</p>
+<p>Is the added curvature statistically worth it? In this class, that essentially translates to: did the more complicated model reduce error enough to justify its complicated self? And can you describe what kind of curvature you think you are seeing?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Look at the sign of the coefficient on <code>I(tenure_months^2)</code> in the summary output. Is it positive or negative? You will be asked what that sign tells you about the shape of the curve.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-2-centering-tenure-what-changed-and-what-didnt" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-centering-tenure-what-changed-and-what-didnt">Part 2 — Centering Tenure: What Changed and What Didn’t?</h2>
+<p>Let’s refit the same curved model, but centered.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m_quad_tenure_c <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> tenure_c <span class="sc">+</span> <span class="fu">I</span>(tenure_c<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> clv)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_quad_tenure_c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Compare:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_quad_tenure)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_quad_tenure_c)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Let’s think through what we’re seeing here:</strong></p>
+<ul>
+<li>How did the intercept change? What does it now mean?
+<ul>
+<li><em>Predicted CLV for a customer at mean tenure</em></li>
+</ul></li>
+<li>What does the <code>tenure_c</code> coefficient now mean?
+<ul>
+<li><em>The local slope of tenure at mean tenure</em></li>
+</ul></li>
+<li>What happened to the quadratic coefficient?
+<ul>
+<li><em>Same curvature — just a different coding of zero</em></li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Record the intercept from <code>m_quad_tenure_c</code>. You will be asked to identify its value and what it represents. Also confirm that the SSE from the centered model and the uncentered model.</p>
+</div>
+</div>
+<p><strong>Quick visual:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clv<span class="sc">$</span>tenure_months, clv<span class="sc">$</span>CLV,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> .<span class="dv">5</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Tenure (months)"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"CLV"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"CLV by Tenure with Quadratic Fit"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>ten_seq  <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(clv<span class="sc">$</span>tenure_months, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">max</span>(clv<span class="sc">$</span>tenure_months, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">length.out =</span> <span class="dv">150</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>pred_ten <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">tenure_months =</span> ten_seq)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ten_seq,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(m_quad_tenure, <span class="at">newdata =</span> pred_ten),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="part-3-another-quadratic-clv-spend" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-another-quadratic-clv-spend">Part 3 — Another Quadratic: CLV ~ Spend</h2>
+<p>We have now seen one example with tenure. Let’s examine another predictor where theory might also suggest diminishing returns: average monthly spend.</p>
+<section id="fit-and-compare" class="level3">
+<h3 class="anchored" data-anchor-id="fit-and-compare">Fit and compare</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>m_lin_spend  <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> spend_c, <span class="at">data =</span> clv)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>m_quad_spend <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> spend_c <span class="sc">+</span> <span class="fu">I</span>(spend_c<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> clv)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_lin_spend)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_quad_spend)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="compute-pre-and-partial-f" class="level3">
+<h3 class="anchored" data-anchor-id="compute-pre-and-partial-f">Compute PRE and partial-F</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>SSE_lin_spend  <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_lin_spend)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>SSE_quad_spend <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_quad_spend)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>PRE_quad_over_lin_spend <span class="ot">&lt;-</span> (SSE_lin_spend <span class="sc">-</span> SSE_quad_spend) <span class="sc">/</span> SSE_lin_spend</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>PRE_quad_over_lin_spend</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>df_small_spend <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_lin_spend)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>df_big_spend   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_quad_spend)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>df_num_spend <span class="ot">&lt;-</span> df_small_spend <span class="sc">-</span> df_big_spend</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>df_den_spend <span class="ot">&lt;-</span> df_big_spend</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>F_quad_spend <span class="ot">&lt;-</span> ((SSE_lin_spend <span class="sc">-</span> SSE_quad_spend) <span class="sc">/</span> df_num_spend) <span class="sc">/</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  (SSE_quad_spend <span class="sc">/</span> df_den_spend)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>p_quad_spend <span class="ot">&lt;-</span> <span class="fu">pf</span>(F_quad_spend,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df1 =</span> df_num_spend,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">df2 =</span> df_den_spend,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>F_quad_spend</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>p_quad_spend</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>Before you read the coefficients, look at the sign on the quadratic term. A <strong>negative</strong> quadratic coefficient means the curve opens downward — the effect of spend on CLV gets weaker as spend increases. A <strong>positive</strong> quadratic coefficient would mean the effect accelerates. Which is it here?</p>
+<p>Now look at the quadratic coefficient’s magnitude. It is probably very small, which makes sense: spend is measured in dollars, so <span class="math inline">\(b_2\)</span> is operating on dollars squared. That does not make it unimportant; it just means you need to calculate predicted values at realistic spend levels to understand the practical size of the bend. Try asking: what is the predicted CLV for a customer at mean spend vs.&nbsp;at mean + 1 SD spend?</p>
+<p>Work through these questions:</p>
+<ul>
+<li>Is there evidence of curvature in spend? (What’s your PRE? What’s your F and p?)</li>
+<li>What is the direction of the curve — does the effect of spend <em>increase</em> or <em>decrease</em> as spend gets larger?</li>
+<li>Is the direction of curvature the same as with tenure?</li>
+<li>Which predictor shows stronger nonlinearity in this dataset?</li>
+<li>What would you tell a manager who asked: <em>“At what point does getting customers to spend more not really move the needle as much?”</em></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Record your <code>PRE_quad_over_lin_spend</code> value. You will be asked to identify it and compare it to the tenure PRE from Part 1. Also note the sign of the quadratic coefficient on <code>I(spend_c^2)</code> — you will be asked what it tells you about the direction of the curve.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-4-nonlinear-by-linear-does-the-tenure-curve-depend-on-engagement" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-nonlinear-by-linear-does-the-tenure-curve-depend-on-engagement">Part 4 — Nonlinear-by-Linear: Does the Tenure Curve Depend on Engagement?</h2>
+<p><strong>Research question:</strong> Does the relationship between tenure and CLV vary depending on engagement score — and in particular, does <em>the shape of the curvature</em> change across engagement levels?</p>
+<p>This is more than asking whether the lines are just shifted up or down for different customers. We are asking whether the <em>bend itself</em> looks different for highly engaged customers versus less engaged ones.</p>
+<section id="a-note-on-using-vs.-in-model-formulas" class="level3 callout">
+<h3 class="callout anchored" data-anchor-id="a-note-on-using-vs.-in-model-formulas">A note on using <code>:</code> vs.&nbsp;<code>*</code> in model formulas</h3>
+<p>In many statistics courses that use R, you may have used <code>*</code> to specify interactions and let R handle the expansion:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> X <span class="sc">*</span> Z)   <span class="co"># R expands this to: Y ~ X + Z + X:Z</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>That shorthand is completely fine — and for simple two-variable interactions it is exactly what you want. <strong>However</strong>, when we are building nonlinear-by-linear models, we need more precise control over which terms are included. Here is the problem:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># What you might try:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(CLV <span class="sc">~</span> tenure_c <span class="sc">*</span> eng_c <span class="sc">+</span> <span class="fu">I</span>(tenure_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> eng_c)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># What R actually expands this to:</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># CLV ~ tenure_c + eng_c + tenure_c:eng_c +</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#       I(tenure_c^2) + eng_c + I(tenure_c^2):eng_c</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This can add terms you did not intend to add and make your step-by-step model comparisons less transparent.</p>
+<p>When we are building models one piece at a time and comparing them step by step (which is exactly what we are doing), we want to specify each term <strong>explicitly using <code>:</code></strong>. The <code>:</code> operator gives you <em>only</em> the interaction term, without automatically adding main effects. That means you are in control of the hierarchy, not R’s expansion logic.</p>
+<p>So:</p>
+<ul>
+<li><code>X:Z</code> gives you the interaction term only</li>
+<li><code>X * Z</code> gives you <code>X + Z + X:Z</code></li>
+</ul>
+<p>In simple models, these lead to the same place. In the kind of incremental model-building we do in this class, using <code>:</code> explicitly keeps things unambiguous - particularly when you want to be extremely clear about what model C you are comparing against. This is one of those cases where the shortcut that works in many situations becomes a source of confusion in more complex ones. <strong>Use <code>:</code> here.</strong></p>
+</section>
+<section id="hierarchy-reminder" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchy-reminder">Hierarchy reminder</h3>
+<p>When we include higher-order terms, we keep the lower-order pieces they build on. If we include <span class="math inline">\(X^2\)</span>, we also keep <span class="math inline">\(X\)</span>. If we include <span class="math inline">\(X \cdot Z\)</span> or <span class="math inline">\(X^2 \cdot Z\)</span>, we keep the relevant lower-order terms as well. This keeps the model interpretable and prevents higher-order terms from absorbing effects they were not meant to capture.</p>
+</section>
+<section id="a-model-1-curvature-only-no-interaction" class="level3">
+<h3 class="anchored" data-anchor-id="a-model-1-curvature-only-no-interaction">4A — Model 1: Curvature only (no interaction)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m_ten_curve <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> tenure_c <span class="sc">+</span> <span class="fu">I</span>(tenure_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> eng_c, <span class="at">data =</span> clv)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ten_curve)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="b-model-2-add-linear-interaction-xz" class="level3">
+<h3 class="anchored" data-anchor-id="b-model-2-add-linear-interaction-xz">4B — Model 2: Add linear interaction (X:Z)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>m_ten_curve_linint <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> tenure_c <span class="sc">+</span> <span class="fu">I</span>(tenure_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> eng_c <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                           tenure_c<span class="sc">:</span>eng_c,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> clv)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ten_curve_linint)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="c-model-3-add-nonlinear-by-linear-term-x²z" class="level3">
+<h3 class="anchored" data-anchor-id="c-model-3-add-nonlinear-by-linear-term-x²z">4C — Model 3: Add nonlinear-by-linear term (X²:Z)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m_ten_curve_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> tenure_c <span class="sc">+</span> <span class="fu">I</span>(tenure_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> eng_c <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                         tenure_c<span class="sc">:</span>eng_c <span class="sc">+</span> <span class="fu">I</span>(tenure_c<span class="sc">^</span><span class="dv">2</span>)<span class="sc">:</span>eng_c,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> clv)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ten_curve_full)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="compare-model-1-vs.-model-2-adding-xz" class="level3">
+<h3 class="anchored" data-anchor-id="compare-model-1-vs.-model-2-adding-xz">Compare Model 1 vs.&nbsp;Model 2 (adding X:Z)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>SSE_curve_only   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_ten_curve)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>SSE_curve_linint <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_ten_curve_linint)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>PRE_linint_over_curve <span class="ot">&lt;-</span> (SSE_curve_only <span class="sc">-</span> SSE_curve_linint) <span class="sc">/</span> SSE_curve_only</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>PRE_linint_over_curve</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>df_small_linint <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_ten_curve)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>df_big_linint   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_ten_curve_linint)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>F_linint <span class="ot">&lt;-</span> ((SSE_curve_only <span class="sc">-</span> SSE_curve_linint) <span class="sc">/</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>               (df_small_linint <span class="sc">-</span> df_big_linint)) <span class="sc">/</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  (SSE_curve_linint <span class="sc">/</span> df_big_linint)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>p_linint <span class="ot">&lt;-</span> <span class="fu">pf</span>(F_linint,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">df1 =</span> df_small_linint <span class="sc">-</span> df_big_linint,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">df2 =</span> df_big_linint,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>F_linint</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>p_linint</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Record <code>PRE_linint_over_curve</code> and <code>F_linint</code>. You will be asked to identify both values.</p>
+</div>
+</div>
+</section>
+<section id="compare-model-2-vs.-model-3-adding-x²z" class="level3">
+<h3 class="anchored" data-anchor-id="compare-model-2-vs.-model-3-adding-x²z">Compare Model 2 vs.&nbsp;Model 3 (adding X²:Z)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>SSE_curve_full <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_ten_curve_full)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>PRE_nl_over_linint <span class="ot">&lt;-</span> (SSE_curve_linint <span class="sc">-</span> SSE_curve_full) <span class="sc">/</span> SSE_curve_linint</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>PRE_nl_over_linint</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>df_small_nl <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_ten_curve_linint)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>df_big_nl   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_ten_curve_full)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>F_nl <span class="ot">&lt;-</span> ((SSE_curve_linint <span class="sc">-</span> SSE_curve_full) <span class="sc">/</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>           (df_small_nl <span class="sc">-</span> df_big_nl)) <span class="sc">/</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  (SSE_curve_full <span class="sc">/</span> df_big_nl)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>p_nl <span class="ot">&lt;-</span> <span class="fu">pf</span>(F_nl,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">df1 =</span> df_small_nl <span class="sc">-</span> df_big_nl,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">df2 =</span> df_big_nl,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>F_nl</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>p_nl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Record <code>PRE_nl_over_linint</code> and <code>F_nl</code>. You will be asked to identify both values.</p>
+</div>
+</div>
+</section>
+<section id="what-the-coefficients-mean" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-coefficients-mean">What the coefficients mean</h3>
+<ul>
+<li><strong><code>tenure_c</code></strong>: The local slope of tenure at <em>mean engagement</em> and <em>mean tenure</em> (both centered to zero). This is the expected change in CLV per additional month of tenure for a customer at the average engagement level.</li>
+<li><strong><code>I(tenure_c^2)</code></strong>: The curvature in tenure <em>at mean engagement</em>. Negative means diminishing returns; positive means acceleration.</li>
+<li><strong><code>tenure_c:eng_c</code></strong>: Whether the <em>linear</em> component of the tenure slope differs by engagement. Positive means higher-engagement customers have a steeper tenure slope at mean tenure.</li>
+<li><strong><code>I(tenure_c^2):eng_c</code></strong>: Whether the <em>curvature</em> itself changes with engagement. This is the true nonlinear-by-linear term — it tells us whether the <em>shape</em> of the tenure→CLV curve depends on engagement, not just whether it shifts up or down.</li>
+</ul>
+<p>A useful test of whether you understand this: imagine someone asks, <em>“So what is different about high-engagement customers here?”</em> If your answer is only <em>“there is an interaction,”</em> you are not done yet.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From your <code>summary(m_ten_curve_full)</code> output, record the coefficient on <code>eng_c</code>. You will be asked to interpret it. Also think about what it means that this coefficient is evaluated at <code>tenure_c = 0</code> — i.e., at mean tenure. One question will ask you to use the <code>tenure_c</code> and <code>tenure_c:eng_c</code> coefficients together to compute the simple slope of tenure at +1 SD engagement (SD of <code>eng_c</code> ≈ 2.00).</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-5-quick-visual-of-the-nonlinear-by-linear-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="part-5-quick-visual-of-the-nonlinear-by-linear-pattern">Part 5 — Quick Visual of the Nonlinear-by-Linear Pattern</h2>
+<p>When the model starts getting more complicated, plots become less optional. It’s really difficult to hold 3 nonlinear effects or more than 2 dimensions in your head. Let’s visualize predicted tenure curves for relatively low, average, and high engagement.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>eng_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(clv<span class="sc">$</span>eng_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>eng_lo <span class="ot">&lt;-</span> <span class="sc">-</span>eng_sd</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>eng_md <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>eng_hi <span class="ot">&lt;-</span>  eng_sd</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: because eng_c is already centered, its mean is approximately 0.</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># So eng_lo and eng_hi are simply ±1 SD from the center.</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(clv<span class="sc">$</span>tenure_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>         <span class="fu">max</span>(clv<span class="sc">$</span>tenure_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">length.out =</span> <span class="dv">150</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clv<span class="sc">$</span>tenure_c, clv<span class="sc">$</span>CLV,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> .<span class="dv">4</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Centered Tenure"</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"CLV"</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Tenure Curves at Low / Mean / High Engagement"</span>)</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(m_ten_curve_full,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">tenure_c =</span> x, <span class="at">eng_c =</span> eng_lo)),</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(m_ten_curve_full,</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">tenure_c =</span> x, <span class="at">eng_c =</span> eng_md)),</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(m_ten_curve_full,</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">tenure_c =</span> x, <span class="at">eng_c =</span> eng_hi)),</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bty =</span> <span class="st">"n"</span>,</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Low engagement (-1 SD)"</span>,</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Mean engagement"</span>,</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"High engagement (+1 SD)"</span>),</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Are these just vertically shifted curves? Or does the <em>shape</em> itself appear to change?</p>
+<p>The models are getting more complex, which is precisely why we need to slow down and think carefully rather than stare at the output until meaning arrives.</p>
+<hr>
+</section>
+<section id="part-6-three-way-interaction-clv-spend-visit-open" class="level2">
+<h2 class="anchored" data-anchor-id="part-6-three-way-interaction-clv-spend-visit-open">Part 6 — Three-Way Interaction: CLV ~ Spend × Visit × Open</h2>
+<p><strong>Research question:</strong> Does the relationship between monthly spend and CLV depend <em>jointly</em> on visit frequency <strong>and</strong> email open rate?</p>
+<p>In other words: is the spend→CLV relationship different for customers who visit often vs.&nbsp;rarely, and does that <em>itself</em> depend on how engaged they are with email?</p>
+<p>A 3-way interaction is not a personal attack on your sanity even if it feels like it is. Sometimes the world is actually structured that way. But because breaking one down can feel that way, we want to make sure that we are extremely programmatic in the way that we interpret them. Our job is still the same: compare models, reduce error, and explain the pattern clearly enough that a non-statistician could follow the basic logic.</p>
+<section id="a-additive-model" class="level3">
+<h3 class="anchored" data-anchor-id="a-additive-model">6A — Additive model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m_add_3way <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> spend_c <span class="sc">+</span> visit_c <span class="sc">+</span> open_c, <span class="at">data =</span> clv)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_add_3way)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="b-full-2-way-interaction-model" class="level3">
+<h3 class="anchored" data-anchor-id="b-full-2-way-interaction-model">6B — Full 2-way interaction model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>m_2way_3way <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> spend_c <span class="sc">+</span> visit_c <span class="sc">+</span> open_c <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                    spend_c<span class="sc">:</span>visit_c <span class="sc">+</span> spend_c<span class="sc">:</span>open_c <span class="sc">+</span> visit_c<span class="sc">:</span>open_c,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> clv)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_2way_3way)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="c-full-3-way-model" class="level3">
+<h3 class="anchored" data-anchor-id="c-full-3-way-model">6C — Full 3-way model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>m_full_3way <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> spend_c <span class="sc">+</span> visit_c <span class="sc">+</span> open_c <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                    spend_c<span class="sc">:</span>visit_c <span class="sc">+</span> spend_c<span class="sc">:</span>open_c <span class="sc">+</span> visit_c<span class="sc">:</span>open_c <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                    spend_c<span class="sc">:</span>visit_c<span class="sc">:</span>open_c,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> clv)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_full_3way)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="compare-2-way-vs.-3-way" class="level3">
+<h3 class="anchored" data-anchor-id="compare-2-way-vs.-3-way">Compare 2-way vs.&nbsp;3-way</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>SSE_2way_3way <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_2way_3way)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>SSE_full_3way <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_full_3way)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>PRE_3way_over_2way <span class="ot">&lt;-</span> (SSE_2way_3way <span class="sc">-</span> SSE_full_3way) <span class="sc">/</span> SSE_2way_3way</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>PRE_3way_over_2way</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>df_small_3way <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_2way_3way)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>df_big_3way   <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(m_full_3way)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>F_3way <span class="ot">&lt;-</span> ((SSE_2way_3way <span class="sc">-</span> SSE_full_3way) <span class="sc">/</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>             (df_small_3way <span class="sc">-</span> df_big_3way)) <span class="sc">/</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  (SSE_full_3way <span class="sc">/</span> df_big_3way)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>p_3way <span class="ot">&lt;-</span> <span class="fu">pf</span>(F_3way,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">df1 =</span> df_small_3way <span class="sc">-</span> df_big_3way,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">df2 =</span> df_big_3way,</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>F_3way</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>p_3way</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Interpretation:</strong> A significant 3-way means the 2-way interaction between any two of these variables is itself changing across levels of the third. So maybe spend and visit frequency work together one way when email open rate is low but that combined pattern looks different when email open rate is high.</p>
+<p>This is more complicated than just “the lines are not parallel,” which means if someone asks you what the 3-way means, your best move is usually not to wave vaguely at the coefficient table. Your best move is to look at predicted values or plots and describe the pattern in slices.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note this for the exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Record <code>PRE_3way_over_2way</code> and <code>F_3way</code>. You will be asked to identify both values. Also note the coefficient on <code>spend_c</code> in <code>m_full_3way</code> — you will be asked for the simple slope of spend when both <code>visit_c</code> and <code>open_c</code> are at their means (hint: when both moderators equal zero, all interaction terms drop out).</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-7-probe-the-3-way-interaction-with-slices" class="level2">
+<h2 class="anchored" data-anchor-id="part-7-probe-the-3-way-interaction-with-slices">Part 7 — Probe the 3-Way Interaction with Slices</h2>
+<p>Let’s hold email open rate at low and high values and examine the predicted spend × visit relationship.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>open_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(clv<span class="sc">$</span>open_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>open_lo <span class="ot">&lt;-</span> <span class="sc">-</span>open_sd</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>open_hi <span class="ot">&lt;-</span>  open_sd</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>visit_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(clv<span class="sc">$</span>visit_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>visit_lo <span class="ot">&lt;-</span> <span class="sc">-</span>visit_sd</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>visit_hi <span class="ot">&lt;-</span>  visit_sd</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>spend_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(clv<span class="sc">$</span>spend_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">max</span>(clv<span class="sc">$</span>spend_c, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">length.out =</span> <span class="dv">40</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(spend_seq,</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>     <span class="fu">predict</span>(m_full_3way,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">spend_c =</span> spend_seq,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">visit_c =</span> visit_lo,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">open_c  =</span> open_lo)),</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">2</span>,</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">700</span>),</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Centered Monthly Spend"</span>,</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Predicted CLV"</span>,</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"3-Way Interaction: Spend × Visit × Open Rate"</span>)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(spend_seq,</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(m_full_3way,</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">spend_c =</span> spend_seq,</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">visit_c =</span> visit_hi,</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">open_c  =</span> open_lo)),</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(spend_seq,</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(m_full_3way,</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">spend_c =</span> spend_seq,</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">visit_c =</span> visit_lo,</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">open_c  =</span> open_hi)),</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(spend_seq,</span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(m_full_3way,</span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">spend_c =</span> spend_seq,</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">visit_c =</span> visit_hi,</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">open_c  =</span> open_hi)),</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>      <span class="at">lty =</span> <span class="dv">4</span>)</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">bty =</span> <span class="st">"n"</span>,</span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Low visit / Low open"</span>,</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"High visit / Low open"</span>,</span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Low visit / High open"</span>,</span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"High visit / High open"</span>),</span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Prompt:</strong> Do the “high visit” vs.&nbsp;“low visit” differences look the same at low and high open rate? If not, that is exactly the kind of pattern a 3-way interaction is capturing.</p>
+<hr>
+</section>
+<section id="part-8-be-smarter-than-r-day_of_year_joined" class="level2">
+<h2 class="anchored" data-anchor-id="part-8-be-smarter-than-r-day_of_year_joined">Part 8 — Be Smarter Than R: <code>day_of_year_joined</code></h2>
+<p>This part is mostly conceptual and exploratory.</p>
+<p>We have a variable that is numeric (day 1 to 365), but it is really <strong>cyclical</strong>. Day 365 and day 1 are not actually “far apart” in any meaningful seasonal sense.</p>
+<p>If we treat this as an ordinary numeric predictor, R will happily go along with that plan — because R is extremely accommodating in that way. But we should still stop and ask whether that is substantively smart.</p>
+<p>A model can run (and even produce significant results) and still be a bad idea.</p>
+<section id="a-naive-linear-model" class="level3">
+<h3 class="anchored" data-anchor-id="a-naive-linear-model">8A — Naive linear model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>m_day_lin <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> day_of_year_joined, <span class="at">data =</span> clv)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_day_lin)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="b-naive-quadratic-model" class="level3">
+<h3 class="anchored" data-anchor-id="b-naive-quadratic-model">8B — Naive quadratic model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>m_day_quad <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> day_of_year_joined <span class="sc">+</span> <span class="fu">I</span>(day_of_year_joined<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> clv)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_day_quad)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>SSE_day_lin  <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_day_lin)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>SSE_day_quad <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_day_quad)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>PRE_day_quad <span class="ot">&lt;-</span> (SSE_day_lin <span class="sc">-</span> SSE_day_quad) <span class="sc">/</span> SSE_day_lin</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>PRE_day_quad</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clv<span class="sc">$</span>day_of_year_joined, clv<span class="sc">$</span>CLV,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> .<span class="dv">4</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Day of Year Joined"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"CLV"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"CLV by Day Joined"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>day_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">365</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(day_seq,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">predict</span>(m_day_quad,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">day_of_year_joined =</span> day_seq)),</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Is a quadratic capturing <em>something</em> here? Probably. Is it necessarily the smartest way to represent this pattern? Probably not.</p>
+<p>Why not? Because seasonality can create patterns that look nonlinear without being well described by one simple parabola. Day 365 and day 1 represent consecutive days in the real world but in a quadratic model they are treated as the endpoints of an arch, which imposes a shape the data may not actually follow.</p>
+<p>We’ll talk about some solutions to this next week.</p>
+<p>For now, this is a good reminder: <strong>do not let the software do all the thinking.</strong></p>
+<hr>
+</section>
+</section>
+<section id="part-9-optional-preview-categorical-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="part-9-optional-preview-categorical-predictors">Part 9 — Optional Preview: Categorical Predictors</h2>
+<p>Not central for this week, but worth a look to see where we are headed:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>campaign_type)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>segment)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>primary_channel)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>m_campaign <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> campaign_type, <span class="at">data =</span> clv)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_campaign)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We will come back to categorical predictors and factor coding more explicitly. For now, just notice that meaningful group differences are already present in this data.</p>
+<hr>
+</section>
+<section id="part-10-practice-additional-nonlinear-models" class="level2">
+<h2 class="anchored" data-anchor-id="part-10-practice-additional-nonlinear-models">Part 10 — Practice: Additional Nonlinear Models</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>This section is for practice only — it is not part of the graded exercise submission.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The questions below cover aspects of the material some students find trickiest: building a nonlinear-by-linear model from scratch, running a second 3-way interaction, and constructing your own analysis from the ground up. Work through whichever option is most useful to you. Answer callouts are provided so you can check your work.</p>
+</div>
+</div>
+<hr>
+<section id="option-a-nonlinear-by-linear-with-spend-and-email-open-rate" class="level3">
+<h3 class="anchored" data-anchor-id="option-a-nonlinear-by-linear-with-spend-and-email-open-rate">Option A: Nonlinear-by-linear with spend and email open rate</h3>
+<p>Fit these three models:</p>
+<ul>
+<li><strong>Model 1:</strong> <code>CLV ~ spend_c + I(spend_c^2) + open_c</code></li>
+<li><strong>Model 2:</strong> <code>CLV ~ spend_c + I(spend_c^2) + open_c + spend_c:open_c</code></li>
+<li><strong>Model 3:</strong> <code>CLV ~ spend_c + I(spend_c^2) + open_c + spend_c:open_c + I(spend_c^2):open_c</code></li>
+</ul>
+<p><strong>Questions to answer:</strong></p>
+<ol type="1">
+<li>Is there evidence of curvature in spend? (You already fit this in Part 3 — use what you found.)</li>
+<li>Does the linear effect of spend on CLV depend on email open rate?</li>
+<li>Does the curvature in spend depend on email open rate?</li>
+<li>In plain English, what pattern do you think this model is capturing?</li>
+</ol>
+<p><strong>Starter skeleton:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> spend_c <span class="sc">+</span> <span class="fu">I</span>(spend_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> open_c, <span class="at">data =</span> clv)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> spend_c <span class="sc">+</span> <span class="fu">I</span>(spend_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> open_c <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>            spend_c<span class="sc">:</span>open_c, <span class="at">data =</span> clv)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> spend_c <span class="sc">+</span> <span class="fu">I</span>(spend_c<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> open_c <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>            spend_c<span class="sc">:</span>open_c <span class="sc">+</span> <span class="fu">I</span>(spend_c<span class="sc">^</span><span class="dv">2</span>)<span class="sc">:</span>open_c,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> clv)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m3)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>SSE_m1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m1)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>SSE_m2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m2)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>SSE_m3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m3)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>PRE_m2_vs_m1 <span class="ot">&lt;-</span> (SSE_m1 <span class="sc">-</span> SSE_m2) <span class="sc">/</span> SSE_m1</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>PRE_m3_vs_m2 <span class="ot">&lt;-</span> (SSE_m2 <span class="sc">-</span> SSE_m3) <span class="sc">/</span> SSE_m2</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>PRE_m2_vs_m1</span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>PRE_m3_vs_m2</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the same df.residual() and pf() pattern from Parts 1 and 3</span></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a><span class="co"># to compute F and p for each comparison.</span></span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a><span class="co"># You will need:</span></span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a><span class="co">#   df_num = df.residual(smaller model) - df.residual(larger model)</span></span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a><span class="co">#   df_den = df.residual(larger model)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Check your work — Option A answers
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>PRE, Model 2 vs.&nbsp;Model 1</strong> (adding <code>spend_c:open_c</code>): approximately <strong>0.044</strong></p>
+<p><strong>F for Model 2 vs.&nbsp;Model 1</strong>: approximately <strong>184.1</strong>, p &lt; .001 — the linear interaction between spend and email open rate is statistically significant.</p>
+<p><strong>PRE, Model 3 vs.&nbsp;Model 2</strong> (adding <code>I(spend_c^2):open_c</code>): approximately <strong>0.006</strong></p>
+<p><strong>F for Model 3 vs.&nbsp;Model 2</strong>: approximately <strong>24.2</strong>, p &lt; .001 — the nonlinear-by-linear term is also significant, though it accounts for considerably less additional variance than the linear interaction did.</p>
+<p><strong>Plain-English interpretation:</strong> Customers who open more emails get more CLV out of higher monthly spend — the spend→CLV relationship is steeper for high-open-rate customers. Model 3 adds the further finding that the <em>curvature</em> in that relationship also differs: at high open rates, the diminishing returns on spend are somewhat less pronounced than at low open rates.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="option-b-another-3-way-interaction" class="level3">
+<h3 class="anchored" data-anchor-id="option-b-another-3-way-interaction">Option B: Another 3-way interaction</h3>
+<p>Fit: <code>CLV ~ tenure_c * sat_c * eng_c</code></p>
+<p>Then:</p>
+<ol type="1">
+<li>Compare additive vs.&nbsp;2-way vs.&nbsp;3-way models</li>
+<li>Compute PRE and F for the 3-way term</li>
+<li>Create at least one useful slice plot</li>
+<li>Write 2–4 sentences explaining what the 3-way means — without just saying “there is a 3-way interaction”</li>
+</ol>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Check your work — Option B key values
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To check your model comparison, the key test is the 3-way term: <code>tenure_c:sat_c:eng_c</code>. Your F statistic for that single term (3-way model vs.&nbsp;2-way model) should be significant at conventional levels. If you are getting an F near zero or a PRE near zero, double-check that you built your 2-way model with all three pairwise interactions (<code>tenure_c:sat_c</code>, <code>tenure_c:eng_c</code>, and <code>sat_c:eng_c</code>) before adding the 3-way.</p>
+<p>For your slice plot, hold one variable at ±1 SD and plot the relationship between the other two. A clean approach: hold <code>eng_c</code> at low and high, then show how the <code>tenure_c</code> × <code>sat_c</code> relationship changes across those panels.</p>
+<p><strong>Plain-English framing to aim for:</strong> The 3-way means that the way satisfaction and tenure work <em>together</em> to predict CLV is itself different for high- vs.&nbsp;low-engagement customers. It is not enough to say “tenure and satisfaction both matter” or even “they interact” — the shape of that interaction depends on where a customer falls on engagement.</p>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="option-c-build-your-own-nonlinear-story" class="level3">
+<h3 class="anchored" data-anchor-id="option-c-build-your-own-nonlinear-story">Option C: Build your own nonlinear story</h3>
+<p>Use one continuous <span class="math inline">\(X\)</span> with clear theoretical motivation, and optionally add one <span class="math inline">\(Z\)</span> and/or <span class="math inline">\(W\)</span>. Your analysis must include:</p>
+<ol type="1">
+<li>A compact linear model</li>
+<li>A quadratic model</li>
+<li>At least one model comparison using PRE</li>
+<li>Correct interpretation of centering</li>
+<li>A plain-English explanation of the pattern</li>
+</ol>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Check your work — Option C checklist
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There is no single right answer here, but your write-up should be able to answer yes to all of the following:</p>
+<ul>
+<li>Does your PRE comparison have a clear numerator (SSE of the simpler model minus SSE of the more complex model) and denominator (SSE of the simpler model)?</li>
+<li>Is your F statistic computed using the correct degrees of freedom — df_num from the difference in residual df, df_den from the larger model?</li>
+<li>After centering, does your intercept now represent a predicted value at a <em>meaningful</em> reference point (the mean of X) rather than at X = 0?</li>
+<li>Can you state in one or two plain sentences what the curvature means — not just that the quadratic term is significant, but what the <em>shape</em> tells you about the relationship?</li>
+</ul>
+<p>If you used a second variable and included interaction terms, also ask: did you keep the lower-order terms? And did you use <code>:</code> rather than <code>*</code> for the interaction terms so that your model comparisons are unambiguous?</p>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Erin Percival Carter <br> <span class="colophon">Built with Quarto, stubbornness, and coffee.</span></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://umaine.edu/business/">
+<p>Maine Business School</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script src="sheep.js"></script>
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
