@@ -1,0 +1,765 @@
+---
+title: "Week 11 Exercise: Nonlinear Effects, Nonlinear-by-Linear Terms, and 3-Way Interactions"
+subtitle: "MKT 378 — Marketing Research"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+## Overview
+
+Up to this point, most of our models have assumed that a predictor changes $Y$ in a straight-line way:
+
+> One-unit increase in $X$ → same expected change in $Y$, regardless of where on the scale you start.
+
+But real customer behavior is often more complicated than that.
+
+Sometimes more of something helps — but only up to a point. Sometimes very low and very high values of a predictor are both associated with lower outcomes. Sometimes the bend itself depends on a second variable.
+
+This week we explore these kinds of models in the context of **CLV: customer lifetime value.** Here, CLV is a 12-month dollar-value outcome reflecting how much revenue a given customer generates.
+
+Our goal is not just to fit a model that reduces error — it is to fit a model we can actually explain to another human being. Your boss, client, or coworker is much more likely to ask:
+
+- "Are we getting diminishing returns here?"
+- "Does this pattern depend on how engaged customers are?"
+- "Should we treat all customers the same, or not?"
+
+That means your job is to understand the pattern well enough to answer reasonable follow-up questions without panicking.
+
+We are extending multiple regression in two related directions:
+
+1. **Allow a predictor's relationship with $Y$ to bend** rather than stay a straight line:
+$$Y = b_0 + b_1 X + b_2 X^2 + \varepsilon$$
+
+2. **Allow that bent relationship to depend on another predictor:**
+$$Y = b_0 + b_1 X + b_2 X^2 + b_3 Z + b_4 (X \cdot Z) + b_5 (X^2 \cdot Z) + \varepsilon$$
+
+This means:
+
+- The slope of $X$ can change across values of $X$ (curvature)
+- And the shape of that curvature can itself vary with $Z$
+
+We also preview **3-way interactions** among continuous predictors:
+$$Y = b_0 + b_1 X + b_2 Z + b_3 W + \ldots + b_7 (X \cdot Z \cdot W) + \varepsilon$$
+
+Questions we will be practicing today:
+
+- Is adding curvature worth it? (quadratic vs. linear)
+- What does centering do in a curved model?
+- Does a nonlinear term vary with another predictor?
+- How do we think about a 3-way interaction in this framework?
+
+---
+
+## Part 0 — Load and Refamiliarize with the Data
+
+```{r}
+clv <- read.csv("Datasets/clv_nonlinear_exercise_full.csv")
+
+head(clv)
+str(clv)
+summary(clv)
+
+n <- length(clv$CLV)
+```
+
+### Data Dictionary
+
+**Outcome:**
+
+| Variable | Description |
+|----------|-------------|
+| `CLV` | 12-month customer lifetime value in dollars |
+
+**Continuous predictors:**
+
+| Variable | Description |
+|----------|-------------|
+| `tenure_months` | How long the customer has been with the firm |
+| `avg_monthly_spend` | Average monthly spend in dollars |
+| `visit_freq_month` | Average number of visits per month |
+| `email_open_rate` | Proportion of marketing emails opened (0 to 1) |
+| `engagement_score` | Internal engagement index |
+| `satisfaction` | Customer satisfaction rating (1 to 10) |
+| `age` | Customer age in years |
+| `income` | Annual income in dollars |
+| `day_of_year_joined` | Day of the year the customer relationship began |
+
+**Categorical predictors:**
+
+| Variable | Levels |
+|----------|--------|
+| `campaign_type` | Organic, Referral, BlackFriday, HolidayGift, NewYearsPromo |
+| `segment` | Value, Growth, At_Risk |
+| `primary_channel` | Online, Store, Omnichannel |
+
+For now, do not worry about using every variable immediately. Some are central to this week's nonlinear work; others give us something to come back to later. This is a fake dataset built to have some interesting patterns, so treat it accordingly.
+
+Before you start modeling, take a minute to actually look at the variables like a person.
+
+Ask yourself:
+
+- Which predictors seem like they could reasonably have diminishing returns?
+- Which ones might have "sweet spots" rather than straight-line effects?
+- Which ones feel like they might interact?
+
+You do not need to know the answer yet. But you should start building a story in your head *before* R starts throwing coefficients at you.
+
+In other words: **do not let the software have the first interesting thought.**
+
+---
+
+## Part 0.5 — Create Centered Variables
+
+```{r}
+clv$tenure_c <- clv$tenure_months     - mean(clv$tenure_months,     na.rm = TRUE)
+clv$spend_c  <- clv$avg_monthly_spend - mean(clv$avg_monthly_spend, na.rm = TRUE)
+clv$visit_c  <- clv$visit_freq_month  - mean(clv$visit_freq_month,  na.rm = TRUE)
+clv$open_c   <- clv$email_open_rate   - mean(clv$email_open_rate,   na.rm = TRUE)
+clv$eng_c    <- clv$engagement_score  - mean(clv$engagement_score,  na.rm = TRUE)
+clv$sat_c    <- clv$satisfaction      - mean(clv$satisfaction,      na.rm = TRUE)
+```
+
+**Reminder:** Centering changes the "magic zero." It changes what the intercept means and what lower-order terms mean in the presence of interactions and quadratics — but it does **not** change model fit and does **not** change the actual underlying pattern in the data.
+
+---
+
+## Part 1 — Linear vs. Quadratic: CLV ~ Tenure
+
+**Research question:** Does the relationship between customer tenure and CLV appear curved?
+
+In a purely linear model, every additional month of tenure changes CLV by the same amount, regardless of whether a customer is brand new or has been around for years.
+
+In a quadratic model, that effect can change. For example:
+
+- Tenure may help a lot at first and then level off
+- Or it may rise, peak, and then taper
+- Or, less commonly, it could accelerate
+
+This is one of those situations where a manager might reasonably ask: *"Are longer-tenure customers always more valuable in the same way, or are we hitting diminishing returns?"*
+
+### 1A — Linear model (compact)
+
+```{r}
+m_lin_tenure <- lm(CLV ~ tenure_months, data = clv)
+summary(m_lin_tenure)
+```
+
+### 1B — Quadratic model (augmented)
+
+```{r}
+m_quad_tenure <- lm(CLV ~ tenure_months + I(tenure_months^2), data = clv)
+summary(m_quad_tenure)
+```
+
+At minimum, this is a good moment to resist the urge to immediately declare victory based on a p-value and move on with your life.
+
+### 1C — PRE for adding curvature
+
+```{r}
+SSE_lin_tenure  <- sum(residuals(m_lin_tenure)^2)
+SSE_quad_tenure <- sum(residuals(m_quad_tenure)^2)
+
+PRE_quad_over_lin_tenure <- (SSE_lin_tenure - SSE_quad_tenure) / SSE_lin_tenure
+PRE_quad_over_lin_tenure
+```
+
+**Interpretation:** How much additional error in the linear model do we explain by allowing the relationship to bend?
+
+And more importantly: if your boss asked whether tenure has a basically straight-line relationship with CLV or whether it levels off or changes shape, what would you say?
+
+### 1D — Partial-F test for the quadratic term
+
+```{r}
+df_small_tenure <- df.residual(m_lin_tenure)
+df_big_tenure   <- df.residual(m_quad_tenure)
+
+df_num_tenure <- df_small_tenure - df_big_tenure   # should be 1
+df_den_tenure <- df_big_tenure
+
+F_quad_tenure <- ((SSE_lin_tenure - SSE_quad_tenure) / df_num_tenure) /
+  (SSE_quad_tenure / df_den_tenure)
+
+p_quad_tenure <- pf(F_quad_tenure,
+                    df1 = df_num_tenure,
+                    df2 = df_den_tenure,
+                    lower.tail = FALSE)
+
+F_quad_tenure
+p_quad_tenure
+```
+
+### 1E — Connect to `summary()` output
+
+```{r}
+summary(m_quad_tenure)
+```
+
+**Reminder:** The $t$-test on `I(tenure_months^2)` is testing the same hypothesis as the 1-df $F$ test above. For a single-parameter test:
+$$F = t^2$$
+
+You can verify this by squaring the $t$ value reported in the summary.
+
+Is the added curvature statistically worth it? In this class, that essentially translates to: did the more complicated model reduce error enough to justify itself? And can you describe what kind of curvature you think you are seeing?
+
+---
+
+## Part 2 — Centering Tenure: What Changed and What Didn't?
+
+Let's refit the same curved model, but centered.
+
+```{r}
+m_quad_tenure_c <- lm(CLV ~ tenure_c + I(tenure_c^2), data = clv)
+summary(m_quad_tenure_c)
+```
+
+Compare:
+
+```{r}
+summary(m_quad_tenure)
+summary(m_quad_tenure_c)
+```
+
+**Write-up prompts:**
+
+- How did the intercept change? What does it now mean?
+  - *Predicted CLV for a customer at mean tenure*
+- What does the `tenure_c` coefficient now mean?
+  - *The local slope of tenure at mean tenure*
+- What happened to the quadratic coefficient?
+  - *Same curvature — just a different coding of zero*
+
+**Quick visual:**
+
+```{r}
+plot(clv$tenure_months, clv$CLV,
+     pch = 16, cex = .5,
+     xlab = "Tenure (months)",
+     ylab = "CLV",
+     main = "CLV by Tenure with Quadratic Fit")
+
+ten_seq  <- seq(min(clv$tenure_months, na.rm = TRUE),
+                max(clv$tenure_months, na.rm = TRUE),
+                length.out = 150)
+pred_ten <- data.frame(tenure_months = ten_seq)
+lines(ten_seq,
+      predict(m_quad_tenure, newdata = pred_ten),
+      lwd = 2)
+```
+
+---
+
+## Part 3 — Another Quadratic: CLV ~ Spend
+
+We have now seen one example with tenure. Let's examine another predictor where theory might also suggest diminishing returns: average monthly spend.
+
+### Fit and compare
+
+```{r}
+m_lin_spend  <- lm(CLV ~ spend_c, data = clv)
+m_quad_spend <- lm(CLV ~ spend_c + I(spend_c^2), data = clv)
+
+summary(m_lin_spend)
+summary(m_quad_spend)
+```
+
+### Compute PRE and partial-F
+
+```{r}
+SSE_lin_spend  <- sum(residuals(m_lin_spend)^2)
+SSE_quad_spend <- sum(residuals(m_quad_spend)^2)
+
+PRE_quad_over_lin_spend <- (SSE_lin_spend - SSE_quad_spend) / SSE_lin_spend
+PRE_quad_over_lin_spend
+
+df_small_spend <- df.residual(m_lin_spend)
+df_big_spend   <- df.residual(m_quad_spend)
+
+df_num_spend <- df_small_spend - df_big_spend
+df_den_spend <- df_big_spend
+
+F_quad_spend <- ((SSE_lin_spend - SSE_quad_spend) / df_num_spend) /
+  (SSE_quad_spend / df_den_spend)
+
+p_quad_spend <- pf(F_quad_spend,
+                   df1 = df_num_spend,
+                   df2 = df_den_spend,
+                   lower.tail = FALSE)
+
+F_quad_spend
+p_quad_spend
+```
+
+### Interpretation
+
+Before you read the coefficients, look at the sign on the quadratic term. A **negative** quadratic coefficient means the curve opens downward — the effect of spend on CLV gets weaker as spend increases. A **positive** quadratic coefficient would mean the effect accelerates. Which is it here?
+
+Now look at the quadratic coefficient's magnitude. It is probably very small, which makes sense: spend is measured in dollars, so $b_2$ is operating on the dollars squared term. That does not make it unimportant; it just means you need to calculate predicted values at realistic spend levels to understand the practical size of the bend. Try asking: what is the predicted CLV for a customer at mean spend vs. at mean + 1 SD spend?
+
+Work through these questions:
+
+- Is there evidence of curvature in spend? (What's your PRE? What's your F and p?)
+- What is the direction of the curve — does the effect of spend *increase* or *decrease* as spend gets larger?
+- Is the direction of curvature the same as with tenure?
+- Which predictor shows stronger nonlinearity in this dataset?
+- What would you tell a manager who asked: *"At what point does getting customers to spend more not really move the needle as much?"*
+
+---
+
+## Part 4 — Nonlinear-by-Linear: Does the Tenure Curve Depend on Engagement?
+
+**Research question:** Does the relationship between tenure and CLV vary depending on engagement score — and in particular, does *the shape of the curvature* change across engagement levels?
+
+This is more than asking whether the lines are just shifted up or down for different customers. We are asking whether the *bend itself* looks different for highly engaged customers versus less engaged ones.
+
+### A note on using `:` vs. `*` in model formulas {.callout}
+
+In many statistics courses, you may have used `*` to specify interactions and let R handle the expansion:
+
+```r
+lm(Y ~ X * Z)   # R expands this to: Y ~ X + Z + X:Z
+```
+
+That shorthand is completely fine — and for simple two-variable interactions it is exactly what you want. **However**, when we are building nonlinear-by-linear models, we need more precise control over which terms are included. Here is the problem:
+
+```r
+# What you might try:
+lm(CLV ~ tenure_c * eng_c + I(tenure_c^2) * eng_c)
+
+# What R actually expands this to:
+# CLV ~ tenure_c + eng_c + tenure_c:eng_c +
+#       I(tenure_c^2) + eng_c + I(tenure_c^2):eng_c
+```
+
+This can add terms you did not intend to add and make your step-by-step model comparisons less transparent.
+
+When we are building models one piece at a time and comparing them step by step (which is exactly what we are doing), we want to specify each term **explicitly using `:`**. The `:` operator gives you *only* the interaction term, without automatically adding main effects. That means you are in control of the hierarchy, not R's expansion logic.
+
+So:
+
+- `X:Z` gives you the interaction term only
+- `X * Z` gives you `X + Z + X:Z`
+
+In simple models, these lead to the same place. In the kind of incremental model-building we do in this class, using `:` explicitly keeps things unambiguous. This is one of those cases where the shortcut that works in many situations becomes a source of confusion in more complex ones. **Use `:` here.**
+
+### Hierarchy reminder
+
+When we include higher-order terms, we keep the lower-order pieces they build on. If we include $X^2$, we also keep $X$. If we include $X \cdot Z$ or $X^2 \cdot Z$, we keep the relevant lower-order terms as well. This is not just statistical etiquette — it keeps the model interpretable and prevents higher-order terms from absorbing effects they were not meant to capture.
+
+### 4A — Model 1: Curvature only (no interaction)
+
+```{r}
+m_ten_curve <- lm(CLV ~ tenure_c + I(tenure_c^2) + eng_c, data = clv)
+summary(m_ten_curve)
+```
+
+### 4B — Model 2: Add linear interaction (X:Z)
+
+```{r}
+m_ten_curve_linint <- lm(CLV ~ tenure_c + I(tenure_c^2) + eng_c +
+                           tenure_c:eng_c,
+                         data = clv)
+summary(m_ten_curve_linint)
+```
+
+### 4C — Model 3: Add nonlinear-by-linear term (X²:Z)
+
+```{r}
+m_ten_curve_full <- lm(CLV ~ tenure_c + I(tenure_c^2) + eng_c +
+                         tenure_c:eng_c + I(tenure_c^2):eng_c,
+                       data = clv)
+summary(m_ten_curve_full)
+```
+
+### Compare Model 1 vs. Model 2 (adding X:Z)
+
+```{r}
+SSE_curve_only   <- sum(residuals(m_ten_curve)^2)
+SSE_curve_linint <- sum(residuals(m_ten_curve_linint)^2)
+
+PRE_linint_over_curve <- (SSE_curve_only - SSE_curve_linint) / SSE_curve_only
+PRE_linint_over_curve
+
+df_small_linint <- df.residual(m_ten_curve)
+df_big_linint   <- df.residual(m_ten_curve_linint)
+
+F_linint <- ((SSE_curve_only - SSE_curve_linint) /
+               (df_small_linint - df_big_linint)) /
+  (SSE_curve_linint / df_big_linint)
+
+p_linint <- pf(F_linint,
+               df1 = df_small_linint - df_big_linint,
+               df2 = df_big_linint,
+               lower.tail = FALSE)
+
+F_linint
+p_linint
+```
+
+### Compare Model 2 vs. Model 3 (adding X²:Z)
+
+```{r}
+SSE_curve_full <- sum(residuals(m_ten_curve_full)^2)
+
+PRE_nl_over_linint <- (SSE_curve_linint - SSE_curve_full) / SSE_curve_linint
+PRE_nl_over_linint
+
+df_small_nl <- df.residual(m_ten_curve_linint)
+df_big_nl   <- df.residual(m_ten_curve_full)
+
+F_nl <- ((SSE_curve_linint - SSE_curve_full) /
+           (df_small_nl - df_big_nl)) /
+  (SSE_curve_full / df_big_nl)
+
+p_nl <- pf(F_nl,
+           df1 = df_small_nl - df_big_nl,
+           df2 = df_big_nl,
+           lower.tail = FALSE)
+
+F_nl
+p_nl
+```
+
+### What the coefficients mean
+
+- **`tenure_c`**: The local slope of tenure when engagement is at its mean and tenure is evaluated at its centered reference point (tenure_c = 0). This is the expected change in CLV per additional month of tenure for a customer at the average engagement level.
+- **`I(tenure_c^2)`**: The curvature in tenure *at mean engagement*. Negative means diminishing returns; positive means acceleration.
+- **`tenure_c:eng_c`**: Whether the *linear* component of the tenure slope differs by engagement. Positive means higher-engagement customers have a steeper tenure slope at mean tenure.
+- **`I(tenure_c^2):eng_c`**: Whether the *curvature* itself changes with engagement. This is the true nonlinear-by-linear term — it tells us whether the *shape* of the tenure→CLV curve depends on engagement, not just whether it shifts up or down.
+
+A useful test of whether you understand this: imagine someone asks, *"So what is different about high-engagement customers here?"* If your answer is only *"there is an interaction,"* you are not done yet.
+
+---
+
+## Part 5 — Quick Visual of the Nonlinear-by-Linear Pattern
+
+When the model starts getting more complicated, plots become less optional. Let's visualize predicted tenure curves for relatively low, average, and high engagement.
+
+```{r}
+eng_sd <- sd(clv$eng_c, na.rm = TRUE)
+eng_lo <- -eng_sd
+eng_md <- 0
+eng_hi <-  eng_sd
+
+# Note: because eng_c is already centered, its mean is approximately 0.
+# So eng_lo and eng_hi are simply ±1 SD from the center.
+
+x <- seq(min(clv$tenure_c, na.rm = TRUE),
+         max(clv$tenure_c, na.rm = TRUE),
+         length.out = 150)
+
+plot(clv$tenure_c, clv$CLV,
+     pch = 16, cex = .4,
+     xlab = "Centered Tenure",
+     ylab = "CLV",
+     main = "Tenure Curves at Low / Mean / High Engagement")
+
+lines(x,
+      predict(m_ten_curve_full,
+              newdata = data.frame(tenure_c = x, eng_c = eng_lo)),
+      lty = 2)
+
+lines(x,
+      predict(m_ten_curve_full,
+              newdata = data.frame(tenure_c = x, eng_c = eng_md)),
+      lty = 1)
+
+lines(x,
+      predict(m_ten_curve_full,
+              newdata = data.frame(tenure_c = x, eng_c = eng_hi)),
+      lty = 3)
+
+legend("topleft", bty = "n",
+       legend = c("Low engagement (-1 SD)",
+                  "Mean engagement",
+                  "High engagement (+1 SD)"),
+       lty = c(2, 1, 3))
+```
+
+Are these just vertically shifted curves? Or does the *shape* itself appear to change?
+
+The models are getting more complex, which is precisely why we need to slow down and think carefully rather than stare at the output until meaning arrives.
+
+---
+
+## Part 6 — Three-Way Interaction: CLV ~ Spend × Visit × Open
+
+**Research question:** Does the relationship between monthly spend and CLV depend *jointly* on visit frequency **and** email open rate?
+
+In other words: is the spend→CLV relationship different for customers who visit often vs. rarely, and does that *itself* depend on how engaged they are with email?
+
+A 3-way interaction is not there to make your life worse personally. It is there because sometimes the world is actually structured that way. Our job is still the same: compare models, reduce error, and explain the pattern clearly enough that a non-statistician could follow the basic logic.
+
+### 6A — Additive model
+
+```{r}
+m_add_3way <- lm(CLV ~ spend_c + visit_c + open_c, data = clv)
+summary(m_add_3way)
+```
+
+### 6B — Full 2-way interaction model
+
+```{r}
+m_2way_3way <- lm(CLV ~ spend_c + visit_c + open_c +
+                    spend_c:visit_c + spend_c:open_c + visit_c:open_c,
+                  data = clv)
+summary(m_2way_3way)
+```
+
+### 6C — Full 3-way model
+
+```{r}
+m_full_3way <- lm(CLV ~ spend_c + visit_c + open_c +
+                    spend_c:visit_c + spend_c:open_c + visit_c:open_c +
+                    spend_c:visit_c:open_c,
+                  data = clv)
+summary(m_full_3way)
+```
+
+### Compare 2-way vs. 3-way
+
+```{r}
+SSE_2way_3way <- sum(residuals(m_2way_3way)^2)
+SSE_full_3way <- sum(residuals(m_full_3way)^2)
+
+PRE_3way_over_2way <- (SSE_2way_3way - SSE_full_3way) / SSE_2way_3way
+PRE_3way_over_2way
+
+df_small_3way <- df.residual(m_2way_3way)
+df_big_3way   <- df.residual(m_full_3way)
+
+F_3way <- ((SSE_2way_3way - SSE_full_3way) /
+             (df_small_3way - df_big_3way)) /
+  (SSE_full_3way / df_big_3way)
+
+p_3way <- pf(F_3way,
+             df1 = df_small_3way - df_big_3way,
+             df2 = df_big_3way,
+             lower.tail = FALSE)
+
+F_3way
+p_3way
+```
+
+**Interpretation:** A significant 3-way means the 2-way interaction between any two of these variables is itself changing across levels of the third. So maybe spend and visit frequency work together one way when email open rate is low — but that combined pattern looks different when email open rate is high.
+
+This is more complicated than just "the lines are not parallel," which means if someone asks you what the 3-way means, your best move is usually not to wave vaguely at the coefficient table. Your best move is to look at predicted values or plots and describe the pattern in slices.
+
+---
+
+## Part 7 — Probe the 3-Way Interaction with Slices
+
+Let's hold email open rate at low and high values and examine the predicted spend × visit relationship.
+
+```{r}
+open_sd <- sd(clv$open_c, na.rm = TRUE)
+open_lo <- -open_sd
+open_hi <-  open_sd
+
+visit_sd <- sd(clv$visit_c, na.rm = TRUE)
+visit_lo <- -visit_sd
+visit_hi <-  visit_sd
+
+spend_seq <- seq(min(clv$spend_c, na.rm = TRUE),
+                 max(clv$spend_c, na.rm = TRUE),
+                 length.out = 40)
+
+plot(spend_seq,
+     predict(m_full_3way,
+             newdata = data.frame(spend_c = spend_seq,
+                                  visit_c = visit_lo,
+                                  open_c  = open_lo)),
+     type = "l", lty = 2,
+     ylim = c(0, 700),
+     xlab = "Centered Monthly Spend",
+     ylab = "Predicted CLV",
+     main = "3-Way Interaction: Spend × Visit × Open Rate")
+
+lines(spend_seq,
+      predict(m_full_3way,
+              newdata = data.frame(spend_c = spend_seq,
+                                   visit_c = visit_hi,
+                                   open_c  = open_lo)),
+      lty = 1)
+
+lines(spend_seq,
+      predict(m_full_3way,
+              newdata = data.frame(spend_c = spend_seq,
+                                   visit_c = visit_lo,
+                                   open_c  = open_hi)),
+      lty = 3)
+
+lines(spend_seq,
+      predict(m_full_3way,
+              newdata = data.frame(spend_c = spend_seq,
+                                   visit_c = visit_hi,
+                                   open_c  = open_hi)),
+      lty = 4)
+
+legend("topleft", bty = "n",
+       legend = c("Low visit / Low open",
+                  "High visit / Low open",
+                  "Low visit / High open",
+                  "High visit / High open"),
+       lty = c(2, 1, 3, 4))
+```
+
+**Prompt:** Do the "high visit" vs. "low visit" differences look the same at low and high open rate? If not, that is exactly the kind of pattern a 3-way interaction is capturing.
+
+---
+
+## Part 8 — Be Smarter Than R: `day_of_year_joined`
+
+This part is mostly conceptual and exploratory.
+
+We have a variable that is numeric (day 1 to 365), but it is really **cyclical**. Day 365 and day 1 are not actually "far apart" in any meaningful seasonal sense.
+
+If we treat this as an ordinary numeric predictor, R will happily go along with that plan — because R is extremely accommodating in that way. But we should still stop and ask whether that is substantively smart.
+
+A model can run (and even produce significant results) and still be a bad idea.
+
+### 8A — Naive linear model
+
+```{r}
+m_day_lin <- lm(CLV ~ day_of_year_joined, data = clv)
+summary(m_day_lin)
+```
+
+### 8B — Naive quadratic model
+
+```{r}
+m_day_quad <- lm(CLV ~ day_of_year_joined + I(day_of_year_joined^2), data = clv)
+summary(m_day_quad)
+
+SSE_day_lin  <- sum(residuals(m_day_lin)^2)
+SSE_day_quad <- sum(residuals(m_day_quad)^2)
+
+PRE_day_quad <- (SSE_day_lin - SSE_day_quad) / SSE_day_lin
+PRE_day_quad
+```
+
+```{r}
+plot(clv$day_of_year_joined, clv$CLV,
+     pch = 16, cex = .4,
+     xlab = "Day of Year Joined",
+     ylab = "CLV",
+     main = "CLV by Day Joined")
+
+day_seq <- seq(1, 365, length.out = 200)
+lines(day_seq,
+      predict(m_day_quad,
+              newdata = data.frame(day_of_year_joined = day_seq)),
+      lwd = 2)
+```
+
+Is a quadratic capturing *something* here? Probably. Is it necessarily the smartest way to represent this pattern? Probably not.
+
+Why not? Because seasonality can create patterns that look nonlinear without being well described by one simple parabola. Day 365 and day 1 represent nearly consecutive days in the real world — but in a quadratic model they are treated as the endpoints of a symmetrical arch, which imposes a shape the data may not actually follow.
+
+One natural alternative: encode the joining date as a month-level categorical variable, which lets the model estimate a separate average CLV for each month without assuming any particular functional form. That is exactly the kind of predictor we will revisit next week.
+
+For now, this is a good reminder: **do not let the software do all the thinking.**
+
+---
+
+## Part 9 — Optional Preview: Categorical Predictors
+
+Not central for this week, but worth a look to see where we are headed:
+
+```{r}
+table(clv$campaign_type)
+table(clv$segment)
+table(clv$primary_channel)
+
+m_campaign <- lm(CLV ~ campaign_type, data = clv)
+summary(m_campaign)
+```
+
+We will come back to categorical predictors and factor coding more explicitly. For now, just notice that meaningful group differences are already present in this data.
+
+---
+
+## Part 10 — Your Turn
+
+Choose **one** of the following options and complete the full analysis.
+
+---
+
+### Option A: Nonlinear-by-linear with spend and email open rate
+
+Fit these three models:
+
+- **Model 1:** `CLV ~ spend_c + I(spend_c^2) + open_c`
+- **Model 2:** `CLV ~ spend_c + I(spend_c^2) + open_c + spend_c:open_c`
+- **Model 3:** `CLV ~ spend_c + I(spend_c^2) + open_c + spend_c:open_c + I(spend_c^2):open_c`
+
+**Questions to answer:**
+
+1. Is there evidence of curvature in spend? (You already fit this in Part 3 — use what you found.)
+2. Does the linear effect of spend on CLV depend on email open rate?
+3. Does the curvature in spend depend on email open rate?
+4. In plain English, what pattern do you think this model is capturing?
+
+**Starter skeleton:**
+
+```{r}
+m1 <- lm(CLV ~ spend_c + I(spend_c^2) + open_c, data = clv)
+m2 <- lm(CLV ~ spend_c + I(spend_c^2) + open_c +
+            spend_c:open_c, data = clv)
+m3 <- lm(CLV ~ spend_c + I(spend_c^2) + open_c +
+            spend_c:open_c + I(spend_c^2):open_c,
+          data = clv)
+
+summary(m1)
+summary(m2)
+summary(m3)
+
+SSE_m1 <- sum(residuals(m1)^2)
+SSE_m2 <- sum(residuals(m2)^2)
+SSE_m3 <- sum(residuals(m3)^2)
+
+PRE_m2_vs_m1 <- (SSE_m1 - SSE_m2) / SSE_m1
+PRE_m3_vs_m2 <- (SSE_m2 - SSE_m3) / SSE_m2
+
+PRE_m2_vs_m1
+PRE_m3_vs_m2
+
+# Use the same df.residual() and pf() pattern from Parts 1 and 3
+# to compute F and p for each comparison.
+# You will need:
+#   df_num = df.residual(smaller model) - df.residual(larger model)
+#   df_den = df.residual(larger model)
+```
+
+---
+
+### Option B: Another 3-way interaction
+
+Fit: `CLV ~ tenure_c * sat_c * eng_c`
+
+Note: Here * is okay because you want the full hierarchical expansion
+
+Then:
+
+1. Compare additive vs. 2-way vs. 3-way models
+2. Compute PRE and F for the 3-way term
+3. Create at least one useful slice plot
+4. Write 2–4 sentences explaining what the 3-way means — without just saying "there is a 3-way interaction"
+
+---
+
+### Option C: Build your own nonlinear story
+
+Use one continuous $X$ with clear theoretical motivation, and optionally add one $Z$ and/or $W$. Your analysis must include:
+
+1. A compact linear model
+2. A quadratic model
+3. At least one model comparison using PRE
+4. Correct interpretation of centering
+5. A plain-English explanation of the pattern
