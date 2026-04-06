@@ -65,7 +65,7 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 11. [Week 10: Interactions ](assignments/week10-exercise.qmd) — We extend multiple regression to allow the effect of one predictor (X) to depend on the level of another predictor (Z). In additive models, the X→Y slope is the same at all levels of Z; in interaction models, we allow the X→Y slope to change with Z.
 
-12. [Week 11: Nonlinear Effect, Nonlinear Interactions, and a Peak at 3 Way Interactions ](assignments/week11-nonlinear.qmd) — This week we start considering what happens when we let the effect X on Y vary not only over the course of X - in other words, to curve - but also for that curve to depend on Z. Then we really push things by starting to consider 3 way interactions.
+12. [Week 11: Nonlinear Effect, Nonlinear Interactions, and a Peak at 3 Way Interactions ](assignments/week11_nonlinear.qmd) — This week we start considering what happens when we let the effect X on Y vary not only over the course of X - in other words, to curve - but also for that curve to depend on Z. Then we really push things by starting to consider 3 way interactions.
 
 ::: {.callout-note appearance="minimal"}
 **More coming** · Additional assignments will be added throughout the semester.
