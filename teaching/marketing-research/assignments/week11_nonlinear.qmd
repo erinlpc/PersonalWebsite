@@ -8,6 +8,12 @@ format:
     code-fold: false
 ---
 
+```{r}
+#| include: false
+knitr::opts_chunk$set(eval = FALSE)
+```
+---
+
 ## Overview
 
 Up to this point, most of our models have assumed that a predictor changes $Y$ in a straight-line way:
