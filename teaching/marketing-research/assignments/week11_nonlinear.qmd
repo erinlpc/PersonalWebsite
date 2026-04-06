@@ -1,15 +1,11 @@
 ---
-title: "Week 11 Exercise: Nonlinear Effects, Nonlinear-by-Linear Terms, and 3-Way Interactions"
-subtitle: "MKT 378 — Marketing Research"
+title: "Week 11 Exercise"
+subtitle: "Nonlinear Effects, Nonlinear-by-Linear Terms, and 3-Way Interactions"
 format:
   html:
     toc: true
     toc-depth: 3
     code-fold: false
-    embed-resources: true
-execute:
-  warning: false
-  message: false
 ---
 
 ## Overview
@@ -30,11 +26,11 @@ Our goal is not just to fit a model that reduces error — it is to fit a model 
 - "Does this pattern depend on how engaged customers are?"
 - "Should we treat all customers the same, or not?"
 
-That means your job is to understand the pattern well enough to answer reasonable follow-up questions without panicking.
+That means your job is to understand the pattern well enough to answer reasonable follow-up questions.
 
 We are extending multiple regression in two related directions:
 
-1. **Allow a predictor's relationship with $Y$ to bend** rather than stay a straight line:
+1. **Allow a predictor's relationship with $Y$ to bend** (interact with itself) rather than stay a straight line:
 $$Y = b_0 + b_1 X + b_2 X^2 + \varepsilon$$
 
 2. **Allow that bent relationship to depend on another predictor:**
@@ -48,12 +44,12 @@ This means:
 We also preview **3-way interactions** among continuous predictors:
 $$Y = b_0 + b_1 X + b_2 Z + b_3 W + \ldots + b_7 (X \cdot Z \cdot W) + \varepsilon$$
 
-Questions we will be practicing today:
+Questions we will be asking today:
 
-- Is adding curvature worth it? (quadratic vs. linear)
-- What does centering do in a curved model?
-- Does a nonlinear term vary with another predictor?
-- How do we think about a 3-way interaction in this framework?
+- Is adding curvature to our model worth it? (quadratic vs. linear)
+- What does centering do to our interpretations in a curved model?
+- Does a nonlinear (curved) term vary with another predictor?
+- How do we think about a 3-way (linear) interaction in this framework?
 
 ---
 
@@ -106,10 +102,10 @@ Before you start modeling, take a minute to actually look at the variables like 
 Ask yourself:
 
 - Which predictors seem like they could reasonably have diminishing returns?
-- Which ones might have "sweet spots" rather than straight-line effects?
-- Which ones feel like they might interact?
+- Which ones do you expect might have "sweet spots" rather than straight linear effects?
+- Which ones feel like they might interact/depend on another variable?
 
-You do not need to know the answer yet. But you should start building a story in your head *before* R starts throwing coefficients at you.
+You do not need to know the answer yet. But you should start thinking through what might make sense *before* R starts throwing coefficients at you.
 
 In other words: **do not let the software have the first interesting thought.**
 
@@ -126,7 +122,7 @@ clv$eng_c    <- clv$engagement_score  - mean(clv$engagement_score,  na.rm = TRUE
 clv$sat_c    <- clv$satisfaction      - mean(clv$satisfaction,      na.rm = TRUE)
 ```
 
-**Reminder:** Centering changes the "magic zero." It changes what the intercept means and what lower-order terms mean in the presence of interactions and quadratics — but it does **not** change model fit and does **not** change the actual underlying pattern in the data.
+**Reminder:** Centering changes the "magic zero." It changes what the intercept means and what lower-order terms mean in the presence of interactions and quadratics — but it does **not** change overall model fit and does **not** change the actual underlying pattern in the data.
 
 ---
 
@@ -158,7 +154,13 @@ m_quad_tenure <- lm(CLV ~ tenure_months + I(tenure_months^2), data = clv)
 summary(m_quad_tenure)
 ```
 
-At minimum, this is a good moment to resist the urge to immediately declare victory based on a p-value and move on with your life.
+
+OK, take a second and try to think about what this means before we move on.
+
+At minimum, resist the urge to immediately declare victory based on a p-value.
+
+We can start by examining how much additional error we're explaining in this model
+compared to the compact, linear model.
 
 ### 1C — PRE for adding curvature
 
@@ -173,6 +175,11 @@ PRE_quad_over_lin_tenure
 **Interpretation:** How much additional error in the linear model do we explain by allowing the relationship to bend?
 
 And more importantly: if your boss asked whether tenure has a basically straight-line relationship with CLV or whether it levels off or changes shape, what would you say?
+
+::: {.callout-tip}
+## Note this for the exercise
+Record your value of `PRE_quad_over_lin_tenure`. You will be asked to identify it in the exercise you'll submit this week.
+:::
 
 ### 1D — Partial-F test for the quadratic term
 
@@ -195,6 +202,11 @@ F_quad_tenure
 p_quad_tenure
 ```
 
+::: {.callout-tip}
+## Note this for the exercise
+Record your value of `F_quad_tenure`. You will be asked to identify it in the exercise you'll submit this week.
+:::
+
 ### 1E — Connect to `summary()` output
 
 ```{r}
@@ -204,9 +216,14 @@ summary(m_quad_tenure)
 **Reminder:** The $t$-test on `I(tenure_months^2)` is testing the same hypothesis as the 1-df $F$ test above. For a single-parameter test:
 $$F = t^2$$
 
-You can verify this by squaring the $t$ value reported in the summary.
+You can verify this by squaring the $t$ value reported in the summary output.
 
-Is the added curvature statistically worth it? In this class, that essentially translates to: did the more complicated model reduce error enough to justify itself? And can you describe what kind of curvature you think you are seeing?
+Is the added curvature statistically worth it? In this class, that essentially translates to: did the more complicated model reduce error enough to justify its complicated self? And can you describe what kind of curvature you think you are seeing?
+
+::: {.callout-tip}
+## Note this for the exercise
+Look at the sign of the coefficient on `I(tenure_months^2)` in the summary output. Is it positive or negative? You will be asked what that sign tells you about the shape of the curve. 
+:::
 
 ---
 
@@ -226,7 +243,7 @@ summary(m_quad_tenure)
 summary(m_quad_tenure_c)
 ```
 
-**Write-up prompts:**
+**Let's think through what we're seeing here:**
 
 - How did the intercept change? What does it now mean?
   - *Predicted CLV for a customer at mean tenure*
@@ -234,6 +251,11 @@ summary(m_quad_tenure_c)
   - *The local slope of tenure at mean tenure*
 - What happened to the quadratic coefficient?
   - *Same curvature — just a different coding of zero*
+
+::: {.callout-tip}
+## Note this for the exercise
+Record the intercept from `m_quad_tenure_c`. You will be asked to identify its value and what it represents. Also confirm that the SSE from the centered model and the uncentered model.
+:::
 
 **Quick visual:**
 
@@ -300,7 +322,7 @@ p_quad_spend
 
 Before you read the coefficients, look at the sign on the quadratic term. A **negative** quadratic coefficient means the curve opens downward — the effect of spend on CLV gets weaker as spend increases. A **positive** quadratic coefficient would mean the effect accelerates. Which is it here?
 
-Now look at the quadratic coefficient's magnitude. It is probably very small, which makes sense: spend is measured in dollars, so $b_2$ is operating on the dollars squared term. That does not make it unimportant; it just means you need to calculate predicted values at realistic spend levels to understand the practical size of the bend. Try asking: what is the predicted CLV for a customer at mean spend vs. at mean + 1 SD spend?
+Now look at the quadratic coefficient's magnitude. It is probably very small, which makes sense: spend is measured in dollars, so $b_2$ is operating on dollars squared. That does not make it unimportant; it just means you need to calculate predicted values at realistic spend levels to understand the practical size of the bend. Try asking: what is the predicted CLV for a customer at mean spend vs. at mean + 1 SD spend?
 
 Work through these questions:
 
@@ -309,6 +331,11 @@ Work through these questions:
 - Is the direction of curvature the same as with tenure?
 - Which predictor shows stronger nonlinearity in this dataset?
 - What would you tell a manager who asked: *"At what point does getting customers to spend more not really move the needle as much?"*
+
+::: {.callout-tip}
+## Note this for the exercise
+Record your `PRE_quad_over_lin_spend` value. You will be asked to identify it and compare it to the tenure PRE from Part 1. Also note the sign of the quadratic coefficient on `I(spend_c^2)` — you will be asked what it tells you about the direction of the curve.
+:::
 
 ---
 
@@ -320,7 +347,7 @@ This is more than asking whether the lines are just shifted up or down for diffe
 
 ### A note on using `:` vs. `*` in model formulas {.callout}
 
-In many statistics courses, you may have used `*` to specify interactions and let R handle the expansion:
+In many statistics courses that use R, you may have used `*` to specify interactions and let R handle the expansion:
 
 ```r
 lm(Y ~ X * Z)   # R expands this to: Y ~ X + Z + X:Z
@@ -346,11 +373,11 @@ So:
 - `X:Z` gives you the interaction term only
 - `X * Z` gives you `X + Z + X:Z`
 
-In simple models, these lead to the same place. In the kind of incremental model-building we do in this class, using `:` explicitly keeps things unambiguous. This is one of those cases where the shortcut that works in many situations becomes a source of confusion in more complex ones. **Use `:` here.**
+In simple models, these lead to the same place. In the kind of incremental model-building we do in this class, using `:` explicitly keeps things unambiguous - particularly when you want to be extremely clear about what model C you are comparing against. This is one of those cases where the shortcut that works in many situations becomes a source of confusion in more complex ones. **Use `:` here.**
 
 ### Hierarchy reminder
 
-When we include higher-order terms, we keep the lower-order pieces they build on. If we include $X^2$, we also keep $X$. If we include $X \cdot Z$ or $X^2 \cdot Z$, we keep the relevant lower-order terms as well. This is not just statistical etiquette — it keeps the model interpretable and prevents higher-order terms from absorbing effects they were not meant to capture.
+When we include higher-order terms, we keep the lower-order pieces they build on. If we include $X^2$, we also keep $X$. If we include $X \cdot Z$ or $X^2 \cdot Z$, we keep the relevant lower-order terms as well. This keeps the model interpretable and prevents higher-order terms from absorbing effects they were not meant to capture.
 
 ### 4A — Model 1: Curvature only (no interaction)
 
@@ -402,6 +429,11 @@ F_linint
 p_linint
 ```
 
+::: {.callout-tip}
+## Note this for the exercise
+Record `PRE_linint_over_curve` and `F_linint`. You will be asked to identify both values.
+:::
+
 ### Compare Model 2 vs. Model 3 (adding X²:Z)
 
 ```{r}
@@ -426,20 +458,30 @@ F_nl
 p_nl
 ```
 
+::: {.callout-tip}
+## Note this for the exercise
+Record `PRE_nl_over_linint` and `F_nl`. You will be asked to identify both values.
+:::
+
 ### What the coefficients mean
 
-- **`tenure_c`**: The local slope of tenure when engagement is at its mean and tenure is evaluated at its centered reference point (tenure_c = 0). This is the expected change in CLV per additional month of tenure for a customer at the average engagement level.
+- **`tenure_c`**: The local slope of tenure at *mean engagement* and *mean tenure* (both centered to zero). This is the expected change in CLV per additional month of tenure for a customer at the average engagement level.
 - **`I(tenure_c^2)`**: The curvature in tenure *at mean engagement*. Negative means diminishing returns; positive means acceleration.
 - **`tenure_c:eng_c`**: Whether the *linear* component of the tenure slope differs by engagement. Positive means higher-engagement customers have a steeper tenure slope at mean tenure.
 - **`I(tenure_c^2):eng_c`**: Whether the *curvature* itself changes with engagement. This is the true nonlinear-by-linear term — it tells us whether the *shape* of the tenure→CLV curve depends on engagement, not just whether it shifts up or down.
 
 A useful test of whether you understand this: imagine someone asks, *"So what is different about high-engagement customers here?"* If your answer is only *"there is an interaction,"* you are not done yet.
 
+::: {.callout-tip}
+## Note this for the exercise
+From your `summary(m_ten_curve_full)` output, record the coefficient on `eng_c`. You will be asked to interpret it. Also think about what it means that this coefficient is evaluated at `tenure_c = 0` — i.e., at mean tenure. One question will ask you to use the `tenure_c` and `tenure_c:eng_c` coefficients together to compute the simple slope of tenure at +1 SD engagement (SD of `eng_c` ≈ 2.00).
+:::
+
 ---
 
 ## Part 5 — Quick Visual of the Nonlinear-by-Linear Pattern
 
-When the model starts getting more complicated, plots become less optional. Let's visualize predicted tenure curves for relatively low, average, and high engagement.
+When the model starts getting more complicated, plots become less optional. It's really difficult to hold 3 nonlinear effects or more than 2 dimensions in your head. Let's visualize predicted tenure curves for relatively low, average, and high engagement.
 
 ```{r}
 eng_sd <- sd(clv$eng_c, na.rm = TRUE)
@@ -494,7 +536,7 @@ The models are getting more complex, which is precisely why we need to slow down
 
 In other words: is the spend→CLV relationship different for customers who visit often vs. rarely, and does that *itself* depend on how engaged they are with email?
 
-A 3-way interaction is not there to make your life worse personally. It is there because sometimes the world is actually structured that way. Our job is still the same: compare models, reduce error, and explain the pattern clearly enough that a non-statistician could follow the basic logic.
+A 3-way interaction is not a personal attack on your sanity even if it feels like it is. Sometimes the world is actually structured that way. But because breaking one down can feel that way, we want to make sure that we are extremely programmatic in the way that we interpret them.  Our job is still the same: compare models, reduce error, and explain the pattern clearly enough that a non-statistician could follow the basic logic.
 
 ### 6A — Additive model
 
@@ -547,9 +589,14 @@ F_3way
 p_3way
 ```
 
-**Interpretation:** A significant 3-way means the 2-way interaction between any two of these variables is itself changing across levels of the third. So maybe spend and visit frequency work together one way when email open rate is low — but that combined pattern looks different when email open rate is high.
+**Interpretation:** A significant 3-way means the 2-way interaction between any two of these variables is itself changing across levels of the third. So maybe spend and visit frequency work together one way when email open rate is low but that combined pattern looks different when email open rate is high.
 
 This is more complicated than just "the lines are not parallel," which means if someone asks you what the 3-way means, your best move is usually not to wave vaguely at the coefficient table. Your best move is to look at predicted values or plots and describe the pattern in slices.
+
+::: {.callout-tip}
+## Note this for the exercise
+Record `PRE_3way_over_2way` and `F_3way`. You will be asked to identify both values. Also note the coefficient on `spend_c` in `m_full_3way` — you will be asked for the simple slope of spend when both `visit_c` and `open_c` are at their means (hint: when both moderators equal zero, all interaction terms drop out).
+:::
 
 ---
 
@@ -660,9 +707,9 @@ lines(day_seq,
 
 Is a quadratic capturing *something* here? Probably. Is it necessarily the smartest way to represent this pattern? Probably not.
 
-Why not? Because seasonality can create patterns that look nonlinear without being well described by one simple parabola. Day 365 and day 1 represent nearly consecutive days in the real world — but in a quadratic model they are treated as the endpoints of a symmetrical arch, which imposes a shape the data may not actually follow.
+Why not? Because seasonality can create patterns that look nonlinear without being well described by one simple parabola. Day 365 and day 1 represent consecutive days in the real world but in a quadratic model they are treated as the endpoints of an arch, which imposes a shape the data may not actually follow.
 
-One natural alternative: encode the joining date as a month-level categorical variable, which lets the model estimate a separate average CLV for each month without assuming any particular functional form. That is exactly the kind of predictor we will revisit next week.
+We'll talk about some solutions to this next week.
 
 For now, this is a good reminder: **do not let the software do all the thinking.**
 
@@ -685,9 +732,13 @@ We will come back to categorical predictors and factor coding more explicitly. F
 
 ---
 
-## Part 10 — Your Turn
+## Part 10 — Practice: Additional Nonlinear Models
 
-Choose **one** of the following options and complete the full analysis.
+::: {.callout-note}
+## This section is for practice only — it is not part of the graded exercise submission.
+
+The questions below cover aspects of the material some students find trickiest: building a nonlinear-by-linear model from scratch, running a second 3-way interaction, and constructing your own analysis from the ground up. Work through whichever option is most useful to you. Answer callouts are provided so you can check your work.
+:::
 
 ---
 
@@ -737,13 +788,25 @@ PRE_m3_vs_m2
 #   df_den = df.residual(larger model)
 ```
 
+::: {.callout-caution collapse="true"}
+## Check your work — Option A answers
+
+**PRE, Model 2 vs. Model 1** (adding `spend_c:open_c`): approximately **0.044**
+
+**F for Model 2 vs. Model 1**: approximately **184.1**, p < .001 — the linear interaction between spend and email open rate is statistically significant.
+
+**PRE, Model 3 vs. Model 2** (adding `I(spend_c^2):open_c`): approximately **0.006**
+
+**F for Model 3 vs. Model 2**: approximately **24.2**, p < .001 — the nonlinear-by-linear term is also significant, though it accounts for considerably less additional variance than the linear interaction did.
+
+**Plain-English interpretation:** Customers who open more emails get more CLV out of higher monthly spend — the spend→CLV relationship is steeper for high-open-rate customers. Model 3 adds the further finding that the *curvature* in that relationship also differs: at high open rates, the diminishing returns on spend are somewhat less pronounced than at low open rates.
+:::
+
 ---
 
 ### Option B: Another 3-way interaction
 
 Fit: `CLV ~ tenure_c * sat_c * eng_c`
-
-Note: Here * is okay because you want the full hierarchical expansion
 
 Then:
 
@@ -751,6 +814,16 @@ Then:
 2. Compute PRE and F for the 3-way term
 3. Create at least one useful slice plot
 4. Write 2–4 sentences explaining what the 3-way means — without just saying "there is a 3-way interaction"
+
+::: {.callout-caution collapse="true"}
+## Check your work — Option B key values
+
+To check your model comparison, the key test is the 3-way term: `tenure_c:sat_c:eng_c`. Your F statistic for that single term (3-way model vs. 2-way model) should be significant at conventional levels. If you are getting an F near zero or a PRE near zero, double-check that you built your 2-way model with all three pairwise interactions (`tenure_c:sat_c`, `tenure_c:eng_c`, and `sat_c:eng_c`) before adding the 3-way.
+
+For your slice plot, hold one variable at ±1 SD and plot the relationship between the other two. A clean approach: hold `eng_c` at low and high, then show how the `tenure_c` × `sat_c` relationship changes across those panels.
+
+**Plain-English framing to aim for:** The 3-way means that the way satisfaction and tenure work *together* to predict CLV is itself different for high- vs. low-engagement customers. It is not enough to say "tenure and satisfaction both matter" or even "they interact" — the shape of that interaction depends on where a customer falls on engagement.
+:::
 
 ---
 
@@ -763,3 +836,17 @@ Use one continuous $X$ with clear theoretical motivation, and optionally add one
 3. At least one model comparison using PRE
 4. Correct interpretation of centering
 5. A plain-English explanation of the pattern
+
+::: {.callout-caution collapse="true"}
+## Check your work — Option C checklist
+
+There is no single right answer here, but your write-up should be able to answer yes to all of the following:
+
+- Does your PRE comparison have a clear numerator (SSE of the simpler model minus SSE of the more complex model) and denominator (SSE of the simpler model)?
+- Is your F statistic computed using the correct degrees of freedom — df_num from the difference in residual df, df_den from the larger model?
+- After centering, does your intercept now represent a predicted value at a *meaningful* reference point (the mean of X) rather than at X = 0?
+- Can you state in one or two plain sentences what the curvature means — not just that the quadratic term is significant, but what the *shape* tells you about the relationship?
+
+If you used a second variable and included interaction terms, also ask: did you keep the lower-order terms? And did you use `:` rather than `*` for the interaction terms so that your model comparisons are unambiguous?
+:::
+
