@@ -67,6 +67,8 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 12. [Week 11: Nonlinear Effect, Nonlinear Interactions, and a Peak at 3 Way Interactions ](assignments/week11_nonlinear.qmd) — This week we start considering what happens when we let the effect X on Y vary not only over the course of X - in other words, to curve - but also for that curve to depend on Z. Then we really push things by starting to consider 3 way interactions.
 
+13. [Week 12: One Way ANOVA ](assignments/week12_anova.qmd) — This week we start to consider categorical predictors and the complexity (but also much less significant than the name change from "regression" to "ANOVA" might suggest...spoiler, it's the same model!) that doing so introduces.
+
 ::: {.callout-note appearance="minimal"}
 **More coming** · Additional assignments will be added throughout the semester.
 :::

@@ -1,0 +1,684 @@
+---
+title: "Week 12 Exercise"
+subtitle: "One-Way ANOVA, Recoding, and Why Variable Definition Matters"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+---
+
+```{r}
+#| include: false
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+## Overview
+
+Last week, we used this same dataset to think about nonlinear effects. This week, we are using it to examine a different kind of modeling decision: what happens when a predictor is categorical (or at least we choose to treat it as such) rather than continuous.
+
+The analyses we'll be doing this week are one-way ANOVA and even if we're using a new name it's really not a dramatic new method. It is just a regression model in which the predictor is categorical rather than continuous. That means the core logic of model comparisons we've been relying on the whole time holds. We're still comparing compact and augmented models and asking whether a more complicated model improves prediction enough to be worth it.
+
+But this week also raises a new issue that we haven't had to grapple with in quite as much detail as we're about to:
+
+> **How we define a variable is part of research design.**
+
+Some variables are naturally categorical. Campaign type, segment, and primary channel are all examples. It would not make much sense to force those onto a numeric scale and pretend the difference between the category we happened to call 4 is the same amount different from the category we happened to call 5 as category 5 is from 6.
+
+The predictor variables we've worked with so far in the class have been naturally quantitative and making this assumption was reasonable. Income is a good example. It has meaningful numeric distances and a meaningful zero. In cases like that, we often have a choice: preserve the original variation, or collapse the variable into categories. 
+
+My own general preference — and usually my advice — is to preserve as much meaningful variance as possible. If a variable is naturally quantitative and treating it continuously makes substantive sense, that is typically where I want to start. That does not mean categorization is always wrong, but when we collapse categories or bin a continuous variable, we should make sure we have a REALLY good reason (candidly, the reason is often that the person you're reporting to wants it to look tidier and sometimes people prefer categories but you can wait until the absolute last minute before you have to make slides to start dichotomizing).
+
+This week, you will use the same outcome variable, CLV, and examine what changes when predictors are defined in different ways. You will:
+
+-   analyze `campaign_type` in its original 5-level form
+-   redefine it into a 2-level version and a 3-level version
+-   compare what is gained and lost across those definitions
+-   work through a second guided example using `segment`
+-   do it all again (this time more independently) using `primary_channel`
+-   and then examine what happens when `income` is treated as continuous versus grouped into categories or simple splits
+
+------------------------------------------------------------------------
+
+## A Note Before We Start
+
+As you work through this exercise, try to really push yourself to think through what you are doing when you are recoding. Every time you change a variable's definition, you are changing the question the model is set up to answer.
+
+That means the 5-level campaign variable, 2-level campaign variable, and 3-level campaign variable are not just three versions of the same analysis. They are three different analyses, three different questions, and result in three different interpretations.
+
+------------------------------------------------------------------------
+
+## Part 0 — Load the Data and Reconnect with the Variables
+
+We are using the same CLV dataset from last week.
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+clv <- read.csv("Datasets/clv_nonlinear_exercise_full.csv")
+
+str(clv)
+head(clv)
+```
+
+For this week, the most relevant variables are:
+
+| Variable          | Description                                 |
+|-------------------|---------------------------------------------|
+| `CLV`             | 12-month customer lifetime value in dollars |
+| `campaign_type`   | Acquisition campaign category               |
+| `segment`         | Customer segment                            |
+| `primary_channel` | Main channel used by the customer           |
+| `income`          | Customer annual income in dollars           |
+
+Before doing anything else, take a quick look at which of these variables are already categorical and which are continuous.
+
+```{r}
+sapply(clv[, c("CLV", "campaign_type", "segment", "primary_channel", "income")], class)
+```
+
+**Questions:**
+
+-   Which variables are naturally categorical?
+-   Which variables are naturally continuous?
+-   Which variables could be redefined in more than one reasonable way?
+
+**One more quick note on variable types in R before we proceed**
+
+When you run the `sapply()` call above, you may notice that the categorical variables come back as `character` rather than `factor`. In many cases R will handle this gracefully - `lm()` will treat a character variable as categorical and create the appropriate dummy coding automatically - but it is worth knowing the difference.
+
+A `factor` is R's explicit representation of a categorical variable. It stores the levels in a defined order and makes that ordering transparent. A `character` variable is just text, and R makes its own decisions about ordering when it encounters one in a model - typically alphabetical, which determines which level becomes the reference category.
+
+If you ever need to control which group serves as the reference category, or if you are doing more advanced contrast coding, you will want to convert character variables to factors explicitly:
+
+```r         
+clv$campaign_type <- as.factor(clv$campaign_type)
+```
+
+Conversely, `as.numeric()` tells R to treat a variable as a numeric type. This is useful, but it is also a frequent source of analysis errors. If you accidentally apply it to a factor (or if R interprets something as numeric when it should be treated as a factor), R will return the underlying integer codes for the factor levels rather than anything meaningful, and it will do so without complaint.
+
+For this exercise, the default behavior will work fine. But these two functions are worth knowing.
+## Part 1 — One-Way ANOVA with the Original 5-Level Campaign Variable
+
+We will start with the most detailed version of `campaign_type`.
+
+This version preserves the most category-specific information. If the five campaign categories really do differ in substantively important ways, this version gives the model the best chance to see that pattern. It is also the least simplified version, which means it may be a little messier to summarize.
+
+That tension — between nuance and simplification — is one of the main themes of this week.
+
+### Inspect group sizes and means
+
+```{r}
+table(clv$campaign_type)
+
+clv %>%
+  group_by(campaign_type) %>%
+  summarize(
+    n        = n(),
+    mean_CLV = mean(CLV),
+    sd_CLV   = sd(CLV)
+  )
+```
+
+### Visualize
+
+```{r}
+ggplot(clv, aes(x = campaign_type, y = CLV)) +
+  geom_boxplot() +
+  labs(
+    title = "CLV by Campaign Type",
+    x     = "Campaign Type",
+    y     = "Customer Lifetime Value"
+  )
+```
+
+### Fit the compact and augmented models
+
+```{r}
+m0_campaign5 <- lm(CLV ~ 1,             data = clv)
+m1_campaign5 <- lm(CLV ~ campaign_type, data = clv)
+
+summary(m1_campaign5)
+anova(m0_campaign5, m1_campaign5)
+```
+
+### Compute SSE and PRE
+
+```{r}
+SSE0_campaign5 <- sum(residuals(m0_campaign5)^2)
+SSE1_campaign5 <- sum(residuals(m1_campaign5)^2)
+
+PRE_campaign5 <- (SSE0_campaign5 - SSE1_campaign5) / SSE0_campaign5
+
+SSE0_campaign5
+SSE1_campaign5
+PRE_campaign5
+```
+
+**Questions:**
+
+-   What is the null hypothesis in this omnibus comparison?
+-   What does the intercept in the compact model represent?
+-   In the augmented model, what are the model's predicted values within each campaign group?
+-   What does PRE tell you here?
+-   Does `campaign_type` appear to explain much variation in CLV?
+-   Which campaign groups appear most different from one another?
+
+**Pause and think.** At this point, the model is asking: *do mean CLV values differ across the five campaign groups?* That is a legitimate question. But it is not the only question we could ask, and it is not always the most useful one. So next we are going to redefine the predictor and see what changes.
+
+------------------------------------------------------------------------
+
+## Part 1.5 — Two Views of the Same Model
+
+Before we start recoding, let's take a second to really probe the relationship between "ANOVA" and "regression" output in R.
+
+You have just fit `m1_campaign5`. You have seen `summary()` output and `anova()` output, and at first glance they look like they are telling you different things. They are not. They are two different summaries of the same underlying fitted model.
+
+```{r}
+# Same model — just two different ways of looking at it
+summary(m1_campaign5)
+anova(m1_campaign5)
+```
+
+Here is what to notice:
+
+**The F statistic at the bottom of `summary()` is the same F that appears in `anova()`.** It is testing the same thing: does this model explain more variance than the intercept-only compact model? The `anova()` output just makes the sums of squares explicit.
+
+**The R-squared in `summary()` is the PRE you computed manually.** R-squared is not a separate concept — it is exactly `(SSE0 - SSE1) / SSE0`. You can verify this by comparing `summary(m1_campaign5)$r.squared` to your `PRE_campaign5` value.
+
+**The individual t-tests in `summary()` are focused one-df comparisons, not the omnibus test.** Each coefficient is comparing one group (or one contrast) to the reference category. These are the kind of focused mean-difference questions the chapter says we should generally prefer over the omnibus test — they just happen to appear automatically in regression output.
+
+**The omnibus model comparison you ran earlier with `anova(m0_campaign5, m1_campaign5)` produces the same F as the single-model `anova(m1_campaign5)`.** These are just two ways of asking the same question.
+
+```{r}
+# Verify: these F statistics are the same
+anova(m0_campaign5, m1_campaign5)   # model comparison form
+anova(m1_campaign5)                 # single-model ANOVA table form
+```
+
+And one more thing worth checking:
+
+```{r}
+# R-squared = PRE
+summary(m1_campaign5)$r.squared
+PRE_campaign5
+```
+
+The point of all of this is not that one output format is better than the other. It is that they are the same model. The `summary()` output is not "the regression model" and the `anova()` output is not "the ANOVA model." They are the SAME MODEL that is basically wearing different outfits and you should be able to recognize the underlying person and conclusion regardless assuming you're able to correctly interpret the output.
+
+---
+
+## Part 2 — Recoding Campaign into Two Levels: Organic vs. NonOrganic
+
+### Why redefine campaign at all?
+
+Once you have looked at the 5-level version, it is reasonable to ask whether that level of detail is actually necessary for the question at hand.
+
+Suppose the real managerial question is not "which of the five campaign types differ?" but something more blunt:
+
+> *Do organically acquired customers differ from everyone else?*
+
+This is a fundamentally different question, so we need to define a different predictor. This is a good example of why recoding is not automatically good or bad. It depends on whether the new version better matches the substantive question while still preserving enough useful variation.
+
+### Create and inspect the 2-level variable
+
+```{r}
+clv <- clv %>%
+  mutate(
+    campaign_2level = ifelse(campaign_type == "Organic", "Organic", "NonOrganic")
+  )
+
+table(clv$campaign_2level)
+
+clv %>%
+  group_by(campaign_2level) %>%
+  summarize(
+    n        = n(),
+    mean_CLV = mean(CLV),
+    sd_CLV   = sd(CLV)
+  )
+```
+
+### Fit the models
+
+```{r}
+m0_campaign2 <- lm(CLV ~ 1,               data = clv)
+m1_campaign2 <- lm(CLV ~ campaign_2level, data = clv)
+
+summary(m1_campaign2)
+anova(m0_campaign2, m1_campaign2)
+```
+
+### Compute PRE
+
+```{r}
+SSE0_campaign2 <- sum(residuals(m0_campaign2)^2)
+SSE1_campaign2 <- sum(residuals(m1_campaign2)^2)
+
+PRE_campaign2 <- (SSE0_campaign2 - SSE1_campaign2) / SSE0_campaign2
+PRE_campaign2
+```
+
+**Questions:**
+
+- What question is this 2-level version of campaign answering?
+- How is that question different from the 5-level version?
+- Did the explanatory power increase, decrease, or stay about the same?
+- What information did we lose by collapsing all non-organic campaigns into one category?
+- What did we gain?
+
+**Discussion.** This recoding is not "wrong." It may actually be exactly right if the real business question is whether organic acquisition behaves differently from everything else. But it is also cruder. It treats Black Friday, Holiday Gift, New Year's Promo, and Referral as though they belong in one big bucket — which may or may not be substantively wise. Simpler is not automatically better. Sometimes it is just flatter.
+
+---
+
+## Part 3 — Recoding Campaign into Three Levels: Organic, Referral, and HolidayPromo
+
+### A middle-ground version
+
+The 2-level split is simpler, but it may also flatten distinctions that matter. So next we will create a 3-level version that tries to preserve a little more structure.
+
+This version asks whether we can tell a cleaner story by grouping the more seasonal or promotion-driven campaigns together while still separating them from Organic and Referral. In other words, this is not simplification for its own sake — it is an attempt to simplify in a way that is at least somewhat theory- or strategy-informed.
+
+### Create and inspect the 3-level variable
+
+```{r}
+clv <- clv %>%
+  mutate(
+    campaign_3level = case_when(
+      campaign_type == "Organic"  ~ "Organic",
+      campaign_type == "Referral" ~ "Referral",
+      campaign_type %in% c("BlackFriday", "HolidayGift", "NewYearsPromo") ~ "HolidayPromo"
+    )
+  )
+
+table(clv$campaign_3level)
+
+clv %>%
+  group_by(campaign_3level) %>%
+  summarize(
+    n        = n(),
+    mean_CLV = mean(CLV),
+    sd_CLV   = sd(CLV)
+  )
+```
+
+### Fit the model
+
+```{r}
+m0_campaign3 <- lm(CLV ~ 1,               data = clv)
+m1_campaign3 <- lm(CLV ~ campaign_3level, data = clv)
+
+summary(m1_campaign3)
+anova(m0_campaign3, m1_campaign3)
+```
+
+### Compute PRE
+
+```{r}
+SSE0_campaign3 <- sum(residuals(m0_campaign3)^2)
+SSE1_campaign3 <- sum(residuals(m1_campaign3)^2)
+
+PRE_campaign3 <- (SSE0_campaign3 - SSE1_campaign3) / SSE0_campaign3
+PRE_campaign3
+```
+
+**Questions:**
+
+- What question is the 3-level version asking?
+- How does it differ from the 5-level and 2-level versions?
+- Does this feel like a more theoretically coherent grouping than the 2-level split?
+- Does it seem to preserve useful variation while still simplifying the story?
+- Which of the three campaign definitions seems most useful for a manager, and why?
+
+---
+
+## Part 4 — Comparing the Three Campaign Models
+
+### Compare the versions, not just the output
+
+At this point, do not just ask which model has the largest PRE.
+
+Also ask:
+
+- Which definition of the predictor seems most substantively meaningful?
+- Which one seems easiest to interpret?
+- Which one seems to preserve distinctions that a manager might actually care about?
+
+A variable is not "better" just because it is simpler, and it is not automatically better just because it is more detailed. The question is whether the definition matches the research problem.
+
+```{r}
+campaign_model_compare <- data.frame(
+  Model = c("5-level campaign", "2-level campaign", "3-level campaign"),
+  SSE   = c(SSE1_campaign5, SSE1_campaign2, SSE1_campaign3),
+  PRE   = c(PRE_campaign5,  PRE_campaign2,  PRE_campaign3)
+)
+
+campaign_model_compare
+```
+
+**Questions:**
+
+- Which version of campaign explains the most variation in CLV?
+- Which version is easiest to interpret?
+- Which version seems best aligned with a meaningful substantive question?
+- Did collapsing categories always hurt explanatory power?
+- If the 3-level PRE is close to the 5-level PRE, what does that tell you about whether the collapsed categories were actually doing meaningful work in the original model?
+- When might it still be worth accepting some loss of explanatory power in exchange for a cleaner predictor definition?
+
+---
+
+## Part 5 — A Second Guided Example: Segment
+
+### A second categorical predictor
+
+Now that you have worked through campaign in some detail, let's repeat the workflow with `segment`.
+
+This section should feel more familiar. The main goal here is to reinforce that one-way ANOVA is not about a specific variable, it is about a type of predictor. Once a variable is being treated categorically, the same general logic applies: inspect group means, compare compact and augmented models, and interpret what the predictor is buying you.
+
+### Inspect group sizes and means
+
+```{r}
+table(clv$segment)
+
+clv %>%
+  group_by(segment) %>%
+  summarize(
+    n        = n(),
+    mean_CLV = mean(CLV),
+    sd_CLV   = sd(CLV)
+  )
+```
+
+### Visualize
+
+```{r}
+ggplot(clv, aes(x = segment, y = CLV)) +
+  geom_boxplot() +
+  labs(
+    title = "CLV by Segment",
+    x     = "Segment",
+    y     = "Customer Lifetime Value"
+  )
+```
+
+### Fit the models and compute PRE
+
+```{r}
+m0_segment <- lm(CLV ~ 1,       data = clv)
+m1_segment <- lm(CLV ~ segment, data = clv)
+
+summary(m1_segment)
+anova(m0_segment, m1_segment)
+
+SSE0_segment <- sum(residuals(m0_segment)^2)
+SSE1_segment <- sum(residuals(m1_segment)^2)
+
+PRE_segment <- (SSE0_segment - SSE1_segment) / SSE0_segment
+PRE_segment
+```
+
+**Questions:**
+
+- What is the omnibus null hypothesis here?
+- Does segment appear to explain much variation in CLV?
+- Compared with campaign type, does segment appear to be a stronger or weaker predictor?
+- Why is it useful to look at both the mean differences and the PRE rather than only whether a p-value is significant?
+- Does this predictor seem substantively promising, or does it look more modest?
+
+**Optional stretch question.** If you had to choose one focused follow-up comparison involving segment, what would it be and why?
+
+---
+
+## Part 6 — Your Turn: Primary Channel
+
+By this point, the workflow should hopefully feel familiar enough that you do not need as much hand-holding.
+
+For `primary_channel`, your task is to apply the same logic more independently. The goal here is not just to get the code to run — it is to show that you can move from a categorical predictor to model comparison to substantive interpretation without needing every step spelled out for you.
+
+```{r}
+table(clv$primary_channel)
+
+clv %>%
+  group_by(primary_channel) %>%
+  summarize(
+    n        = n(),
+    mean_CLV = mean(CLV),
+    sd_CLV   = sd(CLV)
+  )
+
+ggplot(clv, aes(x = primary_channel, y = CLV)) +
+  geom_boxplot() +
+  labs(
+    title = "CLV by Primary Channel",
+    x     = "Primary Channel",
+    y     = "Customer Lifetime Value"
+  )
+
+m0_channel <- lm(CLV ~ 1,               data = clv)
+m1_channel <- lm(CLV ~ primary_channel, data = clv)
+
+summary(m1_channel)
+anova(m0_channel, m1_channel)
+
+SSE0_channel <- sum(residuals(m0_channel)^2)
+SSE1_channel <- sum(residuals(m1_channel)^2)
+
+PRE_channel <- (SSE0_channel - SSE1_channel) / SSE0_channel
+PRE_channel
+```
+
+**Questions:**
+
+- Does `primary_channel` appear to explain much variation in CLV?
+- Is it stronger or weaker than `segment`? Than `campaign_type`?
+- If you were presenting this to a manager, what would you say in plain English?
+- What follow-up questions should you be prepared to answer in real life? For example: *Why might customers who shop through one channel have higher CLV than customers who shop through another?* Is the channel itself causing that difference, or are different kinds of customers self-selecting into different channels? This is the kind of interpretive question that comes up immediately in a real work environment, and "the model shows a difference" is not a complete answer.
+
+---
+
+## Part 7 — Comparing All Three Categorical Predictors
+
+Before we turn to income, it is worth putting all three categorical predictors side by side.
+
+We have now analyzed `campaign_type`, `segment`, and `primary_channel` as predictors of CLV. Each one was naturally categorical, and each one used the same basic workflow. But they do not all perform the same way, and that comparison is informative.
+
+```{r}
+categorical_compare <- data.frame(
+  Predictor = c("campaign_type (5-level)", "segment", "primary_channel"),
+  SSE       = c(SSE1_campaign5, SSE1_segment, SSE1_channel),
+  PRE       = c(PRE_campaign5,  PRE_segment,  PRE_channel)
+)
+
+categorical_compare
+```
+
+**Questions:**
+
+- Which of the three naturally categorical predictors explains the most variation in CLV?
+- Which explains the least?
+- Does the ranking of predictors by PRE match what you would have predicted from the boxplots alone?
+- What does it mean for research design that three naturally categorical variables — each a plausible predictor of customer value — can differ this much in explanatory power?
+
+---
+
+## Part 8 — Now Let's Go in the Other Direction: Income
+
+So far, we have worked with variables that are naturally categorical, or at least very plausibly treated that way.
+
+Now we are going to do the reverse: take a variable that is naturally quantitative and start turning it into categories.
+
+This is a very common thing to do in practice. Sometimes it is justified but often it comes at a cost.
+
+When you categorize a continuous variable, you usually make it easier to describe and harder for the model to use efficiently. That does not mean categorization is always wrong but there is a tradeoff. The point of this section is to make that tradeoff visible.
+
+### 8a — Treat income as continuous
+
+Start with the most information-preserving version.
+
+```{r}
+m_income_cont <- lm(CLV ~ income, data = clv)
+summary(m_income_cont)
+
+SSE_income_cont <- sum(residuals(m_income_cont)^2)
+
+# Note: for a simple regression model, R-squared and PRE are equivalent.
+# R-squared = 1 - SSE/SST, which is exactly what our PRE formula computes.
+# We can extract it directly from the model summary here for convenience,
+# but you could also compute it manually using SSE and SST as in previous parts.
+PRE_income_cont <- summary(m_income_cont)$r.squared
+PRE_income_cont
+```
+
+### 8b — Create a practical but uneven income bin variable
+
+Now bin income into a set of categories that looks vaguely like something a survey designer or dashboard builder might produce.
+
+```{r}
+clv <- clv %>%
+  mutate(
+    income_binned = cut(
+      income,
+      breaks = c(-Inf, 40000, 50000, 60000, 70000, 80000, 90000,
+                 100000, 110000, 120000, 150000, 200000, 250000),
+      right  = FALSE,
+      labels = c(
+        "<40k", "40-49k", "50-59k", "60-69k", "70-79k", "80-89k",
+        "90-99k", "100-109k", "110-119k", "120-149k", "150-199k", "200-249k"
+      )
+    )
+  )
+
+table(clv$income_binned, useNA = "ifany")
+
+m_income_binned <- lm(CLV ~ income_binned, data = clv)
+summary(m_income_binned)
+
+SSE_income_binned <- sum(residuals(m_income_binned)^2)
+PRE_income_binned <- 1 - SSE_income_binned / sum((clv$CLV - mean(clv$CLV))^2)
+PRE_income_binned
+```
+
+### 8c — Create a median split
+
+Now do the classic move that statistics instructors everywhere beg people not to do, and people continue doing anyway.
+
+```{r}
+median_income <- median(clv$income, na.rm = TRUE)
+
+clv <- clv %>%
+  mutate(
+    income_median_split = ifelse(income < median_income, "LowerIncome", "HigherIncome")
+  )
+
+table(clv$income_median_split)
+
+m_income_median <- lm(CLV ~ income_median_split, data = clv)
+summary(m_income_median)
+
+SSE_income_median <- sum(residuals(m_income_median)^2)
+PRE_income_median <- 1 - SSE_income_median / sum((clv$CLV - mean(clv$CLV))^2)
+PRE_income_median
+```
+
+### 8d — Create a mean split
+
+```{r}
+mean_income <- mean(clv$income, na.rm = TRUE)
+
+clv <- clv %>%
+  mutate(
+    income_mean_split = ifelse(income < mean_income, "BelowMean", "AboveMean")
+  )
+
+table(clv$income_mean_split)
+
+m_income_mean <- lm(CLV ~ income_mean_split, data = clv)
+summary(m_income_mean)
+
+SSE_income_mean <- sum(residuals(m_income_mean)^2)
+PRE_income_mean <- 1 - SSE_income_mean / sum((clv$CLV - mean(clv$CLV))^2)
+PRE_income_mean
+```
+
+---
+
+## Part 9 — Compare the Income Models
+
+```{r}
+income_model_compare <- data.frame(
+  Model = c("Income continuous",
+            "Income binned (12 levels)",
+            "Income median split",
+            "Income mean split"),
+  SSE   = c(SSE_income_cont,
+            SSE_income_binned,
+            SSE_income_median,
+            SSE_income_mean),
+  PRE   = c(PRE_income_cont,
+            PRE_income_binned,
+            PRE_income_median,
+            PRE_income_mean)
+)
+
+income_model_compare
+```
+
+**Questions:**
+
+- Which version of income explains the most variation in CLV?
+- What is lost when income is turned from a ratio-scale predictor into categories?
+- Did binning income into 12 levels preserve more information than a simple mean or median split?
+- Why might researchers still categorize income even if doing so reduces explanatory power?
+- When might categorization be defensible, and when does it mostly look like avoidable information loss?
+
+**Discussion.** Turning a continuous predictor into categories does not automatically make the analysis more insightful. Often it just makes the variable easier to describe while making the model worse. If you are going to throw away information, you should at least have the decency to do it on purpose.
+
+---
+
+## Part 10 — Final Reflection
+
+By the end of this exercise, you have seen two things that are worth holding together:
+
+First, one-way ANOVA is not a separate statistical universe. It is just regression with a categorical predictor. The compact-vs.-augmented logic, the PRE, the F test all works the same way. The only thing that changed is the form of the predictor.
+
+Second, variable definition is material to what substantive question you are actually asking and answering.
+
+
+---
+
+## Optional Challenge — One Focused Comparison by Hand
+
+If you want to connect this week more explicitly back to contrast-coding logic, create a custom comparison for campaign type.
+
+For example, compare Organic to the average of all non-organic campaign types. One simple set of weights would be:
+
+| Campaign | Weight |
+|----------|--------|
+| Organic | +4 |
+| Referral | −1 |
+| BlackFriday | −1 |
+| HolidayGift | −1 |
+| NewYearsPromo | −1 |
+
+These weights sum to zero, which is the key idea: a valid contrast must be centered so that it represents a comparison rather than an overall level difference. Think of it as a weighted average where the groups you are treating as "one side" get positive weights and the groups on the "other side" get negative weights, balanced so they cancel out.
+
+```{r}
+clv <- clv %>%
+  mutate(
+    organic_vs_rest = case_when(
+      campaign_type == "Organic" ~ 4,
+      TRUE ~ -1
+    )
+  )
+
+m_organic_vs_rest <- lm(CLV ~ organic_vs_rest, data = clv)
+summary(m_organic_vs_rest)
+```
+
+**Questions:**
+
+- What specific comparison does this coded predictor represent?
+- Why do the weights need to sum to zero?
+- How is this one-df comparison different from the omnibus F test with the 5-level campaign variable?
+- Why might a focused comparison like this be more useful than an omnibus test that tells you only "some difference exists somewhere"?
