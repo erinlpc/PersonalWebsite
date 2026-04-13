@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Week 12 Exercise – Erin Percival Carter</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../images/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-67a69d0b73b819022ca2a786c9dbf235.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-6d7afff50494efc2fd7ca49f649140f2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../images/favicon_180X180.png" alt="" class="navbar-logo light-content">
+    <img src="../../../images/favicon_180X180.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Erin Percival Carter</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../teaching/index.html"> 
+<span class="menu-text">Teaching</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv.html"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../bard.html"> 
+<span class="menu-text">BARD</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#a-note-before-we-start" id="toc-a-note-before-we-start" class="nav-link" data-scroll-target="#a-note-before-we-start">A Note Before We Start</a></li>
+  <li><a href="#part-0-load-the-data-and-reconnect-with-the-variables" id="toc-part-0-load-the-data-and-reconnect-with-the-variables" class="nav-link" data-scroll-target="#part-0-load-the-data-and-reconnect-with-the-variables">Part 0 — Load the Data and Reconnect with the Variables</a>
+  <ul class="collapse">
+  <li><a href="#inspect-group-sizes-and-means" id="toc-inspect-group-sizes-and-means" class="nav-link" data-scroll-target="#inspect-group-sizes-and-means">Inspect group sizes and means</a></li>
+  <li><a href="#visualize" id="toc-visualize" class="nav-link" data-scroll-target="#visualize">Visualize</a></li>
+  <li><a href="#fit-the-compact-and-augmented-models" id="toc-fit-the-compact-and-augmented-models" class="nav-link" data-scroll-target="#fit-the-compact-and-augmented-models">Fit the compact and augmented models</a></li>
+  <li><a href="#compute-sse-and-pre" id="toc-compute-sse-and-pre" class="nav-link" data-scroll-target="#compute-sse-and-pre">Compute SSE and PRE</a></li>
+  </ul></li>
+  <li><a href="#part-1.5-two-views-of-the-same-model" id="toc-part-1.5-two-views-of-the-same-model" class="nav-link" data-scroll-target="#part-1.5-two-views-of-the-same-model">Part 1.5 — Two Views of the Same Model</a></li>
+  <li><a href="#part-2-recoding-campaign-into-two-levels-organic-vs.-nonorganic" id="toc-part-2-recoding-campaign-into-two-levels-organic-vs.-nonorganic" class="nav-link" data-scroll-target="#part-2-recoding-campaign-into-two-levels-organic-vs.-nonorganic">Part 2 — Recoding Campaign into Two Levels: Organic vs.&nbsp;NonOrganic</a>
+  <ul class="collapse">
+  <li><a href="#why-redefine-campaign-at-all" id="toc-why-redefine-campaign-at-all" class="nav-link" data-scroll-target="#why-redefine-campaign-at-all">Why redefine campaign at all?</a></li>
+  <li><a href="#create-and-inspect-the-2-level-variable" id="toc-create-and-inspect-the-2-level-variable" class="nav-link" data-scroll-target="#create-and-inspect-the-2-level-variable">Create and inspect the 2-level variable</a></li>
+  <li><a href="#fit-the-models" id="toc-fit-the-models" class="nav-link" data-scroll-target="#fit-the-models">Fit the models</a></li>
+  <li><a href="#compute-pre" id="toc-compute-pre" class="nav-link" data-scroll-target="#compute-pre">Compute PRE</a></li>
+  </ul></li>
+  <li><a href="#part-3-recoding-campaign-into-three-levels-organic-referral-and-holidaypromo" id="toc-part-3-recoding-campaign-into-three-levels-organic-referral-and-holidaypromo" class="nav-link" data-scroll-target="#part-3-recoding-campaign-into-three-levels-organic-referral-and-holidaypromo">Part 3 — Recoding Campaign into Three Levels: Organic, Referral, and HolidayPromo</a>
+  <ul class="collapse">
+  <li><a href="#a-middle-ground-version" id="toc-a-middle-ground-version" class="nav-link" data-scroll-target="#a-middle-ground-version">A middle-ground version</a></li>
+  <li><a href="#create-and-inspect-the-3-level-variable" id="toc-create-and-inspect-the-3-level-variable" class="nav-link" data-scroll-target="#create-and-inspect-the-3-level-variable">Create and inspect the 3-level variable</a></li>
+  <li><a href="#fit-the-model" id="toc-fit-the-model" class="nav-link" data-scroll-target="#fit-the-model">Fit the model</a></li>
+  <li><a href="#compute-pre-1" id="toc-compute-pre-1" class="nav-link" data-scroll-target="#compute-pre-1">Compute PRE</a></li>
+  </ul></li>
+  <li><a href="#part-4-comparing-the-three-campaign-models" id="toc-part-4-comparing-the-three-campaign-models" class="nav-link" data-scroll-target="#part-4-comparing-the-three-campaign-models">Part 4 — Comparing the Three Campaign Models</a>
+  <ul class="collapse">
+  <li><a href="#compare-the-versions-not-just-the-output" id="toc-compare-the-versions-not-just-the-output" class="nav-link" data-scroll-target="#compare-the-versions-not-just-the-output">Compare the versions, not just the output</a></li>
+  </ul></li>
+  <li><a href="#part-5-a-second-guided-example-segment" id="toc-part-5-a-second-guided-example-segment" class="nav-link" data-scroll-target="#part-5-a-second-guided-example-segment">Part 5 — A Second Guided Example: Segment</a>
+  <ul class="collapse">
+  <li><a href="#a-second-categorical-predictor" id="toc-a-second-categorical-predictor" class="nav-link" data-scroll-target="#a-second-categorical-predictor">A second categorical predictor</a></li>
+  <li><a href="#inspect-group-sizes-and-means-1" id="toc-inspect-group-sizes-and-means-1" class="nav-link" data-scroll-target="#inspect-group-sizes-and-means-1">Inspect group sizes and means</a></li>
+  <li><a href="#visualize-1" id="toc-visualize-1" class="nav-link" data-scroll-target="#visualize-1">Visualize</a></li>
+  <li><a href="#fit-the-models-and-compute-pre" id="toc-fit-the-models-and-compute-pre" class="nav-link" data-scroll-target="#fit-the-models-and-compute-pre">Fit the models and compute PRE</a></li>
+  </ul></li>
+  <li><a href="#part-6-your-turn-primary-channel" id="toc-part-6-your-turn-primary-channel" class="nav-link" data-scroll-target="#part-6-your-turn-primary-channel">Part 6 — Your Turn: Primary Channel</a></li>
+  <li><a href="#part-7-comparing-all-three-categorical-predictors" id="toc-part-7-comparing-all-three-categorical-predictors" class="nav-link" data-scroll-target="#part-7-comparing-all-three-categorical-predictors">Part 7 — Comparing All Three Categorical Predictors</a></li>
+  <li><a href="#part-8-now-lets-go-in-the-other-direction-income" id="toc-part-8-now-lets-go-in-the-other-direction-income" class="nav-link" data-scroll-target="#part-8-now-lets-go-in-the-other-direction-income">Part 8 — Now Let’s Go in the Other Direction: Income</a>
+  <ul class="collapse">
+  <li><a href="#a-treat-income-as-continuous" id="toc-a-treat-income-as-continuous" class="nav-link" data-scroll-target="#a-treat-income-as-continuous">8a — Treat income as continuous</a></li>
+  <li><a href="#b-create-a-practical-but-uneven-income-bin-variable" id="toc-b-create-a-practical-but-uneven-income-bin-variable" class="nav-link" data-scroll-target="#b-create-a-practical-but-uneven-income-bin-variable">8b — Create a practical but uneven income bin variable</a></li>
+  <li><a href="#c-create-a-median-split" id="toc-c-create-a-median-split" class="nav-link" data-scroll-target="#c-create-a-median-split">8c — Create a median split</a></li>
+  <li><a href="#d-create-a-mean-split" id="toc-d-create-a-mean-split" class="nav-link" data-scroll-target="#d-create-a-mean-split">8d — Create a mean split</a></li>
+  </ul></li>
+  <li><a href="#part-9-compare-the-income-models" id="toc-part-9-compare-the-income-models" class="nav-link" data-scroll-target="#part-9-compare-the-income-models">Part 9 — Compare the Income Models</a></li>
+  <li><a href="#part-10-final-reflection" id="toc-part-10-final-reflection" class="nav-link" data-scroll-target="#part-10-final-reflection">Part 10 — Final Reflection</a></li>
+  <li><a href="#optional-challenge-one-focused-comparison-by-hand" id="toc-optional-challenge-one-focused-comparison-by-hand" class="nav-link" data-scroll-target="#optional-challenge-one-focused-comparison-by-hand">Optional Challenge — One Focused Comparison by Hand</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Week 12 Exercise</h1>
+<p class="subtitle lead">One-Way ANOVA, Recoding, and Why Variable Definition Matters</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Last week, we used this same dataset to think about nonlinear effects. This week, we are using it to examine a different kind of modeling decision: what happens when a predictor is categorical (or at least we choose to treat it as such) rather than continuous.</p>
+<p>The analyses we’ll be doing this week are one-way ANOVA and even if we’re using a new name it’s really not a dramatic new method. It is just a regression model in which the predictor is categorical rather than continuous. That means the core logic of model comparisons we’ve been relying on the whole time holds. We’re still comparing compact and augmented models and asking whether a more complicated model improves prediction enough to be worth it.</p>
+<p>But this week also raises a new issue that we haven’t had to grapple with in quite as much detail as we’re about to:</p>
+<blockquote class="blockquote">
+<p><strong>How we define a variable is part of research design.</strong></p>
+</blockquote>
+<p>Some variables are naturally categorical. Campaign type, segment, and primary channel are all examples. It would not make much sense to force those onto a numeric scale and pretend the difference between the category we happened to call 4 is the same amount different from the category we happened to call 5 as category 5 is from 6.</p>
+<p>The predictor variables we’ve worked with so far in the class have been naturally quantitative and making this assumption was reasonable. Income is a good example. It has meaningful numeric distances and a meaningful zero. In cases like that, we often have a choice: preserve the original variation, or collapse the variable into categories.</p>
+<p>My own general preference — and usually my advice — is to preserve as much meaningful variance as possible. If a variable is naturally quantitative and treating it continuously makes substantive sense, that is typically where I want to start. That does not mean categorization is always wrong, but when we collapse categories or bin a continuous variable, we should make sure we have a REALLY good reason (candidly, the reason is often that the person you’re reporting to wants it to look tidier and sometimes people prefer categories but you can wait until the absolute last minute before you have to make slides to start dichotomizing).</p>
+<p>This week, you will use the same outcome variable, CLV, and examine what changes when predictors are defined in different ways. You will:</p>
+<ul>
+<li>analyze <code>campaign_type</code> in its original 5-level form</li>
+<li>redefine it into a 2-level version and a 3-level version</li>
+<li>compare what is gained and lost across those definitions</li>
+<li>work through a second guided example using <code>segment</code></li>
+<li>do it all again (this time more independently) using <code>primary_channel</code></li>
+<li>and then examine what happens when <code>income</code> is treated as continuous versus grouped into categories or simple splits</li>
+</ul>
+<hr>
+</section>
+<section id="a-note-before-we-start" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-before-we-start">A Note Before We Start</h2>
+<p>As you work through this exercise, try to really push yourself to think through what you are doing when you are recoding. Every time you change a variable’s definition, you are changing the question the model is set up to answer.</p>
+<p>That means the 5-level campaign variable, 2-level campaign variable, and 3-level campaign variable are not just three versions of the same analysis. They are three different analyses, three different questions, and result in three different interpretations.</p>
+<hr>
+</section>
+<section id="part-0-load-the-data-and-reconnect-with-the-variables" class="level2">
+<h2 class="anchored" data-anchor-id="part-0-load-the-data-and-reconnect-with-the-variables">Part 0 — Load the Data and Reconnect with the Variables</h2>
+<p>We are using the same CLV dataset from last week.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>clv <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/clv_nonlinear_exercise_full.csv"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(clv)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(clv)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For this week, the most relevant variables are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>CLV</code></td>
+<td>12-month customer lifetime value in dollars</td>
+</tr>
+<tr class="even">
+<td><code>campaign_type</code></td>
+<td>Acquisition campaign category</td>
+</tr>
+<tr class="odd">
+<td><code>segment</code></td>
+<td>Customer segment</td>
+</tr>
+<tr class="even">
+<td><code>primary_channel</code></td>
+<td>Main channel used by the customer</td>
+</tr>
+<tr class="odd">
+<td><code>income</code></td>
+<td>Customer annual income in dollars</td>
+</tr>
+</tbody>
+</table>
+<p>Before doing anything else, take a quick look at which of these variables are already categorical and which are continuous.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(clv[, <span class="fu">c</span>(<span class="st">"CLV"</span>, <span class="st">"campaign_type"</span>, <span class="st">"segment"</span>, <span class="st">"primary_channel"</span>, <span class="st">"income"</span>)], class)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>Which variables are naturally categorical?</li>
+<li>Which variables are naturally continuous?</li>
+<li>Which variables could be redefined in more than one reasonable way?</li>
+</ul>
+<p><strong>One more quick note on variable types in R before we proceed</strong></p>
+<p>When you run the <code>sapply()</code> call above, you may notice that the categorical variables come back as <code>character</code> rather than <code>factor</code>. In many cases R will handle this gracefully - <code>lm()</code> will treat a character variable as categorical and create the appropriate dummy coding automatically - but it is worth knowing the difference.</p>
+<p>A <code>factor</code> is R’s explicit representation of a categorical variable. It stores the levels in a defined order and makes that ordering transparent. A <code>character</code> variable is just text, and R makes its own decisions about ordering when it encounters one in a model - typically alphabetical, which determines which level becomes the reference category.</p>
+<p>If you ever need to control which group serves as the reference category, or if you are doing more advanced contrast coding, you will want to convert character variables to factors explicitly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>clv<span class="sc">$</span>campaign_type <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(clv<span class="sc">$</span>campaign_type)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Conversely, <code>as.numeric()</code> tells R to treat a variable as a numeric type. This is useful, but it is also a frequent source of analysis errors. If you accidentally apply it to a factor (or if R interprets something as numeric when it should be treated as a factor), R will return the underlying integer codes for the factor levels rather than anything meaningful, and it will do so without complaint.</p>
+<p>For this exercise, the default behavior will work fine. But these two functions are worth knowing. ## Part 1 — One-Way ANOVA with the Original 5-Level Campaign Variable</p>
+<p>We will start with the most detailed version of <code>campaign_type</code>.</p>
+<p>This version preserves the most category-specific information. If the five campaign categories really do differ in substantively important ways, this version gives the model the best chance to see that pattern. It is also the least simplified version, which means it may be a little messier to summarize.</p>
+<p>That tension — between nuance and simplification — is one of the main themes of this week.</p>
+<section id="inspect-group-sizes-and-means" class="level3">
+<h3 class="anchored" data-anchor-id="inspect-group-sizes-and-means">Inspect group sizes and means</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>campaign_type)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>clv <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(campaign_type) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n        =</span> <span class="fu">n</span>(),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_CLV =</span> <span class="fu">mean</span>(CLV),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_CLV   =</span> <span class="fu">sd</span>(CLV)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualize" class="level3">
+<h3 class="anchored" data-anchor-id="visualize">Visualize</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clv, <span class="fu">aes</span>(<span class="at">x =</span> campaign_type, <span class="at">y =</span> CLV)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CLV by Campaign Type"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Campaign Type"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Customer Lifetime Value"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="fit-the-compact-and-augmented-models" class="level3">
+<h3 class="anchored" data-anchor-id="fit-the-compact-and-augmented-models">Fit the compact and augmented models</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m0_campaign5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> <span class="dv">1</span>,             <span class="at">data =</span> clv)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>m1_campaign5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> campaign_type, <span class="at">data =</span> clv)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_campaign5)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m0_campaign5, m1_campaign5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="compute-sse-and-pre" class="level3">
+<h3 class="anchored" data-anchor-id="compute-sse-and-pre">Compute SSE and PRE</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SSE0_campaign5 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m0_campaign5)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SSE1_campaign5 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m1_campaign5)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>PRE_campaign5 <span class="ot">&lt;-</span> (SSE0_campaign5 <span class="sc">-</span> SSE1_campaign5) <span class="sc">/</span> SSE0_campaign5</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>SSE0_campaign5</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>SSE1_campaign5</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>PRE_campaign5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>What is the null hypothesis in this omnibus comparison?</li>
+<li>What does the intercept in the compact model represent?</li>
+<li>In the augmented model, what are the model’s predicted values within each campaign group?</li>
+<li>What does PRE tell you here?</li>
+<li>Does <code>campaign_type</code> appear to explain much variation in CLV?</li>
+<li>Which campaign groups appear most different from one another?</li>
+</ul>
+<p><strong>Pause and think.</strong> At this point, the model is asking: <em>do mean CLV values differ across the five campaign groups?</em> That is a legitimate question. But it is not the only question we could ask, and it is not always the most useful one. So next we are going to redefine the predictor and see what changes.</p>
+<hr>
+</section>
+</section>
+<section id="part-1.5-two-views-of-the-same-model" class="level2">
+<h2 class="anchored" data-anchor-id="part-1.5-two-views-of-the-same-model">Part 1.5 — Two Views of the Same Model</h2>
+<p>Before we start recoding, let’s take a second to really probe the relationship between “ANOVA” and “regression” output in R.</p>
+<p>You have just fit <code>m1_campaign5</code>. You have seen <code>summary()</code> output and <code>anova()</code> output, and at first glance they look like they are telling you different things. They are not. They are two different summaries of the same underlying fitted model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same model — just two different ways of looking at it</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_campaign5)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1_campaign5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Here is what to notice:</p>
+<p><strong>The F statistic at the bottom of <code>summary()</code> is the same F that appears in <code>anova()</code>.</strong> It is testing the same thing: does this model explain more variance than the intercept-only compact model? The <code>anova()</code> output just makes the sums of squares explicit.</p>
+<p><strong>The R-squared in <code>summary()</code> is the PRE you computed manually.</strong> R-squared is not a separate concept — it is exactly <code>(SSE0 - SSE1) / SSE0</code>. You can verify this by comparing <code>summary(m1_campaign5)$r.squared</code> to your <code>PRE_campaign5</code> value.</p>
+<p><strong>The individual t-tests in <code>summary()</code> are focused one-df comparisons, not the omnibus test.</strong> Each coefficient is comparing one group (or one contrast) to the reference category. These are the kind of focused mean-difference questions the chapter says we should generally prefer over the omnibus test — they just happen to appear automatically in regression output.</p>
+<p><strong>The omnibus model comparison you ran earlier with <code>anova(m0_campaign5, m1_campaign5)</code> produces the same F as the single-model <code>anova(m1_campaign5)</code>.</strong> These are just two ways of asking the same question.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify: these F statistics are the same</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m0_campaign5, m1_campaign5)   <span class="co"># model comparison form</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1_campaign5)                 <span class="co"># single-model ANOVA table form</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And one more thing worth checking:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared = PRE</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_campaign5)<span class="sc">$</span>r.squared</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>PRE_campaign5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The point of all of this is not that one output format is better than the other. It is that they are the same model. The <code>summary()</code> output is not “the regression model” and the <code>anova()</code> output is not “the ANOVA model.” They are the SAME MODEL that is basically wearing different outfits and you should be able to recognize the underlying person and conclusion regardless assuming you’re able to correctly interpret the output.</p>
+<hr>
+</section>
+<section id="part-2-recoding-campaign-into-two-levels-organic-vs.-nonorganic" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-recoding-campaign-into-two-levels-organic-vs.-nonorganic">Part 2 — Recoding Campaign into Two Levels: Organic vs.&nbsp;NonOrganic</h2>
+<section id="why-redefine-campaign-at-all" class="level3">
+<h3 class="anchored" data-anchor-id="why-redefine-campaign-at-all">Why redefine campaign at all?</h3>
+<p>Once you have looked at the 5-level version, it is reasonable to ask whether that level of detail is actually necessary for the question at hand.</p>
+<p>Suppose the real managerial question is not “which of the five campaign types differ?” but something more blunt:</p>
+<blockquote class="blockquote">
+<p><em>Do organically acquired customers differ from everyone else?</em></p>
+</blockquote>
+<p>This is a fundamentally different question, so we need to define a different predictor. This is a good example of why recoding is not automatically good or bad. It depends on whether the new version better matches the substantive question while still preserving enough useful variation.</p>
+</section>
+<section id="create-and-inspect-the-2-level-variable" class="level3">
+<h3 class="anchored" data-anchor-id="create-and-inspect-the-2-level-variable">Create and inspect the 2-level variable</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>clv <span class="ot">&lt;-</span> clv <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">campaign_2level =</span> <span class="fu">ifelse</span>(campaign_type <span class="sc">==</span> <span class="st">"Organic"</span>, <span class="st">"Organic"</span>, <span class="st">"NonOrganic"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>campaign_2level)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>clv <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(campaign_2level) <span class="sc">%&gt;%</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">n        =</span> <span class="fu">n</span>(),</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_CLV =</span> <span class="fu">mean</span>(CLV),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_CLV   =</span> <span class="fu">sd</span>(CLV)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="fit-the-models" class="level3">
+<h3 class="anchored" data-anchor-id="fit-the-models">Fit the models</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m0_campaign2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> <span class="dv">1</span>,               <span class="at">data =</span> clv)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>m1_campaign2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> campaign_2level, <span class="at">data =</span> clv)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_campaign2)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m0_campaign2, m1_campaign2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="compute-pre" class="level3">
+<h3 class="anchored" data-anchor-id="compute-pre">Compute PRE</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>SSE0_campaign2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m0_campaign2)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SSE1_campaign2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m1_campaign2)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>PRE_campaign2 <span class="ot">&lt;-</span> (SSE0_campaign2 <span class="sc">-</span> SSE1_campaign2) <span class="sc">/</span> SSE0_campaign2</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>PRE_campaign2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>What question is this 2-level version of campaign answering?</li>
+<li>How is that question different from the 5-level version?</li>
+<li>Did the explanatory power increase, decrease, or stay about the same?</li>
+<li>What information did we lose by collapsing all non-organic campaigns into one category?</li>
+<li>What did we gain?</li>
+</ul>
+<p><strong>Discussion.</strong> This recoding is not “wrong.” It may actually be exactly right if the real business question is whether organic acquisition behaves differently from everything else. But it is also cruder. It treats Black Friday, Holiday Gift, New Year’s Promo, and Referral as though they belong in one big bucket — which may or may not be substantively wise. Simpler is not automatically better. Sometimes it is just flatter.</p>
+<hr>
+</section>
+</section>
+<section id="part-3-recoding-campaign-into-three-levels-organic-referral-and-holidaypromo" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-recoding-campaign-into-three-levels-organic-referral-and-holidaypromo">Part 3 — Recoding Campaign into Three Levels: Organic, Referral, and HolidayPromo</h2>
+<section id="a-middle-ground-version" class="level3">
+<h3 class="anchored" data-anchor-id="a-middle-ground-version">A middle-ground version</h3>
+<p>The 2-level split is simpler, but it may also flatten distinctions that matter. So next we will create a 3-level version that tries to preserve a little more structure.</p>
+<p>This version asks whether we can tell a cleaner story by grouping the more seasonal or promotion-driven campaigns together while still separating them from Organic and Referral. In other words, this is not simplification for its own sake — it is an attempt to simplify in a way that is at least somewhat theory- or strategy-informed.</p>
+</section>
+<section id="create-and-inspect-the-3-level-variable" class="level3">
+<h3 class="anchored" data-anchor-id="create-and-inspect-the-3-level-variable">Create and inspect the 3-level variable</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>clv <span class="ot">&lt;-</span> clv <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">campaign_3level =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>      campaign_type <span class="sc">==</span> <span class="st">"Organic"</span>  <span class="sc">~</span> <span class="st">"Organic"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>      campaign_type <span class="sc">==</span> <span class="st">"Referral"</span> <span class="sc">~</span> <span class="st">"Referral"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>      campaign_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"BlackFriday"</span>, <span class="st">"HolidayGift"</span>, <span class="st">"NewYearsPromo"</span>) <span class="sc">~</span> <span class="st">"HolidayPromo"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>campaign_3level)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>clv <span class="sc">%&gt;%</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(campaign_3level) <span class="sc">%&gt;%</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">n        =</span> <span class="fu">n</span>(),</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_CLV =</span> <span class="fu">mean</span>(CLV),</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_CLV   =</span> <span class="fu">sd</span>(CLV)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="fit-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="fit-the-model">Fit the model</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m0_campaign3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> <span class="dv">1</span>,               <span class="at">data =</span> clv)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>m1_campaign3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> campaign_3level, <span class="at">data =</span> clv)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_campaign3)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m0_campaign3, m1_campaign3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="compute-pre-1" class="level3">
+<h3 class="anchored" data-anchor-id="compute-pre-1">Compute PRE</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>SSE0_campaign3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m0_campaign3)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>SSE1_campaign3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m1_campaign3)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>PRE_campaign3 <span class="ot">&lt;-</span> (SSE0_campaign3 <span class="sc">-</span> SSE1_campaign3) <span class="sc">/</span> SSE0_campaign3</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>PRE_campaign3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>What question is the 3-level version asking?</li>
+<li>How does it differ from the 5-level and 2-level versions?</li>
+<li>Does this feel like a more theoretically coherent grouping than the 2-level split?</li>
+<li>Does it seem to preserve useful variation while still simplifying the story?</li>
+<li>Which of the three campaign definitions seems most useful for a manager, and why?</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="part-4-comparing-the-three-campaign-models" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-comparing-the-three-campaign-models">Part 4 — Comparing the Three Campaign Models</h2>
+<section id="compare-the-versions-not-just-the-output" class="level3">
+<h3 class="anchored" data-anchor-id="compare-the-versions-not-just-the-output">Compare the versions, not just the output</h3>
+<p>At this point, do not just ask which model has the largest PRE.</p>
+<p>Also ask:</p>
+<ul>
+<li>Which definition of the predictor seems most substantively meaningful?</li>
+<li>Which one seems easiest to interpret?</li>
+<li>Which one seems to preserve distinctions that a manager might actually care about?</li>
+</ul>
+<p>A variable is not “better” just because it is simpler, and it is not automatically better just because it is more detailed. The question is whether the definition matches the research problem.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>campaign_model_compare <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">"5-level campaign"</span>, <span class="st">"2-level campaign"</span>, <span class="st">"3-level campaign"</span>),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">SSE   =</span> <span class="fu">c</span>(SSE1_campaign5, SSE1_campaign2, SSE1_campaign3),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">PRE   =</span> <span class="fu">c</span>(PRE_campaign5,  PRE_campaign2,  PRE_campaign3)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>campaign_model_compare</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>Which version of campaign explains the most variation in CLV?</li>
+<li>Which version is easiest to interpret?</li>
+<li>Which version seems best aligned with a meaningful substantive question?</li>
+<li>Did collapsing categories always hurt explanatory power?</li>
+<li>If the 3-level PRE is close to the 5-level PRE, what does that tell you about whether the collapsed categories were actually doing meaningful work in the original model?</li>
+<li>When might it still be worth accepting some loss of explanatory power in exchange for a cleaner predictor definition?</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="part-5-a-second-guided-example-segment" class="level2">
+<h2 class="anchored" data-anchor-id="part-5-a-second-guided-example-segment">Part 5 — A Second Guided Example: Segment</h2>
+<section id="a-second-categorical-predictor" class="level3">
+<h3 class="anchored" data-anchor-id="a-second-categorical-predictor">A second categorical predictor</h3>
+<p>Now that you have worked through campaign in some detail, let’s repeat the workflow with <code>segment</code>.</p>
+<p>This section should feel more familiar. The main goal here is to reinforce that one-way ANOVA is not about a specific variable, it is about a type of predictor. Once a variable is being treated categorically, the same general logic applies: inspect group means, compare compact and augmented models, and interpret what the predictor is buying you.</p>
+</section>
+<section id="inspect-group-sizes-and-means-1" class="level3">
+<h3 class="anchored" data-anchor-id="inspect-group-sizes-and-means-1">Inspect group sizes and means</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>segment)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>clv <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(segment) <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n        =</span> <span class="fu">n</span>(),</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_CLV =</span> <span class="fu">mean</span>(CLV),</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_CLV   =</span> <span class="fu">sd</span>(CLV)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="visualize-1" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-1">Visualize</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clv, <span class="fu">aes</span>(<span class="at">x =</span> segment, <span class="at">y =</span> CLV)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CLV by Segment"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Segment"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Customer Lifetime Value"</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="fit-the-models-and-compute-pre" class="level3">
+<h3 class="anchored" data-anchor-id="fit-the-models-and-compute-pre">Fit the models and compute PRE</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>m0_segment <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> <span class="dv">1</span>,       <span class="at">data =</span> clv)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>m1_segment <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> segment, <span class="at">data =</span> clv)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_segment)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m0_segment, m1_segment)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>SSE0_segment <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m0_segment)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>SSE1_segment <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m1_segment)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>PRE_segment <span class="ot">&lt;-</span> (SSE0_segment <span class="sc">-</span> SSE1_segment) <span class="sc">/</span> SSE0_segment</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>PRE_segment</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>What is the omnibus null hypothesis here?</li>
+<li>Does segment appear to explain much variation in CLV?</li>
+<li>Compared with campaign type, does segment appear to be a stronger or weaker predictor?</li>
+<li>Why is it useful to look at both the mean differences and the PRE rather than only whether a p-value is significant?</li>
+<li>Does this predictor seem substantively promising, or does it look more modest?</li>
+</ul>
+<p><strong>Optional stretch question.</strong> If you had to choose one focused follow-up comparison involving segment, what would it be and why?</p>
+<hr>
+</section>
+</section>
+<section id="part-6-your-turn-primary-channel" class="level2">
+<h2 class="anchored" data-anchor-id="part-6-your-turn-primary-channel">Part 6 — Your Turn: Primary Channel</h2>
+<p>By this point, the workflow should hopefully feel familiar enough that you do not need as much hand-holding.</p>
+<p>For <code>primary_channel</code>, your task is to apply the same logic more independently. The goal here is not just to get the code to run — it is to show that you can move from a categorical predictor to model comparison to substantive interpretation without needing every step spelled out for you.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>primary_channel)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>clv <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(primary_channel) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n        =</span> <span class="fu">n</span>(),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_CLV =</span> <span class="fu">mean</span>(CLV),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_CLV   =</span> <span class="fu">sd</span>(CLV)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(clv, <span class="fu">aes</span>(<span class="at">x =</span> primary_channel, <span class="at">y =</span> CLV)) <span class="sc">+</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"CLV by Primary Channel"</span>,</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x     =</span> <span class="st">"Primary Channel"</span>,</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y     =</span> <span class="st">"Customer Lifetime Value"</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>m0_channel <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> <span class="dv">1</span>,               <span class="at">data =</span> clv)</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>m1_channel <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> primary_channel, <span class="at">data =</span> clv)</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1_channel)</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m0_channel, m1_channel)</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>SSE0_channel <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m0_channel)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>SSE1_channel <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m1_channel)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>PRE_channel <span class="ot">&lt;-</span> (SSE0_channel <span class="sc">-</span> SSE1_channel) <span class="sc">/</span> SSE0_channel</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>PRE_channel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>Does <code>primary_channel</code> appear to explain much variation in CLV?</li>
+<li>Is it stronger or weaker than <code>segment</code>? Than <code>campaign_type</code>?</li>
+<li>If you were presenting this to a manager, what would you say in plain English?</li>
+<li>What follow-up questions should you be prepared to answer in real life? For example: <em>Why might customers who shop through one channel have higher CLV than customers who shop through another?</em> Is the channel itself causing that difference, or are different kinds of customers self-selecting into different channels? This is the kind of interpretive question that comes up immediately in a real work environment, and “the model shows a difference” is not a complete answer.</li>
+</ul>
+<hr>
+</section>
+<section id="part-7-comparing-all-three-categorical-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="part-7-comparing-all-three-categorical-predictors">Part 7 — Comparing All Three Categorical Predictors</h2>
+<p>Before we turn to income, it is worth putting all three categorical predictors side by side.</p>
+<p>We have now analyzed <code>campaign_type</code>, <code>segment</code>, and <code>primary_channel</code> as predictors of CLV. Each one was naturally categorical, and each one used the same basic workflow. But they do not all perform the same way, and that comparison is informative.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>categorical_compare <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Predictor =</span> <span class="fu">c</span>(<span class="st">"campaign_type (5-level)"</span>, <span class="st">"segment"</span>, <span class="st">"primary_channel"</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">SSE       =</span> <span class="fu">c</span>(SSE1_campaign5, SSE1_segment, SSE1_channel),</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">PRE       =</span> <span class="fu">c</span>(PRE_campaign5,  PRE_segment,  PRE_channel)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>categorical_compare</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>Which of the three naturally categorical predictors explains the most variation in CLV?</li>
+<li>Which explains the least?</li>
+<li>Does the ranking of predictors by PRE match what you would have predicted from the boxplots alone?</li>
+<li>What does it mean for research design that three naturally categorical variables — each a plausible predictor of customer value — can differ this much in explanatory power?</li>
+</ul>
+<hr>
+</section>
+<section id="part-8-now-lets-go-in-the-other-direction-income" class="level2">
+<h2 class="anchored" data-anchor-id="part-8-now-lets-go-in-the-other-direction-income">Part 8 — Now Let’s Go in the Other Direction: Income</h2>
+<p>So far, we have worked with variables that are naturally categorical, or at least very plausibly treated that way.</p>
+<p>Now we are going to do the reverse: take a variable that is naturally quantitative and start turning it into categories.</p>
+<p>This is a very common thing to do in practice. Sometimes it is justified but often it comes at a cost.</p>
+<p>When you categorize a continuous variable, you usually make it easier to describe and harder for the model to use efficiently. That does not mean categorization is always wrong but there is a tradeoff. The point of this section is to make that tradeoff visible.</p>
+<section id="a-treat-income-as-continuous" class="level3">
+<h3 class="anchored" data-anchor-id="a-treat-income-as-continuous">8a — Treat income as continuous</h3>
+<p>Start with the most information-preserving version.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>m_income_cont <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> income, <span class="at">data =</span> clv)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_income_cont)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>SSE_income_cont <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_income_cont)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: for a simple regression model, R-squared and PRE are equivalent.</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># R-squared = 1 - SSE/SST, which is exactly what our PRE formula computes.</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># We can extract it directly from the model summary here for convenience,</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># but you could also compute it manually using SSE and SST as in previous parts.</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>PRE_income_cont <span class="ot">&lt;-</span> <span class="fu">summary</span>(m_income_cont)<span class="sc">$</span>r.squared</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>PRE_income_cont</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="b-create-a-practical-but-uneven-income-bin-variable" class="level3">
+<h3 class="anchored" data-anchor-id="b-create-a-practical-but-uneven-income-bin-variable">8b — Create a practical but uneven income bin variable</h3>
+<p>Now bin income into a set of categories that looks vaguely like something a survey designer or dashboard builder might produce.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>clv <span class="ot">&lt;-</span> clv <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">income_binned =</span> <span class="fu">cut</span>(</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>      income,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">40000</span>, <span class="dv">50000</span>, <span class="dv">60000</span>, <span class="dv">70000</span>, <span class="dv">80000</span>, <span class="dv">90000</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                 <span class="dv">100000</span>, <span class="dv">110000</span>, <span class="dv">120000</span>, <span class="dv">150000</span>, <span class="dv">200000</span>, <span class="dv">250000</span>),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">right  =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"&lt;40k"</span>, <span class="st">"40-49k"</span>, <span class="st">"50-59k"</span>, <span class="st">"60-69k"</span>, <span class="st">"70-79k"</span>, <span class="st">"80-89k"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"90-99k"</span>, <span class="st">"100-109k"</span>, <span class="st">"110-119k"</span>, <span class="st">"120-149k"</span>, <span class="st">"150-199k"</span>, <span class="st">"200-249k"</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>income_binned, <span class="at">useNA =</span> <span class="st">"ifany"</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>m_income_binned <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> income_binned, <span class="at">data =</span> clv)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_income_binned)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>SSE_income_binned <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_income_binned)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>PRE_income_binned <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> SSE_income_binned <span class="sc">/</span> <span class="fu">sum</span>((clv<span class="sc">$</span>CLV <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>CLV))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>PRE_income_binned</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="c-create-a-median-split" class="level3">
+<h3 class="anchored" data-anchor-id="c-create-a-median-split">8c — Create a median split</h3>
+<p>Now do the classic move that statistics instructors everywhere beg people not to do, and people continue doing anyway.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>median_income <span class="ot">&lt;-</span> <span class="fu">median</span>(clv<span class="sc">$</span>income, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>clv <span class="ot">&lt;-</span> clv <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">income_median_split =</span> <span class="fu">ifelse</span>(income <span class="sc">&lt;</span> median_income, <span class="st">"LowerIncome"</span>, <span class="st">"HigherIncome"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>income_median_split)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>m_income_median <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> income_median_split, <span class="at">data =</span> clv)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_income_median)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>SSE_income_median <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_income_median)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>PRE_income_median <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> SSE_income_median <span class="sc">/</span> <span class="fu">sum</span>((clv<span class="sc">$</span>CLV <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>CLV))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>PRE_income_median</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="d-create-a-mean-split" class="level3">
+<h3 class="anchored" data-anchor-id="d-create-a-mean-split">8d — Create a mean split</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mean_income <span class="ot">&lt;-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>income, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>clv <span class="ot">&lt;-</span> clv <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">income_mean_split =</span> <span class="fu">ifelse</span>(income <span class="sc">&lt;</span> mean_income, <span class="st">"BelowMean"</span>, <span class="st">"AboveMean"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(clv<span class="sc">$</span>income_mean_split)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>m_income_mean <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> income_mean_split, <span class="at">data =</span> clv)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_income_mean)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>SSE_income_mean <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(m_income_mean)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>PRE_income_mean <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> SSE_income_mean <span class="sc">/</span> <span class="fu">sum</span>((clv<span class="sc">$</span>CLV <span class="sc">-</span> <span class="fu">mean</span>(clv<span class="sc">$</span>CLV))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>PRE_income_mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-9-compare-the-income-models" class="level2">
+<h2 class="anchored" data-anchor-id="part-9-compare-the-income-models">Part 9 — Compare the Income Models</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>income_model_compare <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="fu">c</span>(<span class="st">"Income continuous"</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Income binned (12 levels)"</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Income median split"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Income mean split"</span>),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">SSE   =</span> <span class="fu">c</span>(SSE_income_cont,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>            SSE_income_binned,</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>            SSE_income_median,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>            SSE_income_mean),</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">PRE   =</span> <span class="fu">c</span>(PRE_income_cont,</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>            PRE_income_binned,</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>            PRE_income_median,</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>            PRE_income_mean)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>income_model_compare</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>Which version of income explains the most variation in CLV?</li>
+<li>What is lost when income is turned from a ratio-scale predictor into categories?</li>
+<li>Did binning income into 12 levels preserve more information than a simple mean or median split?</li>
+<li>Why might researchers still categorize income even if doing so reduces explanatory power?</li>
+<li>When might categorization be defensible, and when does it mostly look like avoidable information loss?</li>
+</ul>
+<p><strong>Discussion.</strong> Turning a continuous predictor into categories does not automatically make the analysis more insightful. Often it just makes the variable easier to describe while making the model worse. If you are going to throw away information, you should at least have the decency to do it on purpose.</p>
+<hr>
+</section>
+<section id="part-10-final-reflection" class="level2">
+<h2 class="anchored" data-anchor-id="part-10-final-reflection">Part 10 — Final Reflection</h2>
+<p>By the end of this exercise, you have seen two things that are worth holding together:</p>
+<p>First, one-way ANOVA is not a separate statistical universe. It is just regression with a categorical predictor. The compact-vs.-augmented logic, the PRE, the F test all works the same way. The only thing that changed is the form of the predictor.</p>
+<p>Second, variable definition is material to what substantive question you are actually asking and answering.</p>
+<hr>
+</section>
+<section id="optional-challenge-one-focused-comparison-by-hand" class="level2">
+<h2 class="anchored" data-anchor-id="optional-challenge-one-focused-comparison-by-hand">Optional Challenge — One Focused Comparison by Hand</h2>
+<p>If you want to connect this week more explicitly back to contrast-coding logic, create a custom comparison for campaign type.</p>
+<p>For example, compare Organic to the average of all non-organic campaign types. One simple set of weights would be:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Campaign</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Organic</td>
+<td>+4</td>
+</tr>
+<tr class="even">
+<td>Referral</td>
+<td>−1</td>
+</tr>
+<tr class="odd">
+<td>BlackFriday</td>
+<td>−1</td>
+</tr>
+<tr class="even">
+<td>HolidayGift</td>
+<td>−1</td>
+</tr>
+<tr class="odd">
+<td>NewYearsPromo</td>
+<td>−1</td>
+</tr>
+</tbody>
+</table>
+<p>These weights sum to zero, which is the key idea: a valid contrast must be centered so that it represents a comparison rather than an overall level difference. Think of it as a weighted average where the groups you are treating as “one side” get positive weights and the groups on the “other side” get negative weights, balanced so they cancel out.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>clv <span class="ot">&lt;-</span> clv <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">organic_vs_rest =</span> <span class="fu">case_when</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>      campaign_type <span class="sc">==</span> <span class="st">"Organic"</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>m_organic_vs_rest <span class="ot">&lt;-</span> <span class="fu">lm</span>(CLV <span class="sc">~</span> organic_vs_rest, <span class="at">data =</span> clv)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_organic_vs_rest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>What specific comparison does this coded predictor represent?</li>
+<li>Why do the weights need to sum to zero?</li>
+<li>How is this one-df comparison different from the omnibus F test with the 5-level campaign variable?</li>
+<li>Why might a focused comparison like this be more useful than an omnibus test that tells you only “some difference exists somewhere”?</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2025 Erin Percival Carter <br> <span class="colophon">Built with Quarto, stubbornness, and coffee.</span></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://umaine.edu/business/">
+<p>Maine Business School</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script src="sheep.js"></script>
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
