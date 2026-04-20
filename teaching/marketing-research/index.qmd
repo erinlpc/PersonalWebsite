@@ -69,6 +69,8 @@ These assignments build your R skills progressively. Each is designed to be acce
 
 13. [Week 12: One Way ANOVA ](assignments/week12_anova.qmd) — This week we start to consider categorical predictors and the complexity (but also much less significant than the name change from "regression" to "ANOVA" might suggest...spoiler, it's the same model!) that doing so introduces.
 
+14. [Week 13: Intro to Conjoint Analysis ](assignments/conjoint_analysis.qmd) — In this exercise, we take bits and pieces of all we've learned across the previous exercises to dip our toes in the conjoint waters. Conjont is one of the only TRUE marketing-specific analyses out there - we created this technique. We're going to explore an introductory, simple version.
+
 ::: {.callout-note appearance="minimal"}
 **More coming** · Additional assignments will be added throughout the semester.
 :::
