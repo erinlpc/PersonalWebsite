@@ -7,8 +7,6 @@ jobs:
     permissions:
       contents: write
       pages: write
-    env:
-      R_LIBS_USER: /opt/R/4.4.1/lib/R/library
     steps:
       - uses: actions/checkout@v4
       
@@ -19,7 +17,9 @@ jobs:
       
       - name: Install R packages
         run: |
-          install.packages(c("rmarkdown", "knitr", "yaml"))
+          lib <- "/home/runner/work/_temp/Library"
+          dir.create(lib, recursive = TRUE, showWarnings = FALSE)
+          install.packages(c("rmarkdown", "knitr", "yaml"), lib = lib)
         shell: Rscript {0}
       
       - uses: quarto-dev/quarto-actions/setup@v2
