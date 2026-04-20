@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+      - name: Install system dependencies
+        run: sudo apt-get install -y libuv1-dev
+      
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
@@ -20,11 +23,6 @@ jobs:
           lib <- "/home/runner/work/_temp/Library"
           dir.create(lib, recursive = TRUE, showWarnings = FALSE)
           install.packages(c("rmarkdown", "knitr", "yaml"), lib = lib)
-          cat("LibPaths:\n")
-          cat(paste(.libPaths(), collapse = "\n"), "\n")
-          cat("rmarkdown installed:", "rmarkdown" %in% rownames(installed.packages(lib.loc = lib)), "\n")
-          cat("Files in lib:\n")
-          cat(paste(list.files(lib), collapse = "\n"), "\n")
         shell: Rscript {0}
       
       - uses: quarto-dev/quarto-actions/setup@v2
